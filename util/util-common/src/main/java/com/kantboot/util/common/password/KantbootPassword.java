@@ -3,7 +3,6 @@ package com.kantboot.util.common.password;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
