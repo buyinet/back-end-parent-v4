@@ -48,14 +48,11 @@ Kantboot开发平台，可以应用在多种小程序、App项目的开发中,
 - DB2
 - 达梦、人大金仓
 
-## 项目结构
-```
-util 工具模块
-├─util-common 通用工具模块
-├─util-core 核心工具模块
-```
-
-提示：
->项目中默认使用的密码加密操作是util-common模块中的KantbootPassword类
-> 
-> 具体操作请查看<a href="/util/util-common/README.md">util-common模块的README.md</a>
+## 项目模块
+### 1. 工具模块(util)
+#### 1.1 常用工具模块(util-common)
+项目中默认使用的密码加密操作是util-common模块中的KantbootPassword类
+>具体操作请查看<a href="/util/util-common/README.md">util-common模块的README.md</a>
+#### 1.2 核心工具模块(util-core)
+项目中使用@RequestParam注解之所以可以解析json参数，是因为util-core模块中的resolver包中的配置器的作用
+>具体操作请查看<a href="/util/util-core/README.md">util-core模块的README.md</a>
