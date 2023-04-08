@@ -47,3 +47,15 @@ Kantboot开发平台，可以应用在多种小程序、App项目的开发中,
 - SQLite
 - DB2
 - 达梦、人大金仓
+
+## 项目结构
+```
+util 工具模块
+├─util-common 通用工具模块
+├─util-core 核心工具模块
+```
+
+提示：
+>项目中默认使用的密码加密操作是util-common模块中的KantbootPassword类
+> 
+> 具体操作请查看<a href="/util/util-common/README.md">util-common模块的README.md</a>
