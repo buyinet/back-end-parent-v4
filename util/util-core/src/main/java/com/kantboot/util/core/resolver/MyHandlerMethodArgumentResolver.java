@@ -35,7 +35,7 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
     /**
      * 这个是处理@RequestParam注解的原本策略类
      */
-    private RequestParamMethodArgumentResolver requestParamMethodArgumentResolver;
+    private final RequestParamMethodArgumentResolver requestParamMethodArgumentResolver;
 
     /**
      * 全参构造
@@ -46,9 +46,8 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
 
     /**
      * 流转字符串
-     *
-     * @param bf
-     * @return
+     * @param bf 流
+     * @return 字符串
      */
     private static String getRead(BufferedReader bf) {
         StringBuilder sb = new StringBuilder();
@@ -112,14 +111,14 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
             Object arg = null;
             //如果已经获取到了值的话那么再做类型转换
             if (o1 != null) {
+                assert parameterName != null;
                 WebDataBinder binder = webDataBinderFactory.createBinder(nativeWebRequest, null, parameterName);
                 arg = binder.convertIfNecessary(o1, parameterType, methodParameter);
             }
             return arg;
         }
         //否则跑原本的策略类.
-        Object o = requestParamMethodArgumentResolver.resolveArgument(methodParameter,
+        return requestParamMethodArgumentResolver.resolveArgument(methodParameter,
                 modelAndViewContainer, nativeWebRequest, webDataBinderFactory);
-        return o;
     }
 }
