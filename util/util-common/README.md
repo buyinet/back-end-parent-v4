@@ -58,6 +58,7 @@ FileUtil.getMD5("D:\\test","baidu.png");
 ## 2. (KantbootPassword)密码操作
 ### 2.1 加密
 ```
+// 在SpringBoot环境下，可以直接注入使用
 KantbootPassword kantbootPassword = new KantbootPassword();
 
 // 每次加密的结果都不一样
@@ -67,6 +68,7 @@ System.out.println("kantbootPassword.encode = " + kantbootPassword.encode("12345
 
 ### 2.2 比较密码是否正确
 ```
+// 在SpringBoot环境下，可以直接注入使用
 KantbootPassword kantbootPassword = new KantbootPassword();
 
 // 比较成功，返回结果：密码比较 = true
