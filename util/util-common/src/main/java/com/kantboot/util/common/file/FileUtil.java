@@ -9,6 +9,8 @@ import org.springframework.util.DigestUtils;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 /**
@@ -117,7 +119,7 @@ public class FileUtil {
         try {
             fos = new java.io.FileOutputStream(file);
         } catch (IOException e) {
-
+            log.error("创建文件失败", e);
         }finally {
             if (fos != null) {
                 fos.close();
@@ -139,19 +141,30 @@ public class FileUtil {
     }
 
     /**
-     * 获取文件的字节流
-     * @param filePath 文件地址
+     * 获取文件的字节数组
+     * @param filePath 文件路径
      * @param fileName 文件名
-     * @return 字节流
+     * @return 文件的字节数组
      */
-    public static byte[] getByte(String filePath, String fileName){
-        String fieldName = "file";
+    public static byte[] getBytes(String filePath, String fileName) {
+        String fileFieldName = "file";
         FileItemFactory factory = new DiskFileItemFactory(16, null);
-        FileItem item = factory.createItem(fieldName, "text/plain", false,fileName);
-        File newfile = new File(filePath+"/"+fileName);
+        FileItem item = factory.createItem(fileFieldName, "text/plain", false, fileName);
+        Path path = Paths.get(filePath);
+        File newFile = path.resolve(fileName).toFile();
+        writeBytesToItem(newFile, item);
+        return item.get();
+    }
+
+    /**
+     * 将文件的字节流写入到FileItem中
+     * @param file 文件对象
+     * @param item FileItem对象
+     */
+    private static void writeBytesToItem(File file, FileItem item) {
         int bytesRead;
         byte[] buffer = new byte[8192];
-        try (FileInputStream fis = new FileInputStream(newfile);
+        try (FileInputStream fis = new FileInputStream(file);
              OutputStream os = item.getOutputStream()) {
             int len = 8192;
             while ((bytesRead = fis.read(buffer, 0, len))!= -1)
@@ -159,10 +172,10 @@ public class FileUtil {
                 os.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
-            log.error("获取文件字节流失败", e);
+            log.error("获取文件字节数组失败", e);
         }
-        return item.get();
     }
+
 
     /**
      * 获取文件的MD5值
@@ -174,7 +187,7 @@ public class FileUtil {
      * @return MD5值
      */
     public static String getMd5(String filePath, String fileName){
-        return DigestUtils.md5DigestAsHex(getByte(filePath, fileName));
+        return DigestUtils.md5DigestAsHex(getBytes(filePath, fileName));
     }
 
 }
