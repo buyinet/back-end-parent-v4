@@ -3,7 +3,7 @@
 
 ## 1. 文件操作
 ### 1.1 获取文件的后缀名
-```
+```java
 String suffix = FileUtil.getSuffix("/file/test.txt");
 // 返回结果：/file/test.txt = txt
 System.out.println("/file/test.txt = " + suffix);
@@ -18,7 +18,7 @@ System.out.println("test.png = " + suffix);
 ```
 
 ### 1.2 获取文件的ContentType
-```
+```java
 String contentType = FileUtil.getContentType("/file/test.txt");
 
 // 返回结果：/file/test.txt = text/plain
@@ -36,7 +36,7 @@ System.out.println("test.png = " + contentType);
 ```
 
 1.3 从网络Url中下载文件
-```
+```java
 String url = "https://www.baidu.com/img/bdlogo.gif";
 
 // 下载到D盘的test目录下，文件名为baidu.png，重复下载会覆盖
@@ -44,20 +44,20 @@ FileUtil.downloadFromUrl(url,"D:\\test","baidu.png");
 ```
 
 1.4 获取文件的字节流
-```
+```java
 // 获取D盘的test目录下的baidu.png文件的字节流
 FileUtil.getByte("D:\\test","baidu.png");
 ```
 
 1.5 获取文件的MD5值
-```
+```java
 // 获取D盘的test目录下的baidu.png文件的MD5值
 FileUtil.getMD5("D:\\test","baidu.png");
 ```
 
 ## 2. (KantbootPassword)密码操作
 ### 2.1 加密
-```
+```java
 // 在SpringBoot环境下，可以直接注入使用
 KantbootPassword kantbootPassword = new KantbootPassword();
 
@@ -67,7 +67,7 @@ System.out.println("kantbootPassword.encode = " + kantbootPassword.encode("12345
 ```
 
 ### 2.2 比较密码是否正确
-```
+```java
 // 在SpringBoot环境下，可以直接注入使用
 KantbootPassword kantbootPassword = new KantbootPassword();
 
