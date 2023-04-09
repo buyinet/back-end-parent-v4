@@ -5,10 +5,9 @@ import org.apache.tomcat.util.http.fileupload.FileItemFactory;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.springframework.util.DigestUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -17,56 +16,52 @@ import java.util.HashMap;
  */
 
 public class FileUtil {
-    /**
-     * SIZE
-     */
-    private final int size = 1024;
 
 
-    public static final HashMap<String,String> contentTypeMapBySuffix = new HashMap<>();
+    public static final HashMap<String,String> CONTENT_TYPE_MAP_BY_SUFFIX = new HashMap<>();
 
     static{
-        contentTypeMapBySuffix.put("jpg","image/jpeg");
-        contentTypeMapBySuffix.put("jpeg","image/jpeg");
-        contentTypeMapBySuffix.put("png","image/png");
-        contentTypeMapBySuffix.put("gif","image/gif");
-        contentTypeMapBySuffix.put("bmp","image/bmp");
-        contentTypeMapBySuffix.put("ico","image/x-icon");
-        contentTypeMapBySuffix.put("svg","image/svg+xml");
-        contentTypeMapBySuffix.put("webp","image/webp");
-        contentTypeMapBySuffix.put("tiff","image/tiff");
-        contentTypeMapBySuffix.put("psd","image/vnd.adobe.photoshop");
-        contentTypeMapBySuffix.put("mp4","video/mp4");
-        contentTypeMapBySuffix.put("avi","video/x-msvideo");
-        contentTypeMapBySuffix.put("wmv","video/x-ms-wmv");
-        contentTypeMapBySuffix.put("flv","video/x-flv");
-        contentTypeMapBySuffix.put("mkv","video/x-matroska");
-        contentTypeMapBySuffix.put("mp3","audio/mpeg");
-        contentTypeMapBySuffix.put("wav","audio/x-wav");
-        contentTypeMapBySuffix.put("ogg","audio/ogg");
-        contentTypeMapBySuffix.put("wma","audio/x-ms-wma");
-        contentTypeMapBySuffix.put("flac","audio/flac");
-        contentTypeMapBySuffix.put("aac","audio/aac");
-        contentTypeMapBySuffix.put("pdf","application/pdf");
-        contentTypeMapBySuffix.put("doc","application/msword");
-        contentTypeMapBySuffix.put("docx","application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        contentTypeMapBySuffix.put("xls","application/vnd.ms-excel");
-        contentTypeMapBySuffix.put("xlsx","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        contentTypeMapBySuffix.put("ppt","application/vnd.ms-powerpoint");
-        contentTypeMapBySuffix.put("pptx","application/vnd.openxmlformats-officedocument.presentationml.presentation");
-        contentTypeMapBySuffix.put("zip","application/zip");
-        contentTypeMapBySuffix.put("rar","application/x-rar-compressed");
-        contentTypeMapBySuffix.put("7z","application/x-7z-compressed");
-        contentTypeMapBySuffix.put("gz","application/x-gzip");
-        contentTypeMapBySuffix.put("bz2","application/x-bzip2");
-        contentTypeMapBySuffix.put("tar","application/x-tar");
-        contentTypeMapBySuffix.put("jar","application/java-archive");
-        contentTypeMapBySuffix.put("txt","text/plain");
-        contentTypeMapBySuffix.put("html","text/html");
-        contentTypeMapBySuffix.put("xml","text/xml");
-        contentTypeMapBySuffix.put("js","application/javascript");
-        contentTypeMapBySuffix.put("css","text/css");
-        contentTypeMapBySuffix.put("json","application/json");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("jpg","image/jpeg");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("jpeg","image/jpeg");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("png","image/png");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("gif","image/gif");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("bmp","image/bmp");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("ico","image/x-icon");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("svg","image/svg+xml");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("webp","image/webp");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("tiff","image/tiff");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("psd","image/vnd.adobe.photoshop");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("mp4","video/mp4");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("avi","video/x-msvideo");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("wmv","video/x-ms-wmv");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("flv","video/x-flv");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("mkv","video/x-matroska");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("mp3","audio/mpeg");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("wav","audio/x-wav");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("ogg","audio/ogg");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("wma","audio/x-ms-wma");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("flac","audio/flac");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("aac","audio/aac");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("pdf","application/pdf");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("doc","application/msword");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("docx","application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("xls","application/vnd.ms-excel");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("xlsx","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("ppt","application/vnd.ms-powerpoint");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("pptx","application/vnd.openxmlformats-officedocument.presentationml.presentation");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("zip","application/zip");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("rar","application/x-rar-compressed");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("7z","application/x-7z-compressed");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("gz","application/x-gzip");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("bz2","application/x-bzip2");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("tar","application/x-tar");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("jar","application/java-archive");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("txt","text/plain");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("html","text/html");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("xml","text/xml");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("js","application/javascript");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("css","text/css");
+        CONTENT_TYPE_MAP_BY_SUFFIX.put("json","application/json");
     }
 
     /**
@@ -78,7 +73,11 @@ public class FileUtil {
         if (fileName == null) {
             return null;
         }
-        int index = fileName.lastIndexOf(".");
+
+        // 进行了修复，原先的代码使用了lastIndexOf(".")，
+        // 现在使用了更快的lastIndexOf('.')
+        // 获取最后一个.的位置
+        int index = fileName.lastIndexOf('.');
         if (index == -1) {
             return null;
         }
@@ -94,33 +93,46 @@ public class FileUtil {
      */
     public static String getContentType(String fileName) {
         String suffix = getSuffix(fileName);
-        return contentTypeMapBySuffix.get(suffix);
+        return CONTENT_TYPE_MAP_BY_SUFFIX.get(suffix);
     }
 
     /**
      * 从网络Url中下载文件
      */
     public static void downloadFromUrl(String urlStr,String savePath, String fileName) throws Exception {
-        java.io.BufferedInputStream bis = null;
-        java.io.FileOutputStream fos = null;
-        java.net.HttpURLConnection httpUrl = null;
-        java.net.URL url = new java.net.URL(urlStr);
-        httpUrl = (java.net.HttpURLConnection) url.openConnection();
+        FileOutputStream fos = null;
+        URL url = new java.net.URL(urlStr);
+        HttpURLConnection httpUrl = (java.net.HttpURLConnection) url.openConnection();
         httpUrl.connect();
-        bis = new java.io.BufferedInputStream(httpUrl.getInputStream());
-        java.io.File saveDir = new java.io.File(savePath);
+        BufferedInputStream bis = new BufferedInputStream(httpUrl.getInputStream());
+        File saveDir = new File(savePath);
         if (!saveDir.exists()) {
-            saveDir.mkdirs();
+            boolean mkdirs = saveDir.mkdirs();
+            if (!mkdirs) {
+                throw new Exception("创建文件夹失败");
+            }
         }
-        java.io.File file = new java.io.File(saveDir + java.io.File.separator + fileName);
-        fos = new java.io.FileOutputStream(file);
+        File file = new java.io.File(saveDir + java.io.File.separator + fileName);
+        try {
+            fos = new java.io.FileOutputStream(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fos != null) {
+                fos.close();
+            }
+        }
         int size = 1024;
         byte[] buf = new byte[size];
         int len;
         while ((len = bis.read(buf, 0, size)) != -1) {
-            fos.write(buf, 0, len);
+            if (fos != null) {
+                fos.write(buf, 0, len);
+            }
         }
-        fos.close();
+        if (fos != null) {
+            fos.close();
+        }
         bis.close();
         httpUrl.disconnect();
     }
@@ -140,7 +152,8 @@ public class FileUtil {
         byte[] buffer = new byte[8192];
         try (FileInputStream fis = new FileInputStream(newfile);
              OutputStream os = item.getOutputStream()) {
-            while ((bytesRead = fis.read(buffer, 0, 8192))!= -1)
+            int len = 8192;
+            while ((bytesRead = fis.read(buffer, 0, len))!= -1)
             {
                 os.write(buffer, 0, bytesRead);
             }
