@@ -16,10 +16,10 @@ import java.nio.charset.StandardCharsets;
  * <p>
  * @author 方某方
  */
-public class MyHttpServletRequestWrapper extends HttpServletRequestWrapper {
+public class KantbootHttpServletRequestWrapper extends HttpServletRequestWrapper {
     private final byte[] body;
 
-    public MyHttpServletRequestWrapper(HttpServletRequest request) {
+    public KantbootHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
         request.getParameterMap();
         body = readAsChars(request).getBytes(StandardCharsets.UTF_8);

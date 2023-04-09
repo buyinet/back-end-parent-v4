@@ -4,6 +4,8 @@ package com.kantboot.util.core.resolver;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +31,8 @@ import java.util.Map;
  * </p>
  * @author 方某方
  */
-public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
+@Log4j2
+public class KantbootHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
 
     /**
@@ -40,7 +43,7 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
     /**
      * 全参构造
      */
-    public MyHandlerMethodArgumentResolver(RequestParamMethodArgumentResolver requestParamMethodArgumentResolver) {
+    public KantbootHandlerMethodArgumentResolver(RequestParamMethodArgumentResolver requestParamMethodArgumentResolver) {
         this.requestParamMethodArgumentResolver = requestParamMethodArgumentResolver;
     }
 
@@ -59,6 +62,7 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
             }
         } catch (IOException e) {
             e.printStackTrace();
+            log.error("流转字符串失败", e);
         }
         return sb.toString();
     }
@@ -78,8 +82,8 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
      * 解析参数
      */
     @Override
-    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
-                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory)
+    public Object resolveArgument(@NonNull MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
+            NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory)
             throws Exception {
         final String applicationJson = "application/json";
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);

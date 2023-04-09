@@ -17,7 +17,7 @@ public class HttpServletRequestReplacedFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         ServletRequest requestWrapper = null;
         if (request instanceof HttpServletRequest) {
-            requestWrapper = new MyHttpServletRequestWrapper((HttpServletRequest) request);
+            requestWrapper = new KantbootHttpServletRequestWrapper((HttpServletRequest) request);
         }
         if (null == requestWrapper) {
             chain.doFilter(request, response);

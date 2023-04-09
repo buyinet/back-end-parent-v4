@@ -29,7 +29,7 @@ public class ConfigArgumentResolvers {
         // 获取到框架定义好的参数解析集合
         List<HandlerMethodArgumentResolver> argumentResolvers =
                 requestMappingHandlerAdapter.getArgumentResolvers();
-        MyHandlerMethodArgumentResolver myHandlerMethodArgumentResolver = getMyHandlerMethodArgumentResolver(argumentResolvers);
+        KantbootHandlerMethodArgumentResolver myHandlerMethodArgumentResolver = getMyHandlerMethodArgumentResolver(argumentResolvers);
         // ha.getArgumentResolvers()获取到的是不可变的集合,所以我们需要新建一个集合来放置参数解析器
         List<HandlerMethodArgumentResolver> myArgumentResolvers =
                 new ArrayList<>(argumentResolvers.size() + 1);
@@ -46,7 +46,7 @@ public class ConfigArgumentResolvers {
     /**
      * 获取MyHandlerMethodArgumentResolver实例
      */
-    private MyHandlerMethodArgumentResolver getMyHandlerMethodArgumentResolver(
+    private KantbootHandlerMethodArgumentResolver getMyHandlerMethodArgumentResolver(
             List<HandlerMethodArgumentResolver> argumentResolversList) {
         // 原本处理RequestParam的类
         RequestParamMethodArgumentResolver requestParamMethodArgumentResolver = null;
@@ -67,6 +67,6 @@ public class ConfigArgumentResolvers {
             throw new RuntimeException("RequestParamMethodArgumentResolver not be null!");
         }
         //实例化自定义参数解析器
-        return new MyHandlerMethodArgumentResolver(requestParamMethodArgumentResolver);
+        return new KantbootHandlerMethodArgumentResolver(requestParamMethodArgumentResolver);
     }
 }
