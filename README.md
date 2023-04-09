@@ -69,5 +69,3 @@ Kantboot开发架构，是一个便捷开发、便捷多语言的开发架构，
 其中
 <a href="/system/system-service/src/main/java/com/kantboot/system/service/ISysDictI18nService.java">ISysDictI18nService</a>
 接口是系统中的国际化服务类，便于系统中的国际化功能
->具体操作请查看<a href="/system/system-service/README.md">system-service模块的README.md</a>
-
