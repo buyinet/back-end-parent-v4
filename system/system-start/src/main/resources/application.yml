@@ -1,0 +1,79 @@
+server:
+  port: 8889
+
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: woshifangziyuan1
+      timeout: 30s
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms
+  main:
+    allow-circular-references: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: kantboot1
+    password: woshifangziyuan1
+    url: jdbc:mysql://127.0.0.1:3306/kantboot1?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+  jpa:
+    open-in-view: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibenate:
+        format_sql: false
+        enable_lazy_load_no_trans: true
+    show-sql: false
+    jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+
+
+ribbon:
+  restclient:
+    enabled: true
+#
+#spring:
+#  jpa:
+#    generate-ddl: true
+#    hibernate:
+#      ddl-auto: update
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#  props:
+#    show-sql: true
+#  shardingsphere:
+#    datasource:
+#      names: ds1
+#      ds1:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/test_2?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#        username: test_2
+#        password: woshifangziyuan1
+#    rules:
+#      sharding:
+#        tables:
+#          sys_user:
+#            actual-data-nodes: ds1.sys_user
+#    mode:
+#      type: Standalone
+#      overwrite: true
+#  data:
+#    redis:
+#      host: 127.0.0.1

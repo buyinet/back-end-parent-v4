@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.Method;
 
+/**
+ * redis配置类
+ * @author 方某方
+ */
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {

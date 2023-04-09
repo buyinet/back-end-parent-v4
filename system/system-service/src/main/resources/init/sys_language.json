@@ -1,0 +1,1522 @@
+[
+  {
+    "id": "1",
+    "baiduTranslateCode": "afr",
+    "code": "af-ZA",
+    "description": "南非语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:38.311",
+    "name": "Afrikaanse",
+    "support": "0"
+  },
+  {
+    "id": "2",
+    "baiduTranslateCode": "ara",
+    "code": "ar-AE",
+    "description": "阿拉伯语 (阿联酋)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:41.867",
+    "name": "العربية (الإمارات العربية المتحدة)",
+    "support": "1"
+  },
+  {
+    "id": "3",
+    "baiduTranslateCode": "ara",
+    "code": "ar-BH",
+    "description": "阿拉伯语 (巴林)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:42.357",
+    "name": "العربية (البحرين)",
+    "support": "1"
+  },
+  {
+    "id": "4",
+    "baiduTranslateCode": "arq",
+    "code": "ar-DZ",
+    "description": "阿拉伯语 (阿尔及利亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:42.648",
+    "name": "العربية (الجزائر)",
+    "support": "0"
+  },
+  {
+    "id": "5",
+    "baiduTranslateCode": "ara",
+    "code": "ar-EG",
+    "description": "阿拉伯语 (埃及)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:43.124",
+    "name": "العربية (مصر)",
+    "support": "1"
+  },
+  {
+    "id": "6",
+    "baiduTranslateCode": "ara",
+    "code": "ar-IQ",
+    "description": "阿拉伯语 (伊拉克)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:43.6",
+    "name": "العربية (العراق)",
+    "support": "1"
+  },
+  {
+    "id": "7",
+    "baiduTranslateCode": "ara",
+    "code": "ar-JO",
+    "description": "阿拉伯语 (约旦)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:30:47.293",
+    "name": "العربية (الأردن)",
+    "support": "1"
+  },
+  {
+    "id": "8",
+    "baiduTranslateCode": "ara",
+    "code": "ar-KW",
+    "description": "阿拉伯语 (科威特)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:56.284",
+    "name": "العربية (الكويت)",
+    "support": "1"
+  },
+  {
+    "id": "9",
+    "baiduTranslateCode": "ara",
+    "code": "ar-LB",
+    "description": "阿拉伯语 (黎巴嫩)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:56.81",
+    "name": "العربية (لبنان)",
+    "support": "1"
+  },
+  {
+    "id": "10",
+    "baiduTranslateCode": "ara",
+    "code": "ar-LY",
+    "description": "阿拉伯语 (利比亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:57.275",
+    "name": "العربية (ليبيا)",
+    "support": "1"
+  },
+  {
+    "id": "11",
+    "baiduTranslateCode": "ara",
+    "code": "ar-MA",
+    "description": "阿拉伯语 (摩洛哥)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:57.756",
+    "name": "العربية (المغرب)",
+    "support": "1"
+  },
+  {
+    "id": "12",
+    "baiduTranslateCode": "ara",
+    "code": "ar-OM",
+    "description": "阿拉伯语 (阿曼)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:58.256",
+    "name": "العربية (عمان)",
+    "support": "1"
+  },
+  {
+    "id": "13",
+    "baiduTranslateCode": "ara",
+    "code": "ar-QA",
+    "description": "阿拉伯语 (卡塔尔)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:58.743",
+    "name": "العربية (قطر)",
+    "support": "1"
+  },
+  {
+    "id": "14",
+    "baiduTranslateCode": "ara",
+    "code": "ar-SA",
+    "description": "阿拉伯语 (沙特阿拉伯)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:59.245",
+    "name": "العربية (المملكة العربية السعودية)",
+    "support": "1"
+  },
+  {
+    "id": "15",
+    "baiduTranslateCode": "ara",
+    "code": "ar-SY",
+    "description": "阿拉伯语 (叙利亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:35:59.732",
+    "name": "العربية (سوريا)",
+    "support": "1"
+  },
+  {
+    "id": "16",
+    "baiduTranslateCode": "ara",
+    "code": "ar-TN",
+    "description": "阿拉伯语 (突尼斯)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:00.257",
+    "name": "العربية (تونس)",
+    "support": "1"
+  },
+  {
+    "id": "17",
+    "baiduTranslateCode": "ara",
+    "code": "ar-YE",
+    "description": "阿拉伯语 (也门)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:04.07",
+    "name": "العربية (اليمن)",
+    "support": "1"
+  },
+  {
+    "id": "18",
+    "baiduTranslateCode": "aze",
+    "code": "az-AZ",
+    "description": "阿塞拜疆语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:04.368",
+    "name": "azərbaycan dili",
+    "support": "0"
+  },
+  {
+    "id": "19",
+    "baiduTranslateCode": "bel",
+    "code": "be-BY",
+    "description": "白俄罗斯语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:04.648",
+    "name": "беларуская",
+    "support": "0"
+  },
+  {
+    "id": "20",
+    "baiduTranslateCode": "bul",
+    "code": "bg-BG",
+    "description": "保加利亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:05.06",
+    "name": "български",
+    "support": "1"
+  },
+  {
+    "id": "21",
+    "baiduTranslateCode": "bos",
+    "code": "bs-BA",
+    "description": "波斯尼亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:05.342",
+    "name": "bosanski",
+    "support": "0"
+  },
+  {
+    "id": "22",
+    "baiduTranslateCode": "cat",
+    "code": "ca-ES",
+    "description": "加泰罗尼亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:05.631",
+    "name": "català",
+    "support": "0"
+  },
+  {
+    "id": "23",
+    "baiduTranslateCode": "cs",
+    "code": "cs-CZ",
+    "description": "捷克语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:06.228",
+    "name": "čeština",
+    "support": "1"
+  },
+  {
+    "id": "24",
+    "baiduTranslateCode": "wel",
+    "code": "cy-GB",
+    "description": "威尔士语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:06.553",
+    "name": "Cymraeg",
+    "support": "0"
+  },
+  {
+    "id": "25",
+    "baiduTranslateCode": "dan",
+    "code": "da-DK",
+    "description": "丹麦语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:06.939",
+    "name": "dansk",
+    "support": "1"
+  },
+  {
+    "id": "26",
+    "baiduTranslateCode": "de",
+    "code": "de-AT",
+    "description": "德语 (奥地利)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:07.565",
+    "name": "Deutsch (Österreich)",
+    "support": "1"
+  },
+  {
+    "id": "27",
+    "baiduTranslateCode": "de",
+    "code": "de-CH",
+    "description": "德语 (瑞士)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:08.088",
+    "name": "Deutsch (Schweiz)",
+    "support": "1"
+  },
+  {
+    "id": "28",
+    "baiduTranslateCode": "de",
+    "code": "de-DE",
+    "description": "德语 (德国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:08.457",
+    "name": "Deutsch (Deutschland)",
+    "support": "1"
+  },
+  {
+    "id": "29",
+    "baiduTranslateCode": "de",
+    "code": "de-LI",
+    "description": "德语 (列支敦士登)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:08.931",
+    "name": "Deutsch (Liechtenstein)",
+    "support": "1"
+  },
+  {
+    "id": "30",
+    "baiduTranslateCode": "de",
+    "code": "de-LU",
+    "description": "德语 (卢森堡)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:09.438",
+    "name": "Deutsch (Luxemburg)",
+    "support": "1"
+  },
+  {
+    "id": "31",
+    "baiduTranslateCode": "de",
+    "code": "de-MC",
+    "description": "德语 (摩纳哥)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:09.827",
+    "name": "Deutsch (Monaco)",
+    "support": "1"
+  },
+  {
+    "id": "32",
+    "baiduTranslateCode": "div",
+    "code": "dv-MV",
+    "description": "迪维希语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:10.105",
+    "name": "ދިވެހިބަސް",
+    "support": "0"
+  },
+  {
+    "id": "33",
+    "baiduTranslateCode": "el",
+    "code": "el-GR",
+    "description": "希腊语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:10.7",
+    "name": "Ελληνικά",
+    "support": "1"
+  },
+  {
+    "id": "34",
+    "baiduTranslateCode": "en",
+    "code": "en-AU",
+    "description": "英语 (澳大利亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:11.202",
+    "name": "English (Australia)",
+    "support": "1"
+  },
+  {
+    "id": "35",
+    "baiduTranslateCode": "en",
+    "code": "en-BZ",
+    "description": "英语 (伯利兹)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:11.597",
+    "name": "English (Belize)",
+    "support": "1"
+  },
+  {
+    "id": "36",
+    "baiduTranslateCode": "en",
+    "code": "en-CA",
+    "description": "英语 (加拿大)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:12.05",
+    "name": "English (Canada)",
+    "support": "1"
+  },
+  {
+    "id": "37",
+    "baiduTranslateCode": "en",
+    "code": "en-CB",
+    "description": "英语 (加勒比地区)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:12.523",
+    "name": "English (Caribbean)",
+    "support": "1"
+  },
+  {
+    "id": "38",
+    "baiduTranslateCode": "en",
+    "code": "en-GB",
+    "description": "英语 (英国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:12.87",
+    "name": "English (United Kingdom)",
+    "support": "1"
+  },
+  {
+    "id": "39",
+    "baiduTranslateCode": "en",
+    "code": "en-IE",
+    "description": "英语 (爱尔兰)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:13.306",
+    "name": "English (Ireland)",
+    "support": "1"
+  },
+  {
+    "id": "40",
+    "baiduTranslateCode": "en",
+    "code": "en-JM",
+    "description": "英语 (牙买加)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:13.744",
+    "name": "English (Jamaica)",
+    "support": "1"
+  },
+  {
+    "id": "41",
+    "baiduTranslateCode": "en",
+    "code": "en-NZ",
+    "description": "英语 (新西兰)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:14.209",
+    "name": "English (New Zealand)",
+    "support": "1"
+  },
+  {
+    "id": "42",
+    "baiduTranslateCode": "en",
+    "code": "en-PH",
+    "description": "英语 (菲律宾共和国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:14.77",
+    "name": "English (Republic of the Philippines)",
+    "support": "1"
+  },
+  {
+    "id": "43",
+    "baiduTranslateCode": "en",
+    "code": "en-TT",
+    "description": "英语 (特立尼达和多巴哥)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:15.256",
+    "name": "English (Trinidad and Tobago)",
+    "support": "1"
+  },
+  {
+    "id": "44",
+    "baiduTranslateCode": "en",
+    "code": "en-US",
+    "description": "英语 (美国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:15.779",
+    "name": "English (United States)",
+    "support": "1"
+  },
+  {
+    "id": "45",
+    "baiduTranslateCode": "en",
+    "code": "en-ZA",
+    "description": "英语 (南非)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:16.241",
+    "name": "English (South Africa)",
+    "support": "1"
+  },
+  {
+    "id": "46",
+    "baiduTranslateCode": "en",
+    "code": "en-ZW",
+    "description": "英语 (津巴布韦)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:16.753",
+    "name": "English (Zimbabwe)",
+    "support": "1"
+  },
+  {
+    "id": "47",
+    "baiduTranslateCode": "est",
+    "code": "et-EE",
+    "description": "爱沙尼亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:17.279",
+    "name": "Eesti",
+    "support": "1"
+  },
+  {
+    "id": "48",
+    "baiduTranslateCode": "baq",
+    "code": "eu-ES",
+    "description": "巴斯克语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:17.552",
+    "name": "Euskara",
+    "support": "0"
+  },
+  {
+    "id": "49",
+    "baiduTranslateCode": "per",
+    "code": "fa-IR",
+    "description": "波斯语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:17.849",
+    "name": "فارسی",
+    "support": "0"
+  },
+  {
+    "id": "50",
+    "baiduTranslateCode": "fin",
+    "code": "fi-FI",
+    "description": "芬兰语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:18.339",
+    "name": "Suomi",
+    "support": "1"
+  },
+  {
+    "id": "51",
+    "baiduTranslateCode": "fao",
+    "code": "fo-FO",
+    "description": "法罗语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:18.65",
+    "name": "Føroyskt",
+    "support": "0"
+  },
+  {
+    "id": "52",
+    "baiduTranslateCode": "fra",
+    "code": "fr-BE",
+    "description": "法语 (比利时)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:19.136",
+    "name": "Français (Belgique)",
+    "support": "1"
+  },
+  {
+    "id": "53",
+    "baiduTranslateCode": "frn",
+    "code": "fr-CA",
+    "description": "法语 (加拿大)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:19.469",
+    "name": "Français (Canada)",
+    "support": "0"
+  },
+  {
+    "id": "54",
+    "baiduTranslateCode": "fra",
+    "code": "fr-CH",
+    "description": "法语 (瑞士)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:19.953",
+    "name": "Français (Suisse)",
+    "support": "1"
+  },
+  {
+    "id": "55",
+    "baiduTranslateCode": "fra",
+    "code": "fr-FR",
+    "description": "法语 (法国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:20.42",
+    "name": "Français (France)",
+    "support": "1"
+  },
+  {
+    "id": "56",
+    "baiduTranslateCode": "fra",
+    "code": "fr-LU",
+    "description": "法语 (卢森堡)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:21.554",
+    "name": "Français (Luxembourg)",
+    "support": "1"
+  },
+  {
+    "id": "57",
+    "baiduTranslateCode": "fra",
+    "code": "fr-MC",
+    "description": "法语 (摩纳哥)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:23.699",
+    "name": "Français (Principauté de Monaco)",
+    "support": "1"
+  },
+  {
+    "id": "58",
+    "baiduTranslateCode": "glg",
+    "code": "gl-ES",
+    "description": "加利西亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:24.015",
+    "name": "Galego",
+    "support": "0"
+  },
+  {
+    "id": "59",
+    "baiduTranslateCode": "guj",
+    "code": "gu-IN",
+    "description": "古吉拉特语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:24.264",
+    "name": "ગુજરાતી",
+    "support": "0"
+  },
+  {
+    "id": "60",
+    "baiduTranslateCode": "heb",
+    "code": "he-IL",
+    "description": "希伯来语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:24.564",
+    "name": "עברית",
+    "support": "0"
+  },
+  {
+    "id": "61",
+    "baiduTranslateCode": "hi",
+    "code": "hi-IN",
+    "description": "印地语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:24.881",
+    "name": "हिन्दी",
+    "support": "0"
+  },
+  {
+    "id": "62",
+    "baiduTranslateCode": "bos",
+    "code": "hr-BA",
+    "description": "波斯尼亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:25.191",
+    "name": "Bosanski",
+    "support": "0"
+  },
+  {
+    "id": "63",
+    "baiduTranslateCode": "hrv",
+    "code": "hr-HR",
+    "description": "克罗地亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:25.488",
+    "name": "Hrvatski",
+    "support": "0"
+  },
+  {
+    "id": "64",
+    "baiduTranslateCode": "hu",
+    "code": "hu-HU",
+    "description": "匈牙利语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:25.906",
+    "name": "Magyar",
+    "support": "1"
+  },
+  {
+    "id": "65",
+    "baiduTranslateCode": "arm",
+    "code": "hy-AM",
+    "description": "亚美尼亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:26.2",
+    "name": "Հայերեն",
+    "support": "0"
+  },
+  {
+    "id": "66",
+    "baiduTranslateCode": "",
+    "code": "id-ID",
+    "description": "印度尼西亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:26.47",
+    "name": "Bahasa Indonesia",
+    "support": "0"
+  },
+  {
+    "id": "67",
+    "baiduTranslateCode": "ice",
+    "code": "is-IS",
+    "description": "冰岛语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:26.824",
+    "name": "Íslenska",
+    "support": "0"
+  },
+  {
+    "id": "68",
+    "baiduTranslateCode": "it",
+    "code": "it-CH",
+    "description": "意大利语 (瑞士)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:27.212",
+    "name": "Italiano (Svizzera)",
+    "support": "1"
+  },
+  {
+    "id": "69",
+    "baiduTranslateCode": "it",
+    "code": "it-IT",
+    "description": "意大利语 (意大利)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:28.512",
+    "name": "Italiano (Italia)",
+    "support": "1"
+  },
+  {
+    "id": "70",
+    "baiduTranslateCode": "jp",
+    "code": "ja-JP",
+    "description": "日语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:28.956",
+    "name": "日本語",
+    "support": "1"
+  },
+  {
+    "id": "71",
+    "baiduTranslateCode": "geo",
+    "code": "ka-GE",
+    "description": "格鲁吉亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:29.272",
+    "name": "ქართული",
+    "support": "0"
+  },
+  {
+    "id": "72",
+    "baiduTranslateCode": "",
+    "code": "kk-KZ",
+    "description": "哈萨克语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:29.579",
+    "name": "Қазақша",
+    "support": "0"
+  },
+  {
+    "id": "73",
+    "baiduTranslateCode": "kan",
+    "code": "kn-IN",
+    "description": "卡纳达语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:29.904",
+    "name": "ಕನ್ನಡ",
+    "support": "0"
+  },
+  {
+    "id": "74",
+    "baiduTranslateCode": "kor",
+    "code": "ko-KR",
+    "description": "韩语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:30.479",
+    "name": "한국어",
+    "support": "1"
+  },
+  {
+    "id": "75",
+    "baiduTranslateCode": "kok",
+    "code": "kok-IN",
+    "description": "孔卡尼语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:30.797",
+    "name": "कोंकणी",
+    "support": "0"
+  },
+  {
+    "id": "76",
+    "baiduTranslateCode": "kir",
+    "code": "ky-KG",
+    "description": "吉尔吉斯语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:31.077",
+    "name": "Кыргызча",
+    "support": "0"
+  },
+  {
+    "id": "77",
+    "baiduTranslateCode": "lit",
+    "code": "lt-LT",
+    "description": "立陶宛语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:31.409",
+    "name": "Lietuvių",
+    "support": "0"
+  },
+  {
+    "id": "78",
+    "baiduTranslateCode": "lav",
+    "code": "lv-LV",
+    "description": "拉脱维亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:31.7",
+    "name": "Latviešu",
+    "support": "0"
+  },
+  {
+    "id": "79",
+    "baiduTranslateCode": "mao",
+    "code": "mi-NZ",
+    "description": "毛利语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:32.001",
+    "name": "Te Reo Māori",
+    "support": "0"
+  },
+  {
+    "id": "80",
+    "baiduTranslateCode": "mac",
+    "code": "mk-MK",
+    "description": "马其顿语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:32.32",
+    "name": "Македонски",
+    "support": "0"
+  },
+  {
+    "id": "81",
+    "baiduTranslateCode": "",
+    "code": "mn-MN",
+    "description": "蒙古语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:32.6",
+    "name": "Монгол хэл",
+    "support": "0"
+  },
+  {
+    "id": "82",
+    "baiduTranslateCode": "",
+    "code": "mr-IN",
+    "description": "马拉提语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:32.858",
+    "name": "मराठी",
+    "support": "0"
+  },
+  {
+    "id": "83",
+    "baiduTranslateCode": "may",
+    "code": "ms-BN",
+    "description": "马来语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:33.163",
+    "name": "Bahasa Melayu",
+    "support": "0"
+  },
+  {
+    "id": "84",
+    "baiduTranslateCode": "may",
+    "code": "ms-MY",
+    "description": "马来语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:33.45",
+    "name": "Bahasa Melayu",
+    "support": "0"
+  },
+  {
+    "id": "85",
+    "baiduTranslateCode": "mlt",
+    "code": "mt-MT",
+    "description": "马耳他语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:33.796",
+    "name": "Malti",
+    "support": "0"
+  },
+  {
+    "id": "86",
+    "baiduTranslateCode": "",
+    "code": "nb-NO",
+    "description": "挪威博克马尔语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:34.086",
+    "name": "Norsk bokmål",
+    "support": "0"
+  },
+  {
+    "id": "87",
+    "baiduTranslateCode": "",
+    "code": "nl-BE",
+    "description": "荷兰语 (比利时)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:34.354",
+    "name": "Nederlands",
+    "support": "0"
+  },
+  {
+    "id": "88",
+    "baiduTranslateCode": "nl",
+    "code": "nl-NL",
+    "description": "荷兰语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:34.918",
+    "name": "Nederlands",
+    "support": "1"
+  },
+  {
+    "id": "89",
+    "baiduTranslateCode": "",
+    "code": "nn-NO",
+    "description": "挪威尼诺斯克语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:35.221",
+    "name": "Norsk nynorsk",
+    "support": "0"
+  },
+  {
+    "id": "90",
+    "baiduTranslateCode": "sot",
+    "code": "ns-ZA",
+    "description": "南索托语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:35.488",
+    "name": "Sesotho",
+    "support": "0"
+  },
+  {
+    "id": "91",
+    "baiduTranslateCode": "pan",
+    "code": "pa-IN",
+    "description": "旁遮普语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:35.781",
+    "name": "ਪੰਜਾਬੀ",
+    "support": "0"
+  },
+  {
+    "id": "92",
+    "baiduTranslateCode": "pl",
+    "code": "pl-PL",
+    "description": "波兰语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:36.226",
+    "name": "Polski",
+    "support": "1"
+  },
+  {
+    "id": "93",
+    "baiduTranslateCode": "pot",
+    "code": "pt-BR",
+    "description": "葡萄牙语 (巴西)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:36.536",
+    "name": "Português (Brasil)",
+    "support": "0"
+  },
+  {
+    "id": "94",
+    "baiduTranslateCode": "pt",
+    "code": "pt-PT",
+    "description": "葡萄牙语 (葡萄牙)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:37.089",
+    "name": "Português (Portugal)",
+    "support": "1"
+  },
+  {
+    "id": "95",
+    "baiduTranslateCode": "que",
+    "code": "qu-BO",
+    "description": "克丘亚语 (玻利维亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:37.404",
+    "name": "Runasimi",
+    "support": "0"
+  },
+  {
+    "id": "96",
+    "baiduTranslateCode": "",
+    "code": "qu-EC",
+    "description": "基楚瓦语 (厄瓜多尔)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:37.675",
+    "name": "Kichwa",
+    "support": "0"
+  },
+  {
+    "id": "97",
+    "baiduTranslateCode": "que",
+    "code": "qu-PE",
+    "description": "克丘亚语 (秘鲁)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:38.009",
+    "name": "Runasimi",
+    "support": "0"
+  },
+  {
+    "id": "98",
+    "baiduTranslateCode": "rom",
+    "code": "ro-RO",
+    "description": "罗马尼亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:38.54",
+    "name": "Română",
+    "support": "1"
+  },
+  {
+    "id": "99",
+    "baiduTranslateCode": "ru",
+    "code": "ru-RU",
+    "description": "俄语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:39.067",
+    "name": "Русский",
+    "support": "1"
+  },
+  {
+    "id": "100",
+    "baiduTranslateCode": "san",
+    "code": "sa-IN",
+    "description": "梵语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:39.347",
+    "name": "संस्कृत",
+    "support": "0"
+  },
+  {
+    "id": "101",
+    "baiduTranslateCode": "sme",
+    "code": "se-FI",
+    "description": "北方萨米语 (芬兰)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:39.645",
+    "name": "pohjoissaame (Suomi)",
+    "support": "0"
+  },
+  {
+    "id": "102",
+    "baiduTranslateCode": "sme",
+    "code": "se-NO",
+    "description": "北萨米语 (挪威)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:39.944",
+    "name": "davvisámegiella (Norga)",
+    "support": "0"
+  },
+  {
+    "id": "103",
+    "baiduTranslateCode": "sme",
+    "code": "se-SE",
+    "description": "北萨米语 (瑞典)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:40.274",
+    "name": "davvisámegiella (Ruoŧŧa)",
+    "support": "0"
+  },
+  {
+    "id": "104",
+    "baiduTranslateCode": "sk",
+    "code": "sk-SK",
+    "description": "斯洛伐克语 (斯洛伐克)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:40.563",
+    "name": "slovenčina (Slovenská republika)",
+    "support": "0"
+  },
+  {
+    "id": "105",
+    "baiduTranslateCode": "slo",
+    "code": "sl-SI",
+    "description": "斯洛文尼亚语 (斯洛文尼亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:41.101",
+    "name": "slovenščina (Slovenija)",
+    "support": "1"
+  },
+  {
+    "id": "106",
+    "baiduTranslateCode": "ped",
+    "code": "st-ZA",
+    "description": "北索托语 (南非)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:41.367",
+    "name": "Sesotho sa Leboa (Afrika Borwa)",
+    "support": "0"
+  },
+  {
+    "id": "107",
+    "baiduTranslateCode": "spa",
+    "code": "es-AR",
+    "description": "西班牙语 (阿根廷)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:41.855",
+    "name": "español (Argentina)",
+    "support": "1"
+  },
+  {
+    "id": "108",
+    "baiduTranslateCode": "spa",
+    "code": "es-BO",
+    "description": "西班牙语 (玻利维亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:42.319",
+    "name": "español (Bolivia)",
+    "support": "1"
+  },
+  {
+    "id": "109",
+    "baiduTranslateCode": "spa",
+    "code": "es-CL",
+    "description": "西班牙语 (智利)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:42.767",
+    "name": "español (Chile)",
+    "support": "1"
+  },
+  {
+    "id": "110",
+    "baiduTranslateCode": "spa",
+    "code": "es-CO",
+    "description": "西班牙语 (哥伦比亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:43.296",
+    "name": "español (Colombia)",
+    "support": "1"
+  },
+  {
+    "id": "111",
+    "baiduTranslateCode": "spa",
+    "code": "es-CR",
+    "description": "西班牙语 (哥斯达黎加)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:43.786",
+    "name": "español (Costa Rica)",
+    "support": "1"
+  },
+  {
+    "id": "112",
+    "baiduTranslateCode": "spa",
+    "code": "es-DO",
+    "description": "西班牙语 (多米尼加共和国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:44.282",
+    "name": "español (República Dominicana)",
+    "support": "1"
+  },
+  {
+    "id": "113",
+    "baiduTranslateCode": "spa",
+    "code": "es-EC",
+    "description": "西班牙语 (厄瓜多尔)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:44.765",
+    "name": "español (Ecuador)",
+    "support": "1"
+  },
+  {
+    "id": "114",
+    "baiduTranslateCode": "spa",
+    "code": "es-ES",
+    "description": "西班牙语 (西班牙)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:45.251",
+    "name": "español (España)",
+    "support": "1"
+  },
+  {
+    "id": "115",
+    "baiduTranslateCode": "spa",
+    "code": "es-GT",
+    "description": "西班牙语 (危地马拉)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:45.605",
+    "name": "español (Guatemala)",
+    "support": "1"
+  },
+  {
+    "id": "116",
+    "baiduTranslateCode": "spa",
+    "code": "es-HN",
+    "description": "西班牙语 (洪都拉斯)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:46.086",
+    "name": "español (Honduras)",
+    "support": "1"
+  },
+  {
+    "id": "117",
+    "baiduTranslateCode": "spa",
+    "code": "es-MX",
+    "description": "西班牙语 (墨西哥)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:46.544",
+    "name": "español (México)",
+    "support": "1"
+  },
+  {
+    "id": "118",
+    "baiduTranslateCode": "spa",
+    "code": "es-NI",
+    "description": "西班牙语 (尼加拉瓜)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:47.006",
+    "name": "español (Nicaragua)",
+    "support": "1"
+  },
+  {
+    "id": "119",
+    "baiduTranslateCode": "spa",
+    "code": "es-PA",
+    "description": "西班牙语 (巴拿马)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:47.643",
+    "name": "español (Panamá)",
+    "support": "1"
+  },
+  {
+    "id": "120",
+    "baiduTranslateCode": "spa",
+    "code": "es-PE",
+    "description": "西班牙语 (秘鲁)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:48.166",
+    "name": "español (Perú)",
+    "support": "1"
+  },
+  {
+    "id": "121",
+    "baiduTranslateCode": "spa",
+    "code": "es-PR",
+    "description": "西班牙语 (波多黎各)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:48.546",
+    "name": "español (Puerto Rico)",
+    "support": "1"
+  },
+  {
+    "id": "122",
+    "baiduTranslateCode": "spa",
+    "code": "es-PY",
+    "description": "西班牙语 (巴拉圭)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:49.059",
+    "name": "español (Paraguay)",
+    "support": "1"
+  },
+  {
+    "id": "123",
+    "baiduTranslateCode": "spa",
+    "code": "es-SV",
+    "description": "西班牙语 (萨尔瓦多)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:49.525",
+    "name": "español (El Salvador)",
+    "support": "1"
+  },
+  {
+    "id": "124",
+    "baiduTranslateCode": "spa",
+    "code": "es-US",
+    "description": "西班牙语 (美国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:50.001",
+    "name": "español (Estados Unidos)",
+    "support": "1"
+  },
+  {
+    "id": "125",
+    "baiduTranslateCode": "spa",
+    "code": "es-UY",
+    "description": "西班牙语 (乌拉圭)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:50.461",
+    "name": "español (Uruguay)",
+    "support": "1"
+  },
+  {
+    "id": "126",
+    "baiduTranslateCode": "spa",
+    "code": "es-VE",
+    "description": "西班牙语 (委内瑞拉)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:50.95",
+    "name": "español (Venezuela)",
+    "support": "1"
+  },
+  {
+    "id": "127",
+    "baiduTranslateCode": "spa",
+    "code": "sw-KE",
+    "description": "斯瓦希里语 (肯尼亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:51.478",
+    "name": "Kiswahili (Kenya)",
+    "support": "1"
+  },
+  {
+    "id": "128",
+    "baiduTranslateCode": "syr",
+    "code": "syr-SY",
+    "description": "叙利亚语",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:51.771",
+    "name": "ܣܘܪܝܝܐ (سوريا)",
+    "support": "0"
+  },
+  {
+    "id": "129",
+    "baiduTranslateCode": "tam",
+    "code": "ta-IN",
+    "description": "泰米尔语 (印度)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:52.063",
+    "name": "தமிழ் (இந்தியா)",
+    "support": "0"
+  },
+  {
+    "id": "130",
+    "baiduTranslateCode": "tel",
+    "code": "te-IN",
+    "description": "泰卢固语 (印度)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:52.346",
+    "name": "తెలుగు (భారత దేశం)",
+    "support": "0"
+  },
+  {
+    "id": "131",
+    "baiduTranslateCode": "th",
+    "code": "th-TH",
+    "description": "泰语 (泰国)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:52.869",
+    "name": "ไทย (ไทย)",
+    "support": "1"
+  },
+  {
+    "id": "132",
+    "baiduTranslateCode": "",
+    "code": "tn-ZA",
+    "description": "茨瓦纳语 (南非)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:53.173",
+    "name": "Setswana (Aforika Borwa)",
+    "support": "0"
+  },
+  {
+    "id": "133",
+    "baiduTranslateCode": "tr",
+    "code": "tr-TR",
+    "description": "土耳其语 (土耳其)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:53.471",
+    "name": "Türkçe (Türkiye)",
+    "support": "0"
+  },
+  {
+    "id": "134",
+    "baiduTranslateCode": "tso",
+    "code": "ts-ZA",
+    "description": "聪加语 (南非)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:53.751",
+    "name": "Xitsonga (Afrika-Dzonga)",
+    "support": "0"
+  },
+  {
+    "id": "135",
+    "baiduTranslateCode": "tat",
+    "code": "tt-RU",
+    "description": "鞑靼语 (俄罗斯)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:54.054",
+    "name": "Татар (Россия)",
+    "support": "0"
+  },
+  {
+    "id": "136",
+    "baiduTranslateCode": "ukr",
+    "code": "uk-UA",
+    "description": "乌克兰语 (乌克兰)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:54.382",
+    "name": "українська (Україна)",
+    "support": "0"
+  },
+  {
+    "id": "137",
+    "baiduTranslateCode": "urd",
+    "code": "ur-PK",
+    "description": "乌尔都语 (巴基斯坦)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:54.653",
+    "name": "اردو (پاکستان)",
+    "support": "0"
+  },
+  {
+    "id": "138",
+    "baiduTranslateCode": "",
+    "code": "uz-UZ",
+    "description": "乌兹别克语 (乌兹别克斯坦)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:54.944",
+    "name": "o‘zbek (Uzbekiston)",
+    "support": "0"
+  },
+  {
+    "id": "139",
+    "baiduTranslateCode": "vie",
+    "code": "vi-VN",
+    "description": "越南语 (越南)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:55.551",
+    "name": "Tiếng Việt (Việt Nam)",
+    "support": "1"
+  },
+  {
+    "id": "140",
+    "baiduTranslateCode": "xho",
+    "code": "xh-ZA",
+    "description": "科萨语 (南非)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:55.831",
+    "name": "isiXhosa (uMzantsi Afrika)",
+    "support": "0"
+  },
+  {
+    "id": "141",
+    "baiduTranslateCode": "zh",
+    "code": "zh-CN",
+    "description": "中文(简体)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:56.216",
+    "name": "中文(简体)",
+    "support": "1"
+  },
+  {
+    "id": "142",
+    "baiduTranslateCode": "yue",
+    "code": "zh-HK",
+    "description": "中文(香港)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:56.664",
+    "name": "中文(香港特別行政區)",
+    "support": "1"
+  },
+  {
+    "id": "143",
+    "baiduTranslateCode": "cht",
+    "code": "zh-MO",
+    "description": "中文(澳门)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:57.383",
+    "name": "中文(澳門特別行政區)",
+    "support": "1"
+  },
+  {
+    "id": "144",
+    "baiduTranslateCode": "zh",
+    "code": "zh-SG",
+    "description": "中文(新加坡)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:57.773",
+    "name": "中文(新加坡)",
+    "support": "1"
+  },
+  {
+    "id": "145",
+    "baiduTranslateCode": "cht",
+    "code": "zh-TW",
+    "description": "中文(繁体)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:58.253",
+    "name": "中文(繁體)",
+    "support": "1"
+  },
+  {
+    "id": "146",
+    "baiduTranslateCode": "alb",
+    "code": "sq-AL",
+    "description": "阿尔巴尼亚语 (阿尔巴尼亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:58.532",
+    "name": "Shqip (Shqipëria)",
+    "support": "0"
+  },
+  {
+    "id": "147",
+    "baiduTranslateCode": "srp",
+    "code": "sr-BA",
+    "description": "塞尔维亚语 (波斯尼亚和黑塞哥维那)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:58.799",
+    "name": "srpski (Bosna i Hercegovina)",
+    "support": "0"
+  },
+  {
+    "id": "148",
+    "baiduTranslateCode": "src",
+    "code": "sr-SP",
+    "description": "塞尔维亚语 (塞尔维亚)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:59.098",
+    "name": "српски (Србија)",
+    "support": "0"
+  },
+  {
+    "id": "149",
+    "baiduTranslateCode": "swe",
+    "code": "sv-FI",
+    "description": "瑞典语 (芬兰)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:36:59.649",
+    "name": "svenska (Finland)",
+    "support": "1"
+  },
+  {
+    "id": "150",
+    "baiduTranslateCode": "swe",
+    "code": "sv-SE",
+    "description": "瑞典语 (瑞典)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:37:03.409",
+    "name": "svenska (Sverige)",
+    "support": "1"
+  },
+  {
+    "id": "151",
+    "baiduTranslateCode": "fil",
+    "code": "tl-PH",
+    "description": "塔加路语 (菲律宾)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:37:03.682",
+    "name": "Wikang Tagalog (Pilipinas)",
+    "support": "0"
+  },
+  {
+    "id": "152",
+    "baiduTranslateCode": "zul",
+    "code": "zu-ZA",
+    "description": "祖鲁语 (南非)",
+    "gmt_create": "0/1/2000 00:00:00",
+    "gmt_modified": "13/3/2023 09:37:03.953",
+    "name": "isiZulu (iNingizimu Afrika)",
+    "support": "0"
+  }
+]

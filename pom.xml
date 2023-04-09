@@ -10,6 +10,9 @@
     </parent>
     <modules>
         <module>util</module>
+        <module>system</module>
+        <module>start-all</module>
+        <module>api</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -25,6 +28,7 @@
         <spring-boot.version>3.0.3</spring-boot.version>
         <hutool.version>5.8.12</hutool.version>
         <lombok.version>1.18.20</lombok.version>
+        <guava.version>31.1-jre</guava.version>
     </properties>
 
 
@@ -36,7 +40,29 @@
                 <artifactId>util-common</artifactId>
                 <version>${kantboot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kantboot</groupId>
+                <artifactId>util-core</artifactId>
+                <version>${kantboot.version}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>com.kantboot</groupId>
+                <artifactId>system-service</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kantboot</groupId>
+                <artifactId>api-util</artifactId>
+                <version>${kantboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kantboot</groupId>
+                <artifactId>api-service</artifactId>
+                <version>1.0.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -77,6 +103,14 @@
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2-extension</artifactId>
                 <version>2.0.9.graal</version>
+            </dependency>
+
+
+            <!-- guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
 

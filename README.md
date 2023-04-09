@@ -1,4 +1,4 @@
-# Kantboot开发平台
+# Kantboot开发架构
 
 ## 适用项目
 Kantboot开发平台，可以应用在多种小程序、App项目的开发中, 
@@ -55,4 +55,6 @@ Kantboot开发平台，可以应用在多种小程序、App项目的开发中,
 >具体操作请查看<a href="/util/util-common/README.md">util-common模块的README.md</a>
 #### 1.2 核心工具模块(util-core)
 项目中使用@RequestParam注解之所以可以解析json参数，是因为util-core模块中的resolver包中的配置器的作用
+该模块有一定的入侵性，但是可以大大提高开发效率，如果是在非Kantboot开发架构中使用，可以不使用该模块
+
 >具体操作请查看<a href="/util/util-core/README.md">util-core模块的README.md</a>
