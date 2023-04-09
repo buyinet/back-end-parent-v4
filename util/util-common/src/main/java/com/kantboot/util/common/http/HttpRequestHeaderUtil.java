@@ -112,27 +112,27 @@ public class HttpRequestHeaderUtil {
      * 原理：从请求头中获取ua，如果没有ua则返回null，如果有ua则返回设备
      * @return 设备
      */
+    /**
+     * 从User-Agent中获取设备信息
+     * @return 设备信息，如果没有找到则返回null
+     */
     public String getDevice() {
-        String ua = getUserAgent();
-        if (ua == null) {
+        String userAgent = getUserAgent();
+        if (userAgent == null || userAgent.isEmpty()) {
             return null;
         }
 
-        // 遍历设备型号map
+        // 遍历设备型号map查找设备信息
         for (Map.Entry<String, String> entry : deviceMap.entrySet()) {
-            if (ua.contains(entry.getKey())) {
-                String[] split = ua.split(";");
-                for (String s : split) {
-                    if (s.contains(entry.getValue())) {
-                        return s;
-                    }
-                }
+            String deviceKeyword = entry.getKey();
+            String deviceName = entry.getValue();
+            if (userAgent.contains(deviceKeyword) && userAgent.contains(deviceName)) {
+                return deviceName;
             }
         }
-
-
         return null;
     }
+
 
     /**
      * 获取请求头中的语言编码
