@@ -29,11 +29,21 @@
         <hutool.version>5.8.12</hutool.version>
         <lombok.version>1.18.20</lombok.version>
         <guava.version>31.1-jre</guava.version>
+
+        <!-- 原先采用1.2.8版本，但是看了一下，有漏洞
+         CVE-2021-33800 Alibaba Druid 路径遍历漏洞
+         Alibaba Druid是中国阿里巴巴（Alibaba）公司的一个阿里云计算平台 DataWorks 团队出品，为监控而生的开源数据库连接池。
+         Alibaba Druid 1.2.3版本存在安全漏洞，该漏洞源于软件对于带参数的路径缺少有效的过滤与限制。
+         这允许攻击者访问某个函数中带有参数的路径会造成目录遍历。
+         -->
+        <druid.version>1.2.12</druid.version>
     </properties>
 
 
     <dependencyManagement>
         <dependencies>
+
+
 
             <dependency>
                 <groupId>com.kantboot</groupId>
@@ -61,7 +71,13 @@
             <dependency>
                 <groupId>com.kantboot</groupId>
                 <artifactId>api-service</artifactId>
-                <version>1.0.0</version>
+                <version>${kantboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
             </dependency>
 
             <dependency>
