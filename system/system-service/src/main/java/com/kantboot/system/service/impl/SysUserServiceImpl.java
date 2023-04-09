@@ -66,7 +66,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 邮箱的@前面的字符串
      */
     private String getEmailPrefix(String email) {
-        int index = email.indexOf("@");
+        int index = email.indexOf('@');
         if (index < 0) {
             return email;
         }
@@ -79,7 +79,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 邮箱的@后面的字符串
      */
     private String getEmailSuffix(String email) {
-        int index = email.indexOf("@");
+        int index = email.indexOf('@');
         if (index < 0) {
             return "";
         }
