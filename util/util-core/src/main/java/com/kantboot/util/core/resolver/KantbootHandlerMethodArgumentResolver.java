@@ -61,7 +61,6 @@ public class KantbootHandlerMethodArgumentResolver implements HandlerMethodArgum
                 sb.append(buff, 0, len);
             }
         } catch (IOException e) {
-            e.printStackTrace();
             log.error("流转字符串失败", e);
         }
         return sb.toString();

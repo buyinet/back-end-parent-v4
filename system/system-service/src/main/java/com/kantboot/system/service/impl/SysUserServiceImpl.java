@@ -32,29 +32,77 @@ public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private ISysTokenService tokenService;
 
+    /**
+     * 对用户的手机号进行隐私保护，将中间4位数字用星号替代
+     * @param phone 用户手机号
+     * @return 隐私保护后的手机号
+     */
+    private String protectPhoneNumber(String phone) {
+        int length = phone.length();
+        // 将手机号中间四位替换为星号
+        String protectedPhone = String.format("%s%s", phone.substring(0, length - 4).replace(".", "\\*"), phone.substring(length - 4));
+        return protectedPhone;
+    }
+
+    /**
+     * 对用户的邮箱进行隐私保护，只保留@前面的字符串的最后四位，其它换成*
+     * @param email 用户邮箱
+     * @return 隐私保护后的邮箱
+     */
+    public String protectEmail(String email) {
+        int length = email.length();
+        // 获取@前面的字符串
+        String prefix = getEmailPrefix(email);
+        // 获取@后面的字符串
+        String suffix = getEmailSuffix(email);
+        // 只保留@前面的字符串的最后四位，其它换成*
+        String protectedEmail = String.format("%s%s%s", prefix.substring(0, prefix.length() - 4).replace(".", "\\*"), prefix.substring(prefix.length() - 4), suffix);
+        return protectedEmail;
+    }
+
+    /**
+     * 获取邮箱的@前面的字符串
+     * @param email 用户邮箱
+     * @return 邮箱的@前面的字符串
+     */
+    private String getEmailPrefix(String email) {
+        int index = email.indexOf("@");
+        if (index < 0) {
+            return email;
+        }
+        return email.substring(0, index);
+    }
+
+    /**
+     * 获取邮箱的@后面的字符串
+     * @param email 用户邮箱
+     * @return 邮箱的@后面的字符串
+     */
+    private String getEmailSuffix(String email) {
+        int index = email.indexOf("@");
+        if (index < 0) {
+            return "";
+        }
+        return email.substring(index);
+    }
+
+
+
     @Override
     public SysUser hideSensitiveInfo(SysUser user) {
 
         String phone = user.getPhone();
         // 如果手机号不为空
         if (phone != null) {
-            // 获取手机号长度
-            int length = phone.length();
-            // 只保留后四位，其它换成*
-            user.setPhone(phone.substring(0,length - 4).replaceAll(".", "*")+phone.substring(length - 4));
+            // 隐私保护手机号
+            user.setPhone(protectPhoneNumber(phone));
         }
 
         String email = user.getEmail();
         // 如果邮箱不为空
         if (email != null) {
-            // 获取邮箱长度
-            int length = email.length();
-            // 获取@前面的字符串
-            String substring = email.substring(0, email.indexOf("@"));
-            // 获取@后面的字符串
-            String substring1 = email.substring(email.indexOf("@"));
-            // 只保留@前面的字符串的最后四位，其它换成*
-            user.setEmail(substring.substring(0,substring.length() - 4).replaceAll(".", "*")+substring.substring(substring.length() - 4)+substring1);
+            // 隐私保护邮箱
+            user.setEmail(protectEmail(email));
         }
 
         // 清空密码

@@ -5,6 +5,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +17,7 @@ import java.nio.charset.StandardCharsets;
  * <p>
  * @author 方某方
  */
+@Log4j2
 public class KantbootHttpServletRequestWrapper extends HttpServletRequestWrapper {
     private final byte[] body;
 
@@ -42,13 +44,13 @@ public class KantbootHttpServletRequestWrapper extends HttpServletRequestWrapper
                 sb.append(new String(b, 0, n));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("解析流失败", e);
         } finally {
             if (null != is) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("解析流失败", e);
                 }
             }
         }

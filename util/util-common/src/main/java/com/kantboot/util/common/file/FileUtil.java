@@ -1,5 +1,6 @@
 package com.kantboot.util.common.file;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileItemFactory;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -14,7 +15,7 @@ import java.util.HashMap;
  * 文件处理工具类
  * @author 方某方
  */
-
+@Log4j2
 public class FileUtil {
 
 
@@ -116,7 +117,7 @@ public class FileUtil {
         try {
             fos = new java.io.FileOutputStream(file);
         } catch (IOException e) {
-            e.printStackTrace();
+
         }finally {
             if (fos != null) {
                 fos.close();
@@ -158,7 +159,7 @@ public class FileUtil {
                 os.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("获取文件字节流失败", e);
         }
         return item.get();
     }

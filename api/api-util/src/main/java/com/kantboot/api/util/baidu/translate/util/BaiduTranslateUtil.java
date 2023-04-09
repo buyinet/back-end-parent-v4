@@ -6,6 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.util.baidu.translate.entity.BaiduTranslateParam;
 import com.kantboot.api.util.baidu.translate.entity.BaiduTranslateResult;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +16,7 @@ import java.util.UUID;
  * 百度翻译工具类
  * @author 方某方
  */
+@Log4j2
 public class BaiduTranslateUtil {
 
     /**
@@ -60,7 +62,7 @@ public class BaiduTranslateUtil {
             baiduTranslateResult.setDst(transResult.getString("dst"));
             return baiduTranslateResult;
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("百度翻译异常", e);
         }
 
         return null;
