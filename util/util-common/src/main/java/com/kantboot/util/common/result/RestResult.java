@@ -4,6 +4,7 @@ package com.kantboot.util.common.result;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class RestResult<T> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -30,22 +32,22 @@ public class RestResult<T> implements Serializable {
     /**
      * 便捷错误码(数字编码)
      */
-    public static Integer FAIL_STATE = 3000;
+    public static final Integer FAIL_STATE = 3000;
 
     /**
      * 便捷错误码(字符串编码)
      */
-    public static String FAIL_STATE_CODE = "FAIL";
+    public static final String FAIL_STATE_CODE = "FAIL";
 
     /**
      * 便捷成功码(数字编码)
      */
-    public static Integer SUCCESS_STATE = 2000;
+    public static final Integer SUCCESS_STATE = 2000;
 
     /**
      * 便捷成功码(字符串编码)
      */
-    public static String SUCCESS_STATE_CODE = "SUCCESS";
+    public static final String SUCCESS_STATE_CODE = "SUCCESS";
 
 
     /**
