@@ -32,7 +32,27 @@ public class SysTokenServiceImpl implements ISysTokenService {
     @Resource
     private HttpRequestHeaderUtil httpRequestHeaderUtil;
 
+    @Override
+    public SysToken hideSensitiveInfo(SysToken token) {
+        // 隐藏UserAgent
+        token.setCreateUserAgent(null);
+        // 隐藏创建时的ip
+        token.setCreateIp(null);
+        // 隐藏创建时的设备
+        token.setCreateDevice(null);
+        // 隐藏最后一次使用的ip
+        token.setLastIp(null);
+        // 隐藏场景
+        token.setSceneCode(null);
+        // 隐藏过期时间
+        token.setGmtExpire(null);
+        // 隐藏创建时间
+        token.setGmtCreate(null);
+        // 隐藏更新时间
+        token.setGmtModified(null);
 
+        return token;
+    }
 
     @Override
     public SysToken createToken(Long userId) {
@@ -67,7 +87,7 @@ public class SysTokenServiceImpl implements ISysTokenService {
         SysUser sysUser = userRepository.findById(userId).get();
 
         // 保存token，并返回告知用户
-        return repository.save(token).setUser(sysUser);
+        return hideSensitiveInfo(repository.save(token).setUser(sysUser));
     }
 
 }

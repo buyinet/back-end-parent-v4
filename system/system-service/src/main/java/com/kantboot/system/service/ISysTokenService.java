@@ -9,6 +9,14 @@ import com.kantboot.system.module.entity.SysToken;
 public interface ISysTokenService {
 
     /**
+     * 隐藏敏感信息
+     * @param token token信息
+     *              会修改传入的对象
+     * @return token信息
+     */
+    SysToken hideSensitiveInfo(SysToken token);
+
+    /**
      * 生成token
      * @param userId 用户id
      * @return token
