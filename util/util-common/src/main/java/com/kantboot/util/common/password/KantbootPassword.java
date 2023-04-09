@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 /**
  * 一种密码处理方式
  * 方式名称：kantboot
- * 随缘写的
  * @author 方某方
  */
 @Component
