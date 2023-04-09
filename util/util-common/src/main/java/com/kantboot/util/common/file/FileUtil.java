@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class FileUtil {
 
 
-    public static final HashMap<String,String> CONTENT_TYPE_MAP_BY_SUFFIX = new HashMap<>();
+    protected static final HashMap<String,String> CONTENT_TYPE_MAP_BY_SUFFIX = new HashMap<>();
 
     static{
         CONTENT_TYPE_MAP_BY_SUFFIX.put("jpg","image/jpeg");
