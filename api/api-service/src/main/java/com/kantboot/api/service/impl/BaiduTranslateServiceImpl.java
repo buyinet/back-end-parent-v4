@@ -5,9 +5,11 @@ import com.kantboot.api.util.baidu.translate.entity.BaiduTranslateParam;
 import com.kantboot.api.util.baidu.translate.entity.BaiduTranslateResult;
 import com.kantboot.api.util.baidu.translate.util.BaiduTranslateUtil;
 import com.kantboot.api.service.IBaiduTranslateService;
+import com.kantboot.system.module.entity.SysDict;
 import com.kantboot.system.module.entity.SysDictI18n;
 import com.kantboot.system.module.entity.SysLanguage;
 import com.kantboot.system.repository.SysDictI18nRepository;
+import com.kantboot.system.repository.SysDictRepository;
 import com.kantboot.system.repository.SysLanguageRepository;
 import com.kantboot.system.service.ISysSettingService;
 import jakarta.annotation.Resource;
@@ -37,6 +39,9 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
     @Resource
     private SysDictI18nRepository dictI18nRepository;
 
+    @Resource
+    private SysDictRepository dictRepository;
+
 
     @Override
     public BaiduTranslateResult translate(String q, String from, String to) {
@@ -56,6 +61,7 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
     @SneakyThrows
     @Override
     public void generateDictI18n(String q, String from,String dictGroupCode,String dictCode) {
+        // 获取所有支持的语言
         List<SysLanguage> allBySupportIsTrue = languageRepository.findAllBySupportIsTrue();
         // 获取所有baiduTranslateCode
         List<String> baiduTranslateCodeList= allBySupportIsTrue.stream().map(SysLanguage::getBaiduTranslateCode).toList();
@@ -96,6 +102,10 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
         }
 
         dictI18nRepository.saveAll(list);
+
+        SysDict sysDict = new SysDict().setCode(dictCode).setGroupCode(dictGroupCode).setDescription(q);
+        // 保存字典
+        dictRepository.save(sysDict);
 
     }
 

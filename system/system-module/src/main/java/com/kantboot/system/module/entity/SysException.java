@@ -11,16 +11,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 /**
- * 字典国际化实体类
+ * 系统异常实体类
+ * 用于记录系统异常
+ *
  * @author 方某方
  */
-@Table(name = "sys_dict_i18n")
+@Table(name = "sys_exception")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class SysDictI18n {
+public class SysException {
 
     /**
      * 主键
@@ -31,28 +33,30 @@ public class SysDictI18n {
     private Long id;
 
     /**
-     * 字典编码
+     * 异常编码
+     * 对应着字典表的编码
      */
-    @Column(name = "dict_code", length = 64)
-    private String dictCode;
+    @Column(name = "code", length = 64)
+    private String code;
 
     /**
-     * 字典分组编码
+     * 异常状态码
      */
-    @Column(name = "dict_group_code", length = 64)
-    private String dictGroupCode;
+    @Column(name = "state")
+    private Integer state;
 
     /**
-     * 语言
+     * 优先级
      */
-    @Column(name = "language_code", length = 64)
-    private String languageCode;
+    @Column(name = "priority")
+    private Integer priority;
+
 
     /**
-     * 内容
+     * 描述
      */
-    @Column(name = "t_value")
-    private String value;
+    @Column(name = "description")
+    private String description;
 
     /**
      * 创建时间
@@ -67,5 +71,4 @@ public class SysDictI18n {
     @LastModifiedDate
     @Column(name = "gmt_modified")
     private Date gmtModified;
-
 }

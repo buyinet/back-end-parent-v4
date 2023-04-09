@@ -1,0 +1,128 @@
+[
+  {
+    "id": "1",
+    "code": "accountOrPasswordError",
+    "description": "账号或密码错误",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "3333",
+    "priority": 0
+  },
+  {
+    "id": "2",
+    "code": "accountNotExist",
+    "description": "账号不存在",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "3",
+    "code": "privateKeyNotExist",
+    "description": "对应私钥不存在",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "4",
+    "code": "decryptionError",
+    "description": "解密失败",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "5",
+    "code": "usernameRepeat",
+    "description": "用户名重复",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "6",
+    "code": "notLogin",
+    "description": "未登录",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "7777",
+    "priority": 0
+  },
+  {
+    "id": "7",
+    "code": "tokenExpired",
+    "description": "登录状态已过期",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "7777",
+    "priority": 0
+  },
+  {
+    "id": "8",
+    "code": "avatarNotExist",
+    "description": "头像不存在",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "9",
+    "code": "avatarNotSelect",
+    "description": "该头像不可选",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "10",
+    "code": "chatGroupNotExist",
+    "description": "该聊天集不存在",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "11",
+    "code": "illegalAccess",
+    "description": "非法访问",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "12",
+    "code": "illegalRequest",
+    "description": "非法请求",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "13",
+    "code": "deleteSuccess",
+    "description": "删除成功",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  },
+  {
+    "id": "25",
+    "code": "groupCodeNotExist",
+    "description": "文件组不存在",
+    "gmt_create": "",
+    "gmt_modified": "",
+    "state": "",
+    "priority": 0
+  }
+]

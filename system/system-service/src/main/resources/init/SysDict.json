@@ -1,0 +1,522 @@
+[
+    {
+      "id": "139",
+      "code": "loginSuccess",
+      "description": "登录成功",
+      "gmt_create": "1/1/2000 00:00:00",
+      "gmt_modified": "1/1/2000 00:00:00",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "205",
+      "code": "accountNotExist",
+      "description": "账号不存在",
+      "gmt_create": "13/3/2023 05:52:46.368",
+      "gmt_modified": "13/3/2023 05:52:46.368",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "307",
+      "code": "accountOrPasswordError",
+      "description": "账号或密码错误",
+      "gmt_create": "13/3/2023 05:48:34.138",
+      "gmt_modified": "13/3/2023 05:48:34.138",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "421",
+      "code": "privateKeyNotExist",
+      "description": "对应私钥不存在",
+      "gmt_create": "13/3/2023 06:09:33.738",
+      "gmt_modified": "13/3/2023 06:09:33.738",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "474",
+      "code": "homePage",
+      "description": "首页",
+      "gmt_create": "13/3/2023 05:41:16.351",
+      "gmt_modified": "13/3/2023 05:41:16.351",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "519",
+      "code": "decryptionError",
+      "description": "解密失败",
+      "gmt_create": "13/3/2023 06:12:51.842",
+      "gmt_modified": "13/3/2023 06:12:51.842",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "684",
+      "code": "registerSuccess",
+      "description": "注册成功",
+      "gmt_create": "13/3/2023 09:37:04.123",
+      "gmt_modified": "13/3/2023 09:37:04.123",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "746",
+      "code": "usernameRepeat",
+      "description": "用户名重复",
+      "gmt_create": "13/3/2023 09:47:25.334",
+      "gmt_modified": "13/3/2023 09:47:25.334",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "775",
+      "code": "register",
+      "description": "注册",
+      "gmt_create": "13/3/2023 10:22:29.441",
+      "gmt_modified": "13/3/2023 10:22:29.441",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "947",
+      "code": "login",
+      "description": "登录",
+      "gmt_create": "13/3/2023 10:40:31.688",
+      "gmt_modified": "13/3/2023 10:40:31.688",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "957",
+      "code": "phone",
+      "description": "手机号码",
+      "gmt_create": "13/3/2023 10:42:55.605",
+      "gmt_modified": "13/3/2023 10:42:55.605",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "1126",
+      "code": "email",
+      "description": "邮箱",
+      "gmt_create": "13/3/2023 10:44:39.952",
+      "gmt_modified": "13/3/2023 10:44:39.952",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "1178",
+      "code": "accout",
+      "description": "账号",
+      "gmt_create": "13/3/2023 10:47:25.253",
+      "gmt_modified": "13/3/2023 10:47:25.253",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "1194",
+      "code": "getSuccess",
+      "description": "获取成功",
+      "gmt_create": "14/3/2023 02:44:34.854",
+      "gmt_modified": "14/3/2023 02:44:34.854",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "1350",
+      "code": "uploadSuccess",
+      "description": "上传成功",
+      "gmt_create": "14/3/2023 04:21:48.176",
+      "gmt_modified": "14/3/2023 04:21:48.176",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "1435",
+      "code": "allPlatformAdmin",
+      "description": "管理员",
+      "gmt_create": "14/3/2023 04:47:43.597",
+      "gmt_modified": "14/3/2023 04:47:43.597",
+      "groupCode": "role"
+    },
+    {
+      "id": "1694",
+      "code": "allPlatformUser",
+      "description": "普通用户",
+      "gmt_create": "14/3/2023 04:50:09.698",
+      "gmt_modified": "14/3/2023 04:50:09.698",
+      "groupCode": "role"
+    },
+    {
+      "id": "1935",
+      "code": "avatar",
+      "description": "头像",
+      "gmt_create": "15/3/2023 11:06:05.356",
+      "gmt_modified": "15/3/2023 11:06:05.356",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "2084",
+      "code": "tokenExpired",
+      "description": "登录状态已过期",
+      "gmt_create": "15/3/2023 11:53:17.969",
+      "gmt_modified": "15/3/2023 11:53:17.969",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2112",
+      "code": "notLogin",
+      "description": "未登录",
+      "gmt_create": "15/3/2023 11:50:15.841",
+      "gmt_modified": "15/3/2023 11:50:15.841",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2216",
+      "code": "requestSuccess",
+      "description": "请求成功",
+      "gmt_create": "20/3/2023 15:45:34.86",
+      "gmt_modified": "20/3/2023 15:45:34.86",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "2357",
+      "code": "avatarNotExist",
+      "description": "头像不存在",
+      "gmt_create": "20/3/2023 20:59:16.624",
+      "gmt_modified": "20/3/2023 20:59:16.624",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2390",
+      "code": "avatarGenerateSuccess",
+      "description": "用户头像已经生成",
+      "gmt_create": "22/3/2023 00:15:26.994",
+      "gmt_modified": "22/3/2023 00:15:26.994",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "2420",
+      "code": "sentSuccess",
+      "description": "发送成功",
+      "gmt_create": "24/3/2023 10:17:15.424",
+      "gmt_modified": "24/3/2023 10:17:15.424",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "2585",
+      "code": "chatGroupNotExist",
+      "description": "该聊天集不存在",
+      "gmt_create": "24/3/2023 16:57:07.861",
+      "gmt_modified": "24/3/2023 16:57:07.861",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2673",
+      "code": "illegalAccess",
+      "description": "非法访问",
+      "gmt_create": "24/3/2023 16:58:28.578",
+      "gmt_modified": "24/3/2023 16:58:28.578",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2680",
+      "code": "illegalRequest",
+      "description": "非法请求",
+      "gmt_create": "24/3/2023 17:26:26.242",
+      "gmt_modified": "24/3/2023 17:26:26.242",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2851",
+      "code": "deleteSuccess",
+      "description": "删除成功",
+      "gmt_create": "25/3/2023 02:00:13.731",
+      "gmt_modified": "25/3/2023 02:00:13.731",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "2900",
+      "code": "gptChatGenerating",
+      "description": "正在生成回复中",
+      "gmt_create": "25/3/2023 14:22:29.783",
+      "gmt_modified": "25/3/2023 14:22:29.783",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "2986",
+      "code": "createSuccess",
+      "description": "创建成功",
+      "gmt_create": "25/3/2023 16:50:18.245",
+      "gmt_modified": "25/3/2023 16:50:18.245",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "3072",
+      "code": "titleNotNull",
+      "description": "标题不能为空",
+      "gmt_create": "25/3/2023 16:57:16.244",
+      "gmt_modified": "25/3/2023 16:57:16.244",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "3158",
+      "code": "descriptionNotNull",
+      "description": "描述不能为空",
+      "gmt_create": "25/3/2023 17:01:48.311",
+      "gmt_modified": "25/3/2023 17:01:48.311",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "3416",
+      "code": "title",
+      "description": "标题",
+      "gmt_create": "25/3/2023 17:06:50.29",
+      "gmt_modified": "25/3/2023 17:06:50.29",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "3502",
+      "code": "description",
+      "description": "描述",
+      "gmt_create": "25/3/2023 17:07:50.754",
+      "gmt_modified": "25/3/2023 17:07:50.754",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "3588",
+      "code": "partyBeReady",
+      "description": "你有派对处在准备状态",
+      "gmt_create": "25/3/2023 17:11:09.475",
+      "gmt_modified": "25/3/2023 17:11:09.475",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "3674",
+      "code": "createPartySuccess",
+      "description": "创建派对成功",
+      "gmt_create": "26/3/2023 15:14:54.979",
+      "gmt_modified": "26/3/2023 15:14:54.979",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "3760",
+      "code": "partyRoomNotExist",
+      "description": "派对房间不存在",
+      "gmt_create": "26/3/2023 16:24:03.834",
+      "gmt_modified": "26/3/2023 16:24:03.834",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "3846",
+      "code": "partyRoomStatusError",
+      "description": "房间状态异常",
+      "gmt_create": "26/3/2023 16:34:29.497",
+      "gmt_modified": "26/3/2023 16:34:29.497",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "3946",
+      "code": "oneClickLogin",
+      "description": "一键登录",
+      "gmt_create": "27/3/2023 19:51:58.902",
+      "gmt_modified": "27/3/2023 19:51:58.902",
+      "groupCode": "stateSuccess"
+    },
+    {
+      "id": "4065",
+      "code": "KantProblemNo1",
+      "description": "我能够知道什么?",
+      "gmt_create": "27/3/2023 19:58:10.374",
+      "gmt_modified": "27/3/2023 19:58:10.374",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4323",
+      "code": "kantProblemNo2",
+      "description": "我应当做什么？",
+      "gmt_create": "27/3/2023 20:03:09.975",
+      "gmt_modified": "27/3/2023 20:03:09.975",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4409",
+      "code": "kantProblemNo3",
+      "description": "我可以希望什么？",
+      "gmt_create": "27/3/2023 20:04:18.235",
+      "gmt_modified": "27/3/2023 20:04:18.235",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4495",
+      "code": "kantProblemNo4",
+      "description": "人是什么？",
+      "gmt_create": "27/3/2023 20:06:13.462",
+      "gmt_modified": "27/3/2023 20:06:13.462",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4593",
+      "code": "avatarNotSelect",
+      "description": "该头像不可选",
+      "gmt_create": "20/3/2023 21:06:28.401",
+      "gmt_modified": "20/3/2023 21:06:28.401",
+      "groupCode": "stateError"
+    },
+    {
+      "id": "4657",
+      "code": "switchLanguage",
+      "description": "切换语言",
+      "gmt_create": "27/3/2023 20:37:32.458",
+      "gmt_modified": "27/3/2023 20:37:32.458",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4803",
+      "code": "languageSelect",
+      "description": "语言选择",
+      "gmt_create": "27/3/2023 22:29:02.037",
+      "gmt_modified": "27/3/2023 22:29:02.037",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4809",
+      "code": "addDirectory",
+      "description": "添加目录",
+      "gmt_create": "29/3/2023 00:49:45.017",
+      "gmt_modified": "29/3/2023 00:49:45.017",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "4871",
+      "code": "chatValue",
+      "description": "对话内容",
+      "gmt_create": "29/3/2023 01:40:01.297",
+      "gmt_modified": "29/3/2023 01:40:01.297",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5031",
+      "code": "sent",
+      "description": "发送",
+      "gmt_create": "29/3/2023 02:32:49.652",
+      "gmt_modified": "29/3/2023 02:32:49.652",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5184",
+      "code": "philosophicalAssistant",
+      "description": "哲学助手",
+      "gmt_create": "31/3/2023 00:19:02.615",
+      "gmt_modified": "31/3/2023 00:19:02.615",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5356",
+      "code": "party",
+      "description": "派对",
+      "gmt_create": "31/3/2023 01:46:35.245",
+      "gmt_modified": "31/3/2023 01:46:35.245",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5442",
+      "code": "chat",
+      "description": "聊天",
+      "gmt_create": "31/3/2023 01:48:32.446",
+      "gmt_modified": "31/3/2023 01:48:32.446",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5528",
+      "code": "my",
+      "description": "我的",
+      "gmt_create": "31/3/2023 01:52:54.845",
+      "gmt_modified": "31/3/2023 01:52:54.845",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5614",
+      "code": "noOpen",
+      "description": "暂未开放",
+      "gmt_create": "31/3/2023 02:01:22.19",
+      "gmt_modified": "31/3/2023 02:01:22.19",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5730",
+      "code": "beta",
+      "description": "测试版",
+      "gmt_create": "27/3/2023 19:55:37.854",
+      "gmt_modified": "27/3/2023 19:55:37.854",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5779",
+      "code": "contentNotNull",
+      "description": "内容不能空",
+      "gmt_create": "31/3/2023 04:57:01.591",
+      "gmt_modified": "31/3/2023 04:57:01.591",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5938",
+      "code": "newChat",
+      "description": "新的对话",
+      "gmt_create": "31/3/2023 15:20:49.586",
+      "gmt_modified": "31/3/2023 15:20:49.586",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "5964",
+      "code": "noChat",
+      "description": "没有对话",
+      "gmt_create": "31/3/2023 16:41:48.239",
+      "gmt_modified": "31/3/2023 16:41:48.239",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6179",
+      "code": "avatarSelectTitle",
+      "description": "头像选择",
+      "gmt_create": "31/3/2023 22:04:05.635",
+      "gmt_modified": "31/3/2023 22:04:05.635",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6253",
+      "code": "intensityOperationLv1",
+      "description": "低级强度运算",
+      "gmt_create": "1/4/2023 10:57:47.433",
+      "gmt_modified": "1/4/2023 10:57:47.433",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6295",
+      "code": "lowLevelIntensityOperation",
+      "description": "低级强度运算",
+      "gmt_create": "1/4/2023 10:52:48.617",
+      "gmt_modified": "1/4/2023 10:52:48.617",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6429",
+      "code": "intensityOperationLv2",
+      "description": "中级强度运算",
+      "gmt_create": "1/4/2023 11:01:04.885",
+      "gmt_modified": "1/4/2023 11:01:04.885",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6563",
+      "code": "intensityOperationLv4",
+      "description": "超高级强度运算",
+      "gmt_create": "1/4/2023 12:59:55.582",
+      "gmt_modified": "1/4/2023 12:59:55.582",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6570",
+      "code": "intensityOperationLv3",
+      "description": "高级强度运算",
+      "gmt_create": "1/4/2023 11:03:11.038",
+      "gmt_modified": "1/4/2023 11:03:11.038",
+      "groupCode": "appFront"
+    },
+    {
+      "id": "6689",
+      "code": "groupCodeNotExist",
+      "description": "文件组不存在",
+      "gmt_create": "2/4/2023 23:27:06.177",
+      "gmt_modified": "2/4/2023 23:27:06.177",
+      "groupCode": "stateError"
+    }
+]
