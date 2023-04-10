@@ -42,31 +42,37 @@ public class KantbootSystemSecurityFilter implements Filter {
     @Resource
     private ISysUserService userService;
 
+
     private final BaseException baseException = new BaseException();
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        // 记录开始时间
+        long start = System.currentTimeMillis();
+
         // 向上转型
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String requestUri = request.getRequestURI();
 
-        // 输出拦截的请求
-        log.info("拦截请求: {}", requestUri);
         List<String> pathList = requestUriSplit(requestUri);
         // 遍历匹配
         for (String path : pathList) {
             // 检查是否可放行
             try {
                 checkPath(path);
-            }catch (BaseException e){
-                exceptionHandler(response,e);
+            } catch (BaseException e) {
+                exceptionHandler(response, e);
                 return;
             }
         }
 
         // 放行
         filterChain.doFilter(request, response);
+        // 记录结束时间
+        long end = System.currentTimeMillis();
+        log.info("请求路径：{}，耗时：{}ms", requestUri, end - start);
     }
 
     /**
@@ -110,11 +116,25 @@ public class KantbootSystemSecurityFilter implements Filter {
         Set<SysRole> rolesOfUser = user.getRoles();
         // 权限的角色
         Set<SysRole> rolesOfPermission = byUri.getRoles();
-        // 判断是否有交集，true表示有交集，false表示没有交集
-        boolean isIntersect = rolesOfUser.stream().anyMatch(rolesOfPermission::contains);
+        // 用户的角色编码
+        List<String> roleCodesOfUser = new ArrayList<>();
+        // 权限的角色编码
+        List<String> roleCodesOfPermission = new ArrayList<>();
+
+        // 获取用户的角色编码
+        for (SysRole role : rolesOfUser) {
+            roleCodesOfUser.add(role.getCode());
+        }
+        // 获取权限的角色编码
+        for (SysRole role : rolesOfPermission) {
+            roleCodesOfPermission.add(role.getCode());
+        }
+
+        // 用户的角色编码和权限的角色编码是否有交集
+        boolean isIntersection = roleCodesOfUser.stream().anyMatch(roleCodesOfPermission::contains);
 
         // 如果没有交集，抛出异常，告知客户端没有权限
-        if (!isIntersect) {
+        if (!isIntersection) {
             throw exceptionService.getException("insufficientPermissions");
         }
 
