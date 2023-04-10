@@ -35,4 +35,21 @@ public interface ISysUserService {
      */
     SysToken securityRegister(SecurityLoginAndRegisterDTO dto);
 
+    /**
+     * 登录（普通登录）
+     * @param account 账号
+     * @param password 密码
+     * @return token
+     */
+    SysToken login(String account, String password);
+
+    /**
+     * 登录（安全登录）
+     * @param dto 登录信息
+     *            即加密过的账号密码
+     *            以及账号密码的公钥
+     * @return token
+     */
+    SysToken securityLogin(SecurityLoginAndRegisterDTO dto);
+
 }

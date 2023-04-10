@@ -166,5 +166,50 @@ public class SysUserServiceImpl implements ISysUserService {
         return register(username, password);
     }
 
+    @Override
+    public SysToken login(String account, String password) {
+        // 根据用户名查询用户
+        SysUser user = repository.findByUsername(account);
+        if (user == null) {
+            // 如果用户不存在，则继续根据手机号查询用户
+            user=repository.findByPhone(account);
+        }
 
+        if (user == null) {
+            // 如果用户不存在，则继续根据邮箱查询用户
+            user=repository.findByEmailIgnoreCase(account);
+        }
+
+        if (user == null) {
+            //如果用户不存在，抛出异常，提示客户端账号不存在
+            throw exceptionService.getException("accountNotExist");
+        }
+
+        // 判断密码是否正确
+        if (!kantbootPassword.matches(password, user.getPassword())) {
+            // 如果密码不正确，抛出异常，提示客户端账号或密码错误
+            throw exceptionService.getException("accountOrPasswordError");
+        }
+
+        // 创建token
+        SysToken token = tokenService.createToken(user.getId());
+        token.setUser(hideSensitiveInfo(token.getUser()));
+        return token;
+    }
+
+
+    @Override
+    public SysToken securityLogin(SecurityLoginAndRegisterDTO dto) {
+        // 获取加密账号的公钥
+        String publicKeyOfAccount = dto.getPublicKeyOfAccount();
+        // 获取加密密码的公钥
+        String publicKeyOfPassword = dto.getPublicKeyOfPassword();
+
+        // 解密用户名
+        String account = rsaService.decrypt(dto.getUsername(), publicKeyOfAccount);
+        // 解密密码
+        String password = rsaService.decrypt(dto.getPassword(), publicKeyOfPassword);
+
+        return login(account, password);
+    }
 }

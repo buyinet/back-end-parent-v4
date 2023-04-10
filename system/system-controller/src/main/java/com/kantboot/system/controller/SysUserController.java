@@ -39,4 +39,19 @@ public class SysUserController {
         return stateSuccessService.success(service.securityRegister(dto), "registerSuccess");
     }
 
+    @RequestMapping("/login")
+    public RestResult login(
+            @RequestParam("account") String account,
+            @RequestParam("password") String password) {
+        // 调用service层的登录方法，返回结果，并返回成功信息
+        return stateSuccessService.success(service.login(account, password), "loginSuccess");
+    }
+
+    @RequestMapping("/securityLogin")
+    public RestResult securityLogin(
+            @RequestBody SecurityLoginAndRegisterDTO dto) {
+        // 调用service层的安全登录方法，返回结果，并返回成功信息
+        return stateSuccessService.success(service.securityLogin(dto), "loginSuccess");
+    }
+
 }

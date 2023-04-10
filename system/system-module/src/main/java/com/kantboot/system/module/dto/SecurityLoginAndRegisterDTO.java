@@ -10,6 +10,11 @@ import lombok.Data;
 public class SecurityLoginAndRegisterDTO {
 
     /**
+     * 账号
+     */
+    private String account;
+
+    /**
      * 用户名
      */
     private String username;
@@ -21,6 +26,11 @@ public class SecurityLoginAndRegisterDTO {
 
     /**
      * 账号的公钥
+     */
+    private String publicKeyOfAccount;
+
+    /**
+     * 用户名的公钥
      */
     private String publicKeyOfUsername;
 
