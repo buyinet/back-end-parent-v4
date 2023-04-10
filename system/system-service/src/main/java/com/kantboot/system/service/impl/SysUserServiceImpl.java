@@ -4,6 +4,7 @@ import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
 import com.kantboot.system.module.entity.SysToken;
 import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.repository.SysUserRepository;
+import com.kantboot.system.service.IRsaService;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.system.service.ISysTokenService;
 import com.kantboot.system.service.ISysUserService;
@@ -32,6 +33,9 @@ public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private ISysTokenService tokenService;
 
+    @Resource
+    private IRsaService rsaService;
+
     /**
      * 对用户的手机号进行隐私保护，将中间4位数字用星号替代
      * @param phone 用户手机号
@@ -40,8 +44,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private String protectPhoneNumber(String phone) {
         int length = phone.length();
         // 将手机号中间四位替换为星号
-        String protectedPhone = String.format("%s%s", phone.substring(0, length - 4).replace(".", "\\*"), phone.substring(length - 4));
-        return protectedPhone;
+        return String.format("%s%s", phone.substring(0, length - 4).replace(".", "\\*"), phone.substring(length - 4));
     }
 
     /**
@@ -50,14 +53,12 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 隐私保护后的邮箱
      */
     public String protectEmail(String email) {
-        int length = email.length();
         // 获取@前面的字符串
         String prefix = getEmailPrefix(email);
         // 获取@后面的字符串
         String suffix = getEmailSuffix(email);
         // 只保留@前面的字符串的最后四位，其它换成*
-        String protectedEmail = String.format("%s%s%s", prefix.substring(0, prefix.length() - 4).replace(".", "\\*"), prefix.substring(prefix.length() - 4), suffix);
-        return protectedEmail;
+        return String.format("%s%s%s", prefix.substring(0, prefix.length() - 4).replace(".", "\\*"), prefix.substring(prefix.length() - 4), suffix);
     }
 
     /**
@@ -145,7 +146,17 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public SysToken securityRegister(SecurityLoginAndRegisterDTO dto) {
-        return null;
+        // 获取加密用户名的公钥
+        String publicKeyOfUsername = dto.getPublicKeyOfUsername();
+        // 获取加密密码的公钥
+        String publicKeyOfPassword = dto.getPublicKeyOfPassword();
+
+        // 解密用户名
+        String username = rsaService.decrypt(dto.getUsername(), publicKeyOfUsername);
+        // 解密密码
+        String password = rsaService.decrypt(dto.getPassword(), publicKeyOfPassword);
+
+        return register(username, password);
     }
 
 

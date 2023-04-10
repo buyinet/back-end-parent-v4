@@ -29,6 +29,8 @@ public interface ISysUserService {
     /**
      * 注册（安全注册）
      * @param dto 注册信息
+     *            即加密过的账号密码
+     *            以及账号密码的公钥
      * @return token
      */
     SysToken securityRegister(SecurityLoginAndRegisterDTO dto);
