@@ -1,17 +1,17 @@
 package com.kantboot.system.service.impl;
 
 import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
+import com.kantboot.system.module.entity.SysRole;
 import com.kantboot.system.module.entity.SysToken;
 import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.repository.SysUserRepository;
-import com.kantboot.system.service.IRsaService;
-import com.kantboot.system.service.ISysExceptionService;
-import com.kantboot.system.service.ISysTokenService;
-import com.kantboot.system.service.ISysUserService;
+import com.kantboot.system.service.*;
 import com.kantboot.util.common.password.KantbootPassword;
 import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * 用户服务实现类
@@ -35,6 +35,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Resource
     private IRsaService rsaService;
+
+    @Resource
+    private ISysSettingService settingService;
 
     /**
      * 对用户的手机号进行隐私保护，将中间4位数字用星号替代
@@ -129,8 +132,12 @@ public class SysUserServiceImpl implements ISysUserService {
         String encodePassword = kantbootPassword.encode(password);
         // 创建用户
         SysUser user = new SysUser().setPassword(encodePassword).setUsername(username);
+        // 获取用户注册时的默认角色
+        String defaultRole = settingService.getValue("newUserRegisterRoleCode", "user");
+        Set<SysRole> roles = Set.of(new SysRole().setCode(defaultRole));
+
         // 保存用户
-        SysUser save = repository.save(user);
+        SysUser save = repository.save(user.setRoles(roles));
         // 创建token
         SysToken token = tokenService.createToken(save.getId());
 

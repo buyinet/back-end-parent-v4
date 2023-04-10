@@ -3,6 +3,7 @@ package com.kantboot.system.module.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +19,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "sys_role")
+@Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class SysRole implements Serializable {
 
