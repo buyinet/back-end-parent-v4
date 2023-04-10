@@ -57,7 +57,12 @@ public class KantbootSystemSecurityFilter implements Filter {
         // 遍历匹配
         for (String path : pathList) {
             // 检查是否可放行
-            checkPath(path);
+            try {
+                checkPath(path);
+            }catch (BaseException e){
+                exceptionHandler(response,e);
+                return;
+            }
         }
 
         // 放行
