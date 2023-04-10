@@ -31,8 +31,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
         // 有顺序的set集合，遍历时，会按照添加的顺序遍历
         Set<SysRole> roleSet = new LinkedHashSet<>(roles);
-        // 按照优先级从大到小排序
-        roleSet.stream().sorted((o1, o2) -> o2.getPriority() - o1.getPriority());
 
         for (SysRole role : roleSet) {
             String name = roleMap.get(role.getCode());
@@ -41,7 +39,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
                 role.setName(name);
             }
         }
-
 
         // 记录结束时间
         long end = System.currentTimeMillis();
