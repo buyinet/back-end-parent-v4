@@ -133,7 +133,7 @@ public class SysUserServiceImpl implements ISysUserService {
         // 创建用户
         SysUser user = new SysUser().setPassword(encodePassword).setUsername(username);
         // 获取用户注册时的默认角色
-        String defaultRole = settingService.getValue("newUserRegisterRoleCode", "user");
+        String defaultRole = settingService.getValue("user","newUserRegisterRoleCode");
         Set<SysRole> roles = Set.of(new SysRole().setCode(defaultRole));
 
         // 保存用户

@@ -28,8 +28,7 @@ public class RelSysUserAndSysRole implements Serializable {
      * 主键
      */
     @Id
-    @GenericGenerator(name = "snowflakeId",strategy = KantbootGenerationType.SNOWFLAKE)
-    @GeneratedValue(generator = "snowflakeId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
