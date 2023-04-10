@@ -1,10 +1,8 @@
 package com.kantboot.system.module.entity;
 
-import com.kantboot.util.core.jpa.KantbootGenerationType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,9 +19,9 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "rel_sys_authority_and_sys_role")
+@Table(name = "rel_sys_permission_and_sys_role")
 @EntityListeners(AuditingEntityListener.class)
-public class RelSysAuthorityAndSysRole {
+public class RelSysPermissionAndSysRole {
 
     /**
      * 主键
@@ -36,8 +34,8 @@ public class RelSysAuthorityAndSysRole {
     /**
      * 权限编码
      */
-    @Column(name = "authority_code")
-    private String authorityCode;
+    @Column(name = "permission_code")
+    private String permissionCode;
 
     /**
      * 角色编码

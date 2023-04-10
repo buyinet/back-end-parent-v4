@@ -20,6 +20,12 @@
 
         <dependency>
             <groupId>com.kantboot</groupId>
+            <artifactId>system-security</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kantboot</groupId>
             <artifactId>api-controller</artifactId>
             <version>1.0.0</version>
         </dependency>

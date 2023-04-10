@@ -17,9 +17,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "sys_authority")
+@Table(name = "sys_permission")
 @EntityListeners(AuditingEntityListener.class)
-public class SysAuthority {
+public class SysPermission {
 
     /**
      * 主键
@@ -79,8 +79,8 @@ public class SysAuthority {
      * 关联的角色
      */
     @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.EAGER)
-    @JoinTable(name = "rel_sys_authority_and_sys_role",
-            joinColumns = {@JoinColumn(name = "authority_code",referencedColumnName = "code")},
+    @JoinTable(name = "rel_sys_permission_and_sys_role",
+            joinColumns = {@JoinColumn(name = "permission_code",referencedColumnName = "code")},
             inverseJoinColumns = {@JoinColumn(name = "role_code",referencedColumnName = "code")}
     )
     private Set<SysRole> roles;

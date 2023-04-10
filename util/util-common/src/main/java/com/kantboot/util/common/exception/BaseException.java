@@ -41,7 +41,7 @@ public class BaseException extends RuntimeException{
 
     @ExceptionHandler(value = BaseException.class)
     @ResponseBody
-    public RestResult<String> baseException(BaseException e){
+    public RestResult<String> exceptionHandler(BaseException e){
         return new RestResult<String>().setState(e.getState()).setErrMsg(e.getMessage()).setStateCode(e.getStateCode());
     }
 }
