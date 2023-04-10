@@ -23,4 +23,26 @@ public interface ISysTokenService {
      */
     SysToken createToken(Long userId);
 
+
+    /**
+     * 根据token刷新token
+     * @param token token
+     * @return token
+     */
+    SysToken refreshToken(String token);
+
+    /**
+     * 刷新token
+     * @return token
+     */
+    SysToken refreshToken();
+
+
+    /**
+     * 根据用户id获取token信息
+     * @return token信息
+     */
+    SysToken getSelf();
+
+
 }

@@ -28,4 +28,10 @@ public class SysTokenController {
         // 生成token，并告知前端创建成功
         return stateSuccessService.success(service.createToken(userId), "createSuccess");
     }
+
+    @RequestMapping("/refresh")
+    public RestResult<SysToken> refresh(@RequestParam("token") String token){
+        // 刷新token，并告知前端刷新成功
+        return stateSuccessService.success(service.refreshToken(token), "createSuccess");
+    }
 }

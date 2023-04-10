@@ -2,6 +2,7 @@ package com.kantboot.api.util.baidu.translate.util;
 
 import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.util.baidu.translate.entity.BaiduTranslateParam;
 import com.kantboot.api.util.baidu.translate.entity.BaiduTranslateResult;
@@ -56,6 +57,11 @@ public class BaiduTranslateUtil {
         try (okhttp3.Response response = new okhttp3.OkHttpClient().newCall(request).execute()) {
             assert response.body() != null;
             JSONObject jsonObject = JSON.parseObject(response.body().string());
+            JSONArray transResultArr = jsonObject.getJSONArray("trans_result");
+            if (transResultArr == null || transResultArr.size() == 0) {
+                param.setTo("en");
+                return translate(param);
+            }
             JSONObject transResult = jsonObject.getJSONArray("trans_result").getJSONObject(0);
             BaiduTranslateResult baiduTranslateResult = new BaiduTranslateResult();
             baiduTranslateResult.setSrc(transResult.getString("src"));

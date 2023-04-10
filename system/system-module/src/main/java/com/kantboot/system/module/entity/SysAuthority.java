@@ -3,25 +3,23 @@ package com.kantboot.system.module.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
- * 角色实体类
+ * 权限实体类
  * @author 方某方
  */
 @Entity
 @Getter
 @Setter
-@Table(name = "sys_role")
-@Accessors(chain = true)
+@Table(name = "sys_authority")
 @EntityListeners(AuditingEntityListener.class)
-public class SysRole implements Serializable {
+public class SysAuthority {
 
     /**
      * 主键
@@ -32,34 +30,35 @@ public class SysRole implements Serializable {
     private Long id;
 
     /**
-     * 角色编码
+     * 权限编码
      */
     @Column(name = "code", length = 64)
     private String code;
 
     /**
-     * 字典编码
-     */
-    @Column(name = "dict_code", length = 64)
-    private String dictCode;
-
-    /**
-     * 角色名称
-     */
-    @Column(name = "name", length = 64)
-    private String name;
-
-    /**
-     * 角色描述
+     * 权限描述
      */
     @Column(name = "description")
     private String description;
 
     /**
-     * 角色优先级
+     * uri
      */
-    @Column(name = "priority")
-    private Integer priority;
+    @Column(name = "uri")
+    private String uri;
+
+    /**
+     * 是否需要登录才能访问
+     */
+    @Column(name = "is_need_login")
+    private Boolean needLogin;
+
+    /**
+     * 是否对应角色才能访问
+     */
+    @Column(name = "is_need_role")
+    private Boolean needRole;
+
 
     /**
      * 创建时间
@@ -69,20 +68,21 @@ public class SysRole implements Serializable {
     private Date gmtCreate;
 
     /**
-     * 最后一次修改时间
+     * 修改时间
      */
     @LastModifiedDate
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+    /**
+     * 关联的角色
+     */
+    @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.EAGER)
+    @JoinTable(name = "rel_sys_authority_and_sys_role",
+            joinColumns = {@JoinColumn(name = "authority_code",referencedColumnName = "code")},
+            inverseJoinColumns = {@JoinColumn(name = "role_code",referencedColumnName = "code")}
+    )
+    private Set<SysRole> roles;
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }

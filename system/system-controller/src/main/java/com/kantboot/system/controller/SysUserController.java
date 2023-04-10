@@ -54,4 +54,14 @@ public class SysUserController {
         return stateSuccessService.success(service.securityLogin(dto), "loginSuccess");
     }
 
+    /**
+     * 获取自己的信息
+     * @return 自己的信息
+     */
+    @RequestMapping("/getSelf")
+    public RestResult getSelf() {
+        // 调用service层的获取自己信息方法，返回结果，并返回成功信息
+        return stateSuccessService.success(service.getSelf(), "getSuccess");
+    }
+
 }

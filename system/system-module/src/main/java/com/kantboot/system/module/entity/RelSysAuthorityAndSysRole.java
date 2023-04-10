@@ -24,6 +24,7 @@ import java.util.Date;
 @Table(name = "rel_sys_authority_and_sys_role")
 @EntityListeners(AuditingEntityListener.class)
 public class RelSysAuthorityAndSysRole {
+
     /**
      * 主键
      */

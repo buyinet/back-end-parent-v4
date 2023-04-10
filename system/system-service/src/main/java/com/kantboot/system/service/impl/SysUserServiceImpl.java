@@ -212,4 +212,21 @@ public class SysUserServiceImpl implements ISysUserService {
 
         return login(account, password);
     }
+
+    @Override
+    public SysUser getById(Long id) {
+        SysUser result = repository.findById(id).orElseThrow(() -> exceptionService.getException("userNotExist"));
+        return hideSensitiveInfo(result);
+    }
+
+    @Override
+    public SysUser getSelf() {
+        SysToken self = tokenService.getSelf();
+        return hideSensitiveInfo(self.getUser());
+    }
+
+    @Override
+    public Long getIdOfSelf() {
+        return getSelf().getId();
+    }
 }

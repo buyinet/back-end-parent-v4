@@ -52,4 +52,24 @@ public interface ISysUserService {
      */
     SysToken securityLogin(SecurityLoginAndRegisterDTO dto);
 
+    /**
+     * 根据用户Id获取用户信息
+     * @param id 用户Id
+     * @return 用户信息
+     */
+    SysUser getById(Long id);
+
+    /**
+     * 获取用户自身的信息
+     * @return 用户信息
+     */
+    SysUser getSelf();
+
+    /**
+     * 获取用户自身的id
+     * @return 用户id
+     */
+    Long getIdOfSelf();
+
+
 }
