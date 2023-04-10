@@ -39,6 +39,9 @@ public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private ISysSettingService settingService;
 
+    @Resource
+    private ISysRoleService roleService;
+
     /**
      * 对用户的手机号进行隐私保护，将中间4位数字用星号替代
      * @param phone 用户手机号
@@ -119,6 +122,23 @@ public class SysUserServiceImpl implements ISysUserService {
         return user;
     }
 
+    /**
+     * 处理用户给客户端返回的信息
+     * @param user 用户
+     *             1、隐藏敏感信息
+     *             2、设置用户的角色信息
+     * @return 处理后的用户
+     */
+    private SysUser handleUser(SysUser user) {
+        // 1、隐藏敏感信息
+        SysUser result = hideSensitiveInfo(user);
+        // 2、设置用户的角色信息
+        Set<SysRole> roles = user.getRoles();
+        result.setRoles(roleService.getByRoles(roles));
+        return result;
+    }
+
+
     @Override
     public SysToken register(String username, String password) {
         // 根据用户名查询用户
@@ -142,11 +162,11 @@ public class SysUserServiceImpl implements ISysUserService {
         SysToken token = tokenService.createToken(save.getId());
 
         // 隐藏敏感信息
-        SysUser userOfHide = hideSensitiveInfo(token.getUser());
-        token.setUser(userOfHide);
+        SysUser handleUser = handleUser(token.getUser());
+        token.setUser(handleUser);
 
         // 设置token的用户信息
-        log.info("用户注册成功，用户信息为：{}，token信息为：{}",userOfHide,token);
+        log.info("用户注册成功，用户信息为：{}，token信息为：{}",handleUser,token);
 
         return token;
     }
@@ -193,7 +213,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
         // 创建token
         SysToken token = tokenService.createToken(user.getId());
-        token.setUser(hideSensitiveInfo(token.getUser()));
+        token.setUser(handleUser(token.getUser()));
         return token;
     }
 
@@ -213,16 +233,19 @@ public class SysUserServiceImpl implements ISysUserService {
         return login(account, password);
     }
 
+
+
+
     @Override
     public SysUser getById(Long id) {
         SysUser result = repository.findById(id).orElseThrow(() -> exceptionService.getException("userNotExist"));
-        return hideSensitiveInfo(result);
+        return handleUser(result);
     }
 
     @Override
     public SysUser getSelf() {
         SysToken self = tokenService.getSelf();
-        return hideSensitiveInfo(self.getUser());
+        return handleUser(self.getUser());
     }
 
     @Override
