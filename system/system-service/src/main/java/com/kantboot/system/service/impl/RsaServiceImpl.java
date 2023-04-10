@@ -82,7 +82,11 @@ public class RsaServiceImpl implements IRsaService {
     public String decrypt(String encryptStr, String publicKey) {
         RSA rsa = new RSA(getPrivateKey(publicKey), publicKey);
         try {
-            return rsa.decryptStr(encryptStr, KeyType.PrivateKey);
+            // 尝试解密
+            String decryptStr = rsa.decryptStr(encryptStr, KeyType.PrivateKey);
+            // 解密成功后，删除redis中的privateKey
+            redisUtil.delete(getPrivateKeyKey(publicKey));
+            return decryptStr;
         } catch (Exception e) {
             // 如果解密失败，则抛出异常
             throw exceptionService.getException("decryptionError");

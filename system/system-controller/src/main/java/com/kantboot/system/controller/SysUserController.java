@@ -1,11 +1,11 @@
 package com.kantboot.system.controller;
 
-import com.kantboot.system.module.entity.SysUser;
-import com.kantboot.system.repository.SysUserRepository;
+import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +30,13 @@ public class SysUserController {
             @RequestParam("password") String password) {
         // 调用service层的注册方法，返回结果，并返回成功信息
         return stateSuccessService.success(service.register(username, password), "registerSuccess");
+    }
+
+    @RequestMapping("/securityRegister")
+    public RestResult securityRegister(
+            @RequestBody SecurityLoginAndRegisterDTO dto) {
+        // 调用service层的安全注册方法，返回结果，并返回成功信息
+        return stateSuccessService.success(service.securityRegister(dto), "registerSuccess");
     }
 
 }
