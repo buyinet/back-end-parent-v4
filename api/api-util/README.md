@@ -19,3 +19,24 @@ BaiduTranslateResult translate = BaiduTranslateUtil.translate(baiduTranslatePara
 // 输出结果：{"src":"你好","dst":"Hello"}
 System.out.println(JSON.toJSONString(translate));
 ```
+> 顺带一提，生成国际化的字典的service就是通过这个工具实现的
+
+#### 生成国际化字典的api
+此api时在此顺带一提，
+使用此接口可以快速翻译几十种语言倒国际化字典
+
+URL:
+```shell
+{{url}}/api/baiduTranslate/generateDictI18n
+```
+
+参数说明：
+```json
+{
+    "q":"权限不足",
+    "from":"zh",
+    "dictGroupCode":"stateError",
+    "dictCode":"insufficientPermissions"
+}
+```
+
