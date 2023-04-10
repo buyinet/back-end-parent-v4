@@ -3,7 +3,6 @@ package com.kantboot.system.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.kantboot.system.module.entity.SysDictI18n;
 import com.kantboot.system.repository.SysDictI18nRepository;
-import com.kantboot.system.repository.SysLanguageRepository;
 import com.kantboot.system.service.ISysDictI18nService;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
 import com.kantboot.util.core.redis.RedisUtil;
@@ -26,8 +25,6 @@ public class SysDictI18nServiceImpl implements ISysDictI18nService {
     @Resource
     private SysDictI18nRepository repository;
 
-    @Resource
-    private SysLanguageRepository languageRepository;
 
     @Resource
     private HttpRequestHeaderUtil httpRequestHeaderUtil;
