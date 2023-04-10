@@ -1,5 +1,6 @@
 package com.kantboot.system.module.entity;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 角色实体类
@@ -29,6 +31,7 @@ public class SysRole implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JSONField(serialize = false)
     private Long id;
 
     /**
@@ -46,12 +49,13 @@ public class SysRole implements Serializable {
     /**
      * 角色名称
      */
-    @Column(name = "name", length = 64)
+    @Column(name = "name")
     private String name;
 
     /**
      * 角色描述
      */
+    @JSONField(serialize = false)
     @Column(name = "description")
     private String description;
 

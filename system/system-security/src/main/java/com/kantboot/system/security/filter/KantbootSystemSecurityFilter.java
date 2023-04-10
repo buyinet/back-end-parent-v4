@@ -14,13 +14,13 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 系统安全拦截器
@@ -75,6 +75,28 @@ public class KantbootSystemSecurityFilter implements Filter {
         log.info("请求路径：{}，耗时：{}ms", requestUri, end - start);
     }
 
+
+    /**
+     * URI匹配分割
+     * 例：requestURI是/system/user/list，这个数组便是/system/**，/system/user/**，/system/user/list
+     *
+     * @param requestUri 请求URI
+     * @return 分割后的集合
+     */
+    private List<String> requestUriSplit(String requestUri) {
+        String[] arr = requestUri.split("/");
+        List<String> pathList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(arr).filter(s -> !s.isEmpty()).forEach(s -> {
+            sb.append("/").append(s);
+            pathList.add(sb + "/**");
+        });
+        // 添加最后一个路径
+        pathList.set(pathList.size() - 1, pathList.get(pathList.size() - 1).substring(0, pathList.get(pathList.size() - 1).length() - 3));
+        return pathList;
+    }
+
+
     /**
      * 根据路径检查是否可放行
      *
@@ -113,9 +135,9 @@ public class KantbootSystemSecurityFilter implements Filter {
         }
 
         // 用户的角色
-        Set<SysRole> rolesOfUser = user.getRoles();
+        List<SysRole> rolesOfUser = user.getRoles();
         // 权限的角色
-        Set<SysRole> rolesOfPermission = byUri.getRoles();
+        List<SysRole> rolesOfPermission = byUri.getRoles();
         // 用户的角色编码
         List<String> roleCodesOfUser = new ArrayList<>();
         // 权限的角色编码
@@ -139,28 +161,6 @@ public class KantbootSystemSecurityFilter implements Filter {
         }
 
     }
-
-
-    /**
-     * URI匹配分割
-     * 例：requestURI是/system/user/list，这个数组便是/system/**，/system/user/**，/system/user/list
-     *
-     * @param requestUri 请求URI
-     * @return 分割后的集合
-     */
-    private List<String> requestUriSplit(String requestUri) {
-        String[] arr = requestUri.split("/");
-        List<String> pathList = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        Arrays.stream(arr).filter(s -> !s.isEmpty()).forEach(s -> {
-            sb.append("/").append(s);
-            pathList.add(sb + "/**");
-        });
-        // 添加最后一个路径
-        pathList.set(pathList.size() - 1, pathList.get(pathList.size() - 1).substring(0, pathList.get(pathList.size() - 1).length() - 3));
-        return pathList;
-    }
-
 
     /**
      * 异常处理

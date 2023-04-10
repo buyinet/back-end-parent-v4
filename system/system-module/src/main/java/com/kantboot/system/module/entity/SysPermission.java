@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -83,6 +84,6 @@ public class SysPermission {
             joinColumns = {@JoinColumn(name = "permission_code",referencedColumnName = "code")},
             inverseJoinColumns = {@JoinColumn(name = "role_code",referencedColumnName = "code")}
     )
-    private Set<SysRole> roles;
+    private List<SysRole> roles;
 
 }

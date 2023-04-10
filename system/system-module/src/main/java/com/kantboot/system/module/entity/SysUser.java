@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 用户实体类
@@ -163,18 +163,13 @@ public class SysUser implements Serializable {
     /**
      * 关联的角色
      * 一个用户可以有多个角色
-     * fetch = FetchType.EAGER：表示在查询用户时，同时查询用户的角色
-     *     解决了 Could not write JSON:
-     *     FASTJSON-2.0.9 write JSON errorfailed to lazily initialize a
-     *     collection of role: com.kantboot.system.module.entity.SysUser.roles:
-     *     could not initialize proxy - no Session]
      */
     @ManyToMany(targetEntity = SysRole.class,fetch = FetchType.EAGER)
     @JoinTable(name = "rel_sys_user_and_sys_role",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_code",referencedColumnName = "code")}
     )
-    private Set<SysRole> roles;
+    private List<SysRole> roles;
 
 
 }

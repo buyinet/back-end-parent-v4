@@ -11,6 +11,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -133,8 +134,7 @@ public class SysUserServiceImpl implements ISysUserService {
         // 1、隐藏敏感信息
         SysUser result = hideSensitiveInfo(user);
         // 2、设置用户的角色信息
-        Set<SysRole> roles = user.getRoles();
-        result.setRoles(roleService.getByRoles(roles));
+        result.setRoles(roleService.getByRoles(user.getRoles()));
         return result;
     }
 
@@ -154,10 +154,9 @@ public class SysUserServiceImpl implements ISysUserService {
         SysUser user = new SysUser().setPassword(encodePassword).setUsername(username);
         // 获取用户注册时的默认角色
         String defaultRole = settingService.getValue("user","newUserRegisterRoleCode");
-        Set<SysRole> roles = Set.of(new SysRole().setCode(defaultRole));
 
         // 保存用户
-        SysUser save = repository.save(user.setRoles(roles));
+        SysUser save = repository.save(user.setRoles(List.of(new SysRole().setCode(defaultRole))));
         // 创建token
         SysToken token = tokenService.createToken(save.getId());
 
