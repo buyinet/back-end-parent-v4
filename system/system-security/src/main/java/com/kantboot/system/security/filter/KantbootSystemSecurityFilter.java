@@ -4,8 +4,8 @@ import com.alibaba.fastjson2.JSON;
 import com.kantboot.system.module.entity.SysPermission;
 import com.kantboot.system.module.entity.SysRole;
 import com.kantboot.system.module.entity.SysUser;
-import com.kantboot.system.service.ISysPermissionService;
 import com.kantboot.system.service.ISysExceptionService;
+import com.kantboot.system.service.ISysPermissionService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.exception.BaseException;
 import jakarta.annotation.Resource;
@@ -56,66 +56,65 @@ public class KantbootSystemSecurityFilter implements Filter {
         List<String> pathList = requestUriSplit(requestUri);
         // 遍历匹配
         for (String path : pathList) {
-            SysPermission byUri = permissionService.getByUri(path);
-            if (byUri == null) {
-                continue;
-            }
-            SysUser user = null;
-            // 判断是否需要登录
-            if (byUri.getNeedLogin()) {
-                try {
-                    user = userService.getSelf();
-                } catch (BaseException e) {
-                    // 异常处理
-                    exceptionHandler(response, e);
-                    return;
-                }
-            }
-            // 判断是否限制角色
-            if (byUri.getNeedRole()) {
-                log.info("需要角色，路径：{}", path);
-                if (user == null) {
-                    try {
-                        user = userService.getSelf();
-                        log.info("用户：{}，路径：{}", user, path);
-                    } catch (BaseException e) {
-                        // 异常处理
-                        exceptionHandler(response, e);
-                        return;
-                    }
-                }
-                // 判断角色
-                Set<SysRole> roles = user.getRoles();
-                // 遍历角色
-                for (SysRole role : roles) {
-                    // 遍历权限
-                    Set<SysRole> roles1 = byUri.getRoles();
-                    // 遍历角色
-                    for (SysRole role1 : roles1){
-                        // 判断角色是否匹配
-                        if (role.getCode().equals(role1.getCode())) {
-                            try {
-                                // 放行
-                                filterChain.doFilter(request, response);
-                                return;
-                            } catch (IOException | ServletException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                }
-
-                exceptionHandler(response, exceptionService.getException("insufficientPermissions"));
-                return;
-
-            }
-
-
+            // 检查是否可放行
+            checkPath(path);
         }
 
         // 放行
         filterChain.doFilter(request, response);
     }
+
+    /**
+     * 根据路径检查是否可放行
+     *
+     * @param path 路径
+     *             例：/system/user/list
+     */
+    private void checkPath(String path) {
+
+        // 初始化用户
+        SysUser user = null;
+
+        // 根据uri获取权限
+        SysPermission byUri = permissionService.getByUri(path);
+
+        if (byUri == null) {
+            // 如果没有权限，直接放行
+            return;
+        }
+
+        // 判断是否需要登录
+        if (byUri.getNeedLogin()) {
+            user = userService.getSelf();
+        }
+
+        if (!byUri.getNeedRole()) {
+            // 如果不需要登录，也不需要角色，直接放行
+            return;
+        }
+
+        // 再次判断是否需要登录
+        if (user == null) {
+            // 如果需要角色限制，但是当前用户未登录，会告知客户端没有登录
+            // 这一步是必要的，因为如果配置了需要角色限制，但没有配置需要登录，那么可能无法获取用户角色信息
+            // 因此，配置了需要角色限制，无论是否配置需要登录，都必须在登录状态下才能访问
+            user = userService.getSelf();
+        }
+
+        // 用户的角色
+        Set<SysRole> rolesOfUser = user.getRoles();
+        // 权限的角色
+        Set<SysRole> rolesOfPermission = byUri.getRoles();
+        // 判断是否有交集，true表示有交集，false表示没有交集
+        boolean isIntersect = rolesOfUser.stream().anyMatch(rolesOfPermission::contains);
+
+        // 如果没有交集，抛出异常，告知客户端没有权限
+        if (!isIntersect) {
+            throw exceptionService.getException("insufficientPermissions");
+        }
+
+    }
+
 
     /**
      * URI匹配分割
@@ -128,12 +127,10 @@ public class KantbootSystemSecurityFilter implements Filter {
         String[] arr = requestUri.split("/");
         List<String> pathList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        Arrays.stream(arr)
-                .filter(s -> !s.isEmpty())
-                .forEach(s -> {
-                    sb.append("/").append(s);
-                    pathList.add(sb + "/**");
-                });
+        Arrays.stream(arr).filter(s -> !s.isEmpty()).forEach(s -> {
+            sb.append("/").append(s);
+            pathList.add(sb + "/**");
+        });
         // 添加最后一个路径
         pathList.set(pathList.size() - 1, pathList.get(pathList.size() - 1).substring(0, pathList.get(pathList.size() - 1).length() - 3));
         return pathList;
@@ -143,12 +140,11 @@ public class KantbootSystemSecurityFilter implements Filter {
     /**
      * 异常处理
      *
-     * @param servletResponse 响应
-     * @param e               异常
+     * @param response 响应
+     * @param e        异常
      * @throws IOException IO异常
      */
-    private void exceptionHandler(ServletResponse servletResponse, BaseException e) throws IOException {
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    private void exceptionHandler(HttpServletResponse response, BaseException e) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
