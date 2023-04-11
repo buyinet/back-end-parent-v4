@@ -1,7 +1,10 @@
 package com.kantboot.base.service;
 
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
+import org.springframework.data.domain.Page;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,5 +41,11 @@ public interface IBaseAdminService<T,ID> {
      */
     List<T> getList(CommonParam<T> commonParam);
 
+    /**
+     * 分页查询
+     * @param pageParam 实体类
+     * @return 实体类
+     */
+    HashMap<String,Object> getPage(CommonParamPageParam<T> pageParam);
 
 }

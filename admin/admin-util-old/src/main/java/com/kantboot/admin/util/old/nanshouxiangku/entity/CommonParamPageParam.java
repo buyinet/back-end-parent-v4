@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 @Data
 @Accessors(chain = true)
-public class CommonEntityPageParam<T> implements Serializable {
+public class CommonParamPageParam<T> implements Serializable {
     private int pageNumber;
 
     private int pageSize;
@@ -39,7 +39,7 @@ public class CommonEntityPageParam<T> implements Serializable {
         return result;
     }
 
-    public CommonEntityPageParam<T> addDataAndEq(T entity){
+    public CommonParamPageParam<T> addDataAndEq(T entity){
         if(this.getData()==null){
             this.setData(new CommonParam<>());
         }
@@ -53,7 +53,7 @@ public class CommonEntityPageParam<T> implements Serializable {
         return this;
     }
 
-    public CommonEntityPageParam<T> addDataAndGe(T entity) {
+    public CommonParamPageParam<T> addDataAndGe(T entity) {
         if(this.getData()==null){
             this.setData(new CommonParam<>());
         }
@@ -67,7 +67,7 @@ public class CommonEntityPageParam<T> implements Serializable {
         return this;
     }
 
-    public CommonEntityPageParam<T> addDataAndLe(T entity) {
+    public CommonParamPageParam<T> addDataAndLe(T entity) {
         if(this.getData()==null){
             this.setData(new CommonParam<>());
         }

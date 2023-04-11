@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonEntityPageParam;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.admin.util.old.nanshouxiangku.util.FindCommonUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -76,7 +76,7 @@ public abstract class OldBaseService<T, ID> {
     /**
      * 通用查询
      */
-    public HashMap<String, Object> findCommonByPage(CommonEntityPageParam<T> pageParam) {
+    public HashMap<String, Object> findCommonByPage(CommonParamPageParam<T> pageParam) {
         CommonParam<T> commonParam = pageParam.getData();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();

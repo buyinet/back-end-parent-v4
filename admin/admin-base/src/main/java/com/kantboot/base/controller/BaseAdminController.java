@@ -1,5 +1,7 @@
 package com.kantboot.base.controller;
 
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.base.service.IBaseAdminService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
@@ -56,6 +58,16 @@ public class BaseAdminController<T,ID> {
     @RequestMapping("/getById")
     public RestResult getById(@RequestBody T entity) {
         return stateSuccessService.success(service.getById(entity), "getSuccess");
+    }
+
+    @RequestMapping("/getList")
+    public RestResult getList(@RequestBody CommonParam<T> param) {
+        return stateSuccessService.success(service.getList(param), "getSuccess");
+    }
+
+    @RequestMapping("/getPage")
+    public RestResult getPage(@RequestBody CommonParamPageParam<T> param) {
+        return stateSuccessService.success(service.getPage(param), "getSuccess");
     }
 
 }
