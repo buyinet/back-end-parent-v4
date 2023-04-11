@@ -1,17 +1,18 @@
 package com.kantboot.amin.util.param;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 查询参数
- * 面向查询的直接逻辑参数
+ * 面向查询的直接参数
  * @author 方某方
  */
 @Data
-public class DirectLogicSelectParam<T> {
+public class DirectSelectParam<T> {
 
     /**
      * 代表 =
@@ -85,5 +86,9 @@ public class DirectLogicSelectParam<T> {
      * 代表 <=
      */
     private List<T> leList = new ArrayList<>();
+
+    public JSONObject toJSONObject() {
+        return JSONObject.parseObject(JSON.toJSONString(this));
+    }
 
 }

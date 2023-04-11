@@ -1,17 +1,11 @@
 package com.kantboot.base.controller;
 
-import com.kantboot.amin.util.operate.BaseAdminOperate;
 import com.kantboot.base.service.IBaseAdminService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,6 +23,7 @@ public class BaseAdminController<T,ID> {
 
     @Resource
     private IStateSuccessService stateSuccessService;
+
 
 
     /**

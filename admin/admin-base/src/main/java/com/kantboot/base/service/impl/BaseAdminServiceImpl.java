@@ -3,6 +3,7 @@ package com.kantboot.base.service.impl;
 import com.kantboot.amin.util.operate.BaseAdminOperate;
 import com.kantboot.base.service.IBaseAdminService;
 import com.kantboot.system.service.ISysExceptionService;
+import com.kantboot.util.common.exception.BaseException;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -67,7 +68,12 @@ public class BaseAdminServiceImpl<T,ID> implements IBaseAdminService<T,ID> {
                 // 如果id不为空，那么就是修改
 
                 // 先根据id查询出来，然后再把entity的值赋值给byId
-                T byId = jpaRepository.findById(baseAdminOperate.getId(entity)).orElseThrow(() -> exceptionService.getException("getFail"));
+                T byId = jpaRepository.findById(baseAdminOperate.getId(entity))
+                        .orElseThrow(() ->
+                                // 如果根据id查询不到，那么就抛出异常，告知前端数据不存在
+                                exceptionService.getException("dataNotExist")
+                        );
+
                 // 把entity的值赋值给byId，但是不赋值null的值
                 BeanUtils.copyProperties(entity, byId, baseAdminOperate.getNullPropertyNames(entity));
                 // 保存
@@ -75,7 +81,13 @@ public class BaseAdminServiceImpl<T,ID> implements IBaseAdminService<T,ID> {
             }
             transaction.commit();
             entityManager.close();
-        } catch (Exception e) {
+        }
+        catch (BaseException e){
+            transaction.rollback();
+            entityManager.close();
+            throw e;
+        }
+        catch (Exception e) {
             transaction.rollback();
             entityManager.close();
             log.error("保存失败", e);

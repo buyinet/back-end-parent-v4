@@ -1,25 +1,36 @@
 package com.kantboot.amin.util.operate;
 
-import jakarta.persistence.Id;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.kantboot.amin.util.param.IndirectSelectParam;
+import jakarta.annotation.Resource;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * 管理员基础工具类
- * 用于继承
- *
  * @param <T>  实体类
  * @param <ID> 主键的类型
  * @author 方某方
  */
 @Component
 public class BaseAdminOperate<T, ID> {
+
+    @Resource
+    private EntityManagerFactory entityManagerFactory;
+
 
     /**
      * 根据实体类获取id
@@ -29,15 +40,7 @@ public class BaseAdminOperate<T, ID> {
      */
     @SneakyThrows
     public ID getId(T entity) {
-        // 查询又@Id注解的字段
-        Field[] declaredFields = entity.getClass().getDeclaredFields();
-        for (Field declaredField : declaredFields) {
-            if (declaredField.isAnnotationPresent(Id.class)) {
-                declaredField.setAccessible(true);
-                return (ID) declaredField.get(entity);
-            }
-        }
-        return null;
+       return (ID) entityManagerFactory.getPersistenceUnitUtil().getIdentifier(entity);
     }
 
     /**
@@ -59,6 +62,31 @@ public class BaseAdminOperate<T, ID> {
         }
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
+    }
+
+    /**
+     * 根据条件查询获取list
+     * @param param 参数
+     * @return 查询条件
+     */
+    public List<T> getList(IndirectSelectParam<T> param) {
+        Specification<T> specification = new Specification<T>() {
+            @Override
+            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                // 设置and 下 = 的查询条件
+                Predicate andEqPredicate = criteriaBuilder.conjunction();
+                // 设置查询条件
+                if (null!=param.getAnd()||null!=param.getAnd().getEq()) {
+                    JSONObject.parseObject(JSON.toJSONString(param.getAnd().getEq())).forEach((k, v) -> {
+                        andEqPredicate.getExpressions().add(criteriaBuilder.equal(root.get(k), v));
+                    });
+                }
+
+                Predicate and = criteriaBuilder.and(andEqPredicate);
+                return null;
+            }
+        };
+        return null;
     }
 
 

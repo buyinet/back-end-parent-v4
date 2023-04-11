@@ -81,7 +81,12 @@ public class SysDictI18nServiceImpl implements ISysDictI18nService {
         }
 
         // 如果redis中没有数据，则从数据库中查询
-        String value = repository.findByLanguageCodeAndDictGroupCodeAndDictCode(languageCode, dictGroupCode, dictCode).getValue();
+        SysDictI18n byLanguageCodeAndDictGroupCodeAndDictCode = repository.findByLanguageCodeAndDictGroupCodeAndDictCode(languageCode, dictGroupCode, dictCode);
+        if (byLanguageCodeAndDictGroupCodeAndDictCode == null) {
+            // 如果数据库中没有数据，则直接返回dictCode
+            return dictCode;
+        }
+        String value = byLanguageCodeAndDictGroupCodeAndDictCode.getValue();
         redisUtil.set(redisKey, value);
         return value;
     }

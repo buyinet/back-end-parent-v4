@@ -20,9 +20,6 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
     @Resource
     private SysPermissionRepository repository;
 
-    @Resource
-    private RedisUtil redisUtil;
-
     @Override
     public List<SysPermission> getList() {
         List<SysPermission> all = repository.findAll();
@@ -31,17 +28,7 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
 
     @Override
     public SysPermission getByUri(String uri) {
-        // redis中的key
-        String key = "sys:permission:uri:" + uri;
-        // 从redis中获取
-        SysPermission permission = JSON.parseObject(redisUtil.get(key), SysPermission.class);
-        if (permission != null) {
-            return permission;
-        }
-        // 如果redis中没有，则从数据库中查询
         SysPermission byUri = repository.findByUri(uri);
-        // 将查询到的数据放入redis中
-        redisUtil.set(key, JSON.toJSONString(byUri));
         return byUri;
     }
 }
