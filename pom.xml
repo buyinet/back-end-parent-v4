@@ -13,6 +13,7 @@
         <module>system</module>
         <module>start-all</module>
         <module>api</module>
+        <module>admin</module>
     </modules>
 
     <packaging>pom</packaging>

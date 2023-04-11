@@ -8,15 +8,20 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>com.kantboot</groupId>
     <artifactId>start-all</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>start-all</name>
     <description>start-all</description>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>com.kantboot</groupId>
+            <artifactId>admin-manage-system-controller</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.kantboot</groupId>

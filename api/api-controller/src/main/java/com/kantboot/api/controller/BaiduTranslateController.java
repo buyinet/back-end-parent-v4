@@ -38,7 +38,7 @@ public class BaiduTranslateController {
                                                @RequestParam("dictGroupCode") String dictGroupCode,
                                                @RequestParam("dictCode") String dictCode) {
         service.generateDictI18n(q, from, dictGroupCode, dictCode);
-        return stateSuccessService.success(null, "getSuccess");
+        return stateSuccessService.success(null, "generateSuccess");
     }
 
 }
