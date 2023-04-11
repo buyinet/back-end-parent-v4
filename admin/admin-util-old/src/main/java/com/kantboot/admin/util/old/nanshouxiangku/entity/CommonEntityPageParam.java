@@ -9,6 +9,11 @@ import org.springframework.data.domain.Sort;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * 分页查询参数接收工具
+ * 用于分页的工具类
+ * @param <T>
+ */
 @Data
 @Accessors(chain = true)
 public class CommonEntityPageParam<T> implements Serializable {
@@ -16,7 +21,7 @@ public class CommonEntityPageParam<T> implements Serializable {
 
     private int pageSize;
 
-    private CommonEntity<T> data;
+    private CommonParam<T> data;
 
     String sortType="ASC";
 
@@ -36,7 +41,7 @@ public class CommonEntityPageParam<T> implements Serializable {
 
     public CommonEntityPageParam<T> addDataAndEq(T entity){
         if(this.getData()==null){
-            this.setData(new CommonEntity<>());
+            this.setData(new CommonParam<>());
         }
         if(this.getData().getAnd()==null){
             this.getData().setAnd(new OperatorEntity<>());
@@ -50,7 +55,7 @@ public class CommonEntityPageParam<T> implements Serializable {
 
     public CommonEntityPageParam<T> addDataAndGe(T entity) {
         if(this.getData()==null){
-            this.setData(new CommonEntity<>());
+            this.setData(new CommonParam<>());
         }
         if(this.getData().getAnd()==null){
             this.getData().setAnd(new OperatorEntity<>());
@@ -64,7 +69,7 @@ public class CommonEntityPageParam<T> implements Serializable {
 
     public CommonEntityPageParam<T> addDataAndLe(T entity) {
         if(this.getData()==null){
-            this.setData(new CommonEntity<>());
+            this.setData(new CommonParam<>());
         }
         if(this.getData().getAnd()==null){
             this.getData().setAnd(new OperatorEntity<>());

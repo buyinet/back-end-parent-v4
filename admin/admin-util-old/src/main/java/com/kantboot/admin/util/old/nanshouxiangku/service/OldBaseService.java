@@ -1,6 +1,6 @@
-package com.kantboot.admin.util.old.nanshouxiangku.controller;
+package com.kantboot.admin.util.old.nanshouxiangku.service;
 
-import com.kantboot.util.common.result.RestResult;
+import com.kantboot.system.service.ISysExceptionService;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.web.bind.annotation.RestController;
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonEntity;
+import org.springframework.stereotype.Service;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonEntityPageParam;
 import com.kantboot.admin.util.old.nanshouxiangku.util.FindCommonUtil;
 
@@ -21,27 +21,32 @@ import java.util.List;
 
 /**
  * 通用查询
- * 很早之前的代码，代码太乱了，不适合维护和优化，但是需要使用
+ * 对很早之前的代码稍微改了一下下
+ * 很早之前的代码，代码太乱了，
+ * 不适合维护和优化，但是需要使用，之后要重构
  * @param <T>
  * @param <ID>
  * @author 方某方
  */
-@RestController
+@Service
 @Slf4j
 public abstract class OldBaseService<T, ID> {
 
     @Resource
-    EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     @Resource
-    FindCommonUtil<T> findCommonUtil;
+    private FindCommonUtil<T,ID> findCommonUtil;
+
+    @Resource
+    private ISysExceptionService exceptionService;
 
     /**
      * 通用查询
      *
      * @return
      */
-    public List<T> findCommonByList(CommonEntity<T> commonEntity) {
+    public List<T> findCommonByList(CommonParam<T> commonParam) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -52,7 +57,7 @@ public abstract class OldBaseService<T, ID> {
 
             SimpleJpaRepository<T, ID> jpaRepository = new SimpleJpaRepository<T, ID>(aClass, entityManager);
 
-            Specification<T> specification = findCommonUtil.findCommon(commonEntity, entityManager, transaction);
+            Specification<T> specification = findCommonUtil.findCommon(commonParam, entityManager, transaction);
             List<T> all = jpaRepository.findAll(specification);
             transaction.commit();
             entityManager.close();
@@ -62,19 +67,17 @@ public abstract class OldBaseService<T, ID> {
             if(entityManager!=null){
                 entityManager.close();
             }
+            throw exceptionService.getException("queryError");
         } finally {
             entityManager.close();
         }
-        return null;
     }
 
     /**
      * 通用查询
-     *
-     * @return
      */
     public HashMap<String, Object> findCommonByPage(CommonEntityPageParam<T> pageParam) {
-        CommonEntity<T> commonEntity = pageParam.getData();
+        CommonParam<T> commonParam = pageParam.getData();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -83,14 +86,13 @@ public abstract class OldBaseService<T, ID> {
             Class entityClass = (Class)type.getActualTypeArguments()[0];
             Class<T> aClass = entityClass;
 
-            commonEntity.setEntity((T) entityClass.newInstance());
+            commonParam.setEntity((T) entityClass.newInstance());
 
             SimpleJpaRepository<T, ID> jpaRepository = new SimpleJpaRepository<T, ID>(aClass, entityManager);
-            Specification<T> specification = findCommonUtil.findCommon(commonEntity, entityManager, transaction);
+            Specification<T> specification = findCommonUtil.findCommon(commonParam, entityManager, transaction);
             Page<T> all = jpaRepository.findAll(specification, pageParam.getPageable());
             transaction.commit();
             entityManager.close();
-            long endDate = System.currentTimeMillis();
             HashMap<String, Object> result = new HashMap<>();
             result.put("totalElements", all.getTotalElements());
             result.put("totalPage", all.getTotalPages());
@@ -104,12 +106,12 @@ public abstract class OldBaseService<T, ID> {
             if(entityManager!=null){
                 entityManager.close();
             }
+            throw exceptionService.getException("queryError");
         } finally {
             if(entityManager!=null){
                 entityManager.close();
             }
         }
-        return null;
     }
 
 

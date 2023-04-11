@@ -1,5 +1,7 @@
 package com.kantboot.base.service.impl;
 
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
+import com.kantboot.admin.util.old.nanshouxiangku.service.OldBaseService;
 import com.kantboot.amin.util.operate.BaseAdminOperate;
 import com.kantboot.base.service.IBaseAdminService;
 import com.kantboot.system.service.ISysExceptionService;
@@ -12,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 管理员服务基类实现类
@@ -31,6 +35,15 @@ public class BaseAdminServiceImpl<T,ID> implements IBaseAdminService<T,ID> {
 
     @Resource
     private ISysExceptionService exceptionService;
+
+    @Resource
+    private OldBaseService<T,ID> oldBaseService;
+
+    @Override
+    public List<T> getList(CommonParam<T> commonParam) {
+        oldBaseService.findCommonByList(commonParam);
+        return null;
+    }
 
     @Override
     public void delete(T entity) {

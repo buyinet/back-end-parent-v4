@@ -4,11 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonEntity;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
+import jakarta.annotation.Resource;
+import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -27,54 +25,54 @@ import java.util.*;
 
 @Component
 @Slf4j
-public class FindCommonUtil<T> {
+public class FindCommonUtil<T,ID> {
 
     /**
      * 用来通用查询的方法
      *
-     * @param commonEntity
+     * @param commonParam
      * @param entityManager
      * @param transaction
      * @return Specification<T>
      */
-    public Specification<T> findCommon(CommonEntity<T> commonEntity, EntityManager entityManager, EntityTransaction transaction) {
+    public Specification<T> findCommon(CommonParam<T> commonParam, EntityManager entityManager, EntityTransaction transaction) {
         transaction.begin();
 
 
-        List<T> andLe = commonEntity.getAnd().getLe();
+        List<T> andLe = commonParam.getAnd().getLe();
         String andLeJSONString = JSON.toJSONString(andLe);
         List<HashMap> andLeMaps = JSON.parseArray(andLeJSONString, HashMap.class);
 
         ///////
-        List<T> orEq = commonEntity.getOr().getEq();
+        List<T> orEq = commonParam.getOr().getEq();
         String orEqJSONString = JSON.toJSONString(orEq);
         List<HashMap> orEqMaps = JSON.parseArray(orEqJSONString, HashMap.class);
 
 
-        List<T> orLike = commonEntity.getOr().getLike();
+        List<T> orLike = commonParam.getOr().getLike();
         String orLikeJSONString = JSON.toJSONString(orLike);
         List<HashMap> orLikeMaps = JSON.parseArray(orLikeJSONString, HashMap.class);
 
 
-        List<T> orVague = commonEntity.getOr().getVague();
+        List<T> orVague = commonParam.getOr().getVague();
         String orVagueJSONString = JSON.toJSONString(orVague);
         List<HashMap> orVagueMaps = JSON.parseArray(orVagueJSONString, HashMap.class);
 
 
-        List<T> orGt = commonEntity.getOr().getGt();
+        List<T> orGt = commonParam.getOr().getGt();
         String orGtJSONString = JSON.toJSONString(orGt);
         List<HashMap> orGtMaps = JSON.parseArray(orGtJSONString, HashMap.class);
 
-        List<T> orLt = commonEntity.getOr().getLt();
+        List<T> orLt = commonParam.getOr().getLt();
         String orLtJSONString = JSON.toJSONString(orLt);
         List<HashMap> orLtMaps = JSON.parseArray(orLtJSONString, HashMap.class);
 
 
-        List<T> orGe = commonEntity.getOr().getGe();
+        List<T> orGe = commonParam.getOr().getGe();
         String orGeJSONString = JSON.toJSONString(orGe);
         List<HashMap> orGeMaps = JSON.parseArray(orGeJSONString, HashMap.class);
 
-        List<T> orLe = commonEntity.getAnd().getLe();
+        List<T> orLe = commonParam.getAnd().getLe();
         String orLeJSONString = JSON.toJSONString(orLe);
         List<HashMap> orLeMaps = JSON.parseArray(orLeJSONString, HashMap.class);
 
@@ -84,7 +82,7 @@ public class FindCommonUtil<T> {
                 List<Predicate> predicatesByAnd = new ArrayList<Predicate>();
 
                 //查询所有非空的数据
-                for (String s : commonEntity.getNotNull()) {
+                for (String s : commonParam.getNotNull()) {
                     predicatesByAnd.add(
                             criteriaBuilder
                                     .isNotNull(root.get(s)));
@@ -92,36 +90,36 @@ public class FindCommonUtil<T> {
 
 
                 // 查询所有为空的数据
-                for (String s : commonEntity.getIsNull()) {
+                for (String s : commonParam.getIsNull()) {
                     predicatesByAnd.add(
                             criteriaBuilder
                                     .isNull(root.get(s)));
                 }
 
                 //查询所有 and 下的 = 条件
-                FindCommonUtil.findCommonAndEq(commonEntity,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndEq(commonParam,predicatesByAnd,criteriaBuilder,root);
 
                 //查询所有 and 下的 % 条件
-                FindCommonUtil.findCommonAndLike(commonEntity,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndLike(commonParam,predicatesByAnd,criteriaBuilder,root);
 
                 //查询所有 and 下的 模糊 条件
-                FindCommonUtil.findCommonAndVague(commonEntity,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndVague(commonParam,predicatesByAnd,criteriaBuilder,root);
 
                 //查询所有 and 下的 > 条件
-                FindCommonUtil.findCommonAndGt(commonEntity,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndGt(commonParam,predicatesByAnd,criteriaBuilder,root);
 
                 //查询所有 and 下的 < 条件
-                FindCommonUtil.findCommonAndLt(commonEntity,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndLt(commonParam,predicatesByAnd,criteriaBuilder,root);
 
                 //查询所有 and 下的 >= 条件
-                FindCommonUtil.findCommonAndGe(commonEntity,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndGe(commonParam,predicatesByAnd,criteriaBuilder,root);
 
                 //查询所有 and 下的 <= 条件
                 for (HashMap map : andLeMaps) {
                     Set<String> set = map.keySet();
                     for (String s : set) {
                         boolean bool = true;
-                        if (FindCommonUtil.isHasTransient(commonEntity.getEntity(), s)) {
+                        if (FindCommonUtil.isHasTransient(commonParam.getEntity(), s)) {
                             bool = false;
                         }
                         if (bool) {
@@ -733,18 +731,18 @@ public class FindCommonUtil<T> {
      * 查询所有 and 下的 = 条件
      */
     public static void findCommonAndEq(
-            CommonEntity commonEntity,
+            CommonParam commonParam,
             List<Predicate> predicatesByAnd,
             CriteriaBuilder criteriaBuilder,
             Root root){
-        List andEq = commonEntity.getAnd().getEq();
+        List andEq = commonParam.getAnd().getEq();
         String andEqJSONString = JSON.toJSONString(andEq);
         List<HashMap> andEqMaps = JSON.parseArray(andEqJSONString, HashMap.class);
 
         for (HashMap map : andEqMaps) {
             Set<String> set = map.keySet();
             for (String s : set) {
-                if (FindCommonUtil.isHasTransientByFiled(commonEntity.getEntity(), s)) {
+                if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
                 }else
                 if (!StringUtils.isEmpty(map.get(s))) {
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
@@ -790,18 +788,18 @@ public class FindCommonUtil<T> {
     /**
      * 查询所有 and 下的 like 条件
      */
-    public static void findCommonAndLike(CommonEntity commonEntity,
+    public static void findCommonAndLike(CommonParam commonParam,
                                          List<Predicate> predicatesByAnd,
                                          CriteriaBuilder criteriaBuilder,
                                          Root root){
-        List andLike = commonEntity.getAnd().getLike();
+        List andLike = commonParam.getAnd().getLike();
         String andLikeJSONString = JSON.toJSONString(andLike);
         List<HashMap> andLikeMaps = JSON.parseArray(andLikeJSONString, HashMap.class);
 
         for (HashMap map : andLikeMaps) {
             Set<String> set = map.keySet();
             for (String s : set) {
-                if (FindCommonUtil.isHasTransientByFiled(commonEntity.getEntity(), s)) {
+                if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
                 }
                 else if (!StringUtils.isEmpty(map.get(s))) {
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
@@ -835,19 +833,19 @@ public class FindCommonUtil<T> {
 
     }
 
-    public static void findCommonAndVague(CommonEntity commonEntity,
+    public static void findCommonAndVague(CommonParam commonParam,
                                           List<Predicate> predicatesByAnd,
                                           CriteriaBuilder criteriaBuilder,
                                           Root root){
 
-        List andVague = commonEntity.getAnd().getVague();
+        List andVague = commonParam.getAnd().getVague();
         String andVagueJSONString = JSON.toJSONString(andVague);
         List<HashMap> andVagueMaps = JSON.parseArray(andVagueJSONString, HashMap.class);
         for (HashMap map : andVagueMaps) {
             Set<String> set = map.keySet();
             for (String s : set) {
 
-                if (FindCommonUtil.isHasTransientByFiled(commonEntity.getEntity(), s)) {
+                if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
                 }
                 else if (!StringUtils.isEmpty(map.get(s))) {
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
@@ -885,11 +883,11 @@ public class FindCommonUtil<T> {
 
     }
 
-    public static void findCommonAndGt(CommonEntity commonEntity,
+    public static void findCommonAndGt(CommonParam commonParam,
                                        List<Predicate> predicatesByAnd,
                                        CriteriaBuilder criteriaBuilder,
                                        Root root){
-        List andGt = commonEntity.getAnd().getGt();
+        List andGt = commonParam.getAnd().getGt();
         String andGtJSONString = JSON.toJSONString(andGt);
         List<HashMap> andGtMaps = JSON.parseArray(andGtJSONString, HashMap.class);
 
@@ -897,7 +895,7 @@ public class FindCommonUtil<T> {
             Set<String> set = map.keySet();
             for (String s : set) {
                 boolean bool = true;
-                if (isHasTransient(commonEntity.getEntity(), s)) {
+                if (isHasTransient(commonParam.getEntity(), s)) {
                     bool = false;
                 }
                 if (bool) {
@@ -996,19 +994,19 @@ public class FindCommonUtil<T> {
 
     }
 
-    public static void findCommonAndLt(CommonEntity commonEntity,
+    public static void findCommonAndLt(CommonParam commonParam,
                                        List<Predicate> predicatesByAnd,
                                        CriteriaBuilder criteriaBuilder,
                                        Root root){
 
-        List andLt = commonEntity.getAnd().getLt();
+        List andLt = commonParam.getAnd().getLt();
         String andLtJSONString = JSON.toJSONString(andLt);
         List<HashMap> andLtMaps = JSON.parseArray(andLtJSONString, HashMap.class);
         for (HashMap map : andLtMaps) {
             Set<String> set = map.keySet();
             for (String s : set) {
 
-                if (FindCommonUtil.isHasTransientByFiled(commonEntity.getEntity(), s)) {
+                if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
                 }
                 else if (!StringUtils.isEmpty(map.get(s))) {
 
@@ -1101,11 +1099,11 @@ public class FindCommonUtil<T> {
         }
     }
 
-    public static void findCommonAndGe(CommonEntity commonEntity,
+    public static void findCommonAndGe(CommonParam commonParam,
                                        List<Predicate> predicatesByAnd,
                                        CriteriaBuilder criteriaBuilder,
                                        Root root){
-        List andGe = commonEntity.getAnd().getGe();
+        List andGe = commonParam.getAnd().getGe();
         String andGeJSONString = JSON.toJSONString(andGe);
         List<HashMap> andGeMaps = JSON.parseArray(andGeJSONString, HashMap.class);
 
@@ -1113,7 +1111,7 @@ public class FindCommonUtil<T> {
             Set<String> set = map.keySet();
             for (String s : set) {
 
-                if (FindCommonUtil.isHasTransientByFiled(commonEntity.getEntity(), s)) {
+                if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
                 } else if (!StringUtils.isEmpty(map.get(s))) {
 
                     if ((!(map.get(s) instanceof JSONArray))&&(!(map.get(s) instanceof JSONObject))) {
@@ -1207,28 +1205,17 @@ public class FindCommonUtil<T> {
 
     }
 
+    @Resource
+    EntityManagerFactory entityManagerFactory;
+
     /**
      * 这个方法会将一段文本注入到某个类中添加了@Autowired注解的方法中，并将实例对象返回
      */
-    public Object getId(Object object) {
-        // 从Class对象中获取Demo中声明方法对应的Method对象
-        Field[] fields = object.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            // 判断方法是否被加上了@Autowired这个注解
-            if (field.isAnnotationPresent(Id.class)) {
-                field.setAccessible(true);
-                try {
-                    return field.get(object);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
+    public ID getId(T entity) {
+        return (ID) entityManagerFactory.getPersistenceUnitUtil().getIdentifier(entity);
     }
 
     public static Boolean isHasTransient(Object object, String fieldName) {
-//        isHasTransientByFiled(object,fieldName) ||
         if (isHasTransientByMethod(object, fieldName)) {
             return true;
         }

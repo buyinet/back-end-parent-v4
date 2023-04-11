@@ -1,6 +1,8 @@
 package com.kantboot.base.service;
 
-import org.springframework.web.bind.annotation.RequestBody;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
+
+import java.util.List;
 
 /**
  * 管理员服务基类
@@ -28,5 +30,13 @@ public interface IBaseAdminService<T,ID> {
      * @return 实体类
      */
     T getById(T entity);
+
+    /**
+     * 查询所有，不分页
+     * @param commonParam 实体类
+     * @return 实体类
+     */
+    List<T> getList(CommonParam<T> commonParam);
+
 
 }

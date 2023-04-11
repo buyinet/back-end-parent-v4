@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Accessors(chain = true)
 @NoArgsConstructor
-public class CommonEntity<T> implements Serializable {
+public class CommonParam<T> implements Serializable {
 
     private OperatorEntity<T> or = new OperatorEntity<>();
     private OperatorEntity<T> and = new OperatorEntity<>();
