@@ -124,7 +124,7 @@ public class FindCommonUtil<T,ID> {
                         }
                         if (bool) {
 
-                        } else if (!StringUtils.isEmpty(map.get(s))) {
+                        } else if (!(null!=map.get(s))&&!("".equals(map.get(s)))) {
 
                             if (!(map.get(s) instanceof JSONArray)) {
 
