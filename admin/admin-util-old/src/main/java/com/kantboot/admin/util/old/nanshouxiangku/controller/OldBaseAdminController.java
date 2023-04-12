@@ -65,7 +65,8 @@ public abstract class OldBaseAdminController<T, ID> {
 
             return stateSuccessService.success(all,"getSuccess");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("findCommonByList", e);
+            throw exceptionService.getException("getException");
         } finally {
             entityManager.close();
         }
@@ -103,7 +104,7 @@ public abstract class OldBaseAdminController<T, ID> {
 
             return stateSuccessService.success(result,"getSuccess");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("findCommonByPage", e);
             throw exceptionService.getException("getException");
         } finally {
             if(entityManager!=null){
