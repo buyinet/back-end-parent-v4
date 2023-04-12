@@ -1,7 +1,5 @@
 package com.kantboot.admin.util.old.nanshouxiangku.controller;
 
-import cn.hutool.core.lang.hash.Hash;
-import com.alibaba.fastjson2.JSON;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.admin.util.old.nanshouxiangku.util.FindCommonUtil;
@@ -70,7 +68,6 @@ public abstract class OldBaseAdminController<T, ID> {
         } finally {
             entityManager.close();
         }
-        throw exceptionService.getException("getFail");
     }
 
     /**
