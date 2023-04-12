@@ -33,19 +33,4 @@ public interface IBaseAdminService<T,ID> {
      * @return 实体类
      */
     T getById(T entity);
-
-    /**
-     * 查询所有，不分页
-     * @param commonParam 实体类
-     * @return 实体类
-     */
-    List<T> getList(CommonParam<T> commonParam);
-
-    /**
-     * 分页查询
-     * @param pageParam 实体类
-     * @return 实体类
-     */
-    HashMap<String,Object> getPage(CommonParamPageParam<T> pageParam);
-
 }

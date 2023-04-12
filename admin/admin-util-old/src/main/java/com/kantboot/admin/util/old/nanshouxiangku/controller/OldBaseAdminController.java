@@ -1,6 +1,13 @@
-package com.kantboot.admin.util.old.nanshouxiangku.service;
+package com.kantboot.admin.util.old.nanshouxiangku.controller;
 
+import cn.hutool.core.lang.hash.Hash;
+import com.alibaba.fastjson2.JSON;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
+import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
+import com.kantboot.admin.util.old.nanshouxiangku.util.FindCommonUtil;
+import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.system.service.ISysExceptionService;
+import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,44 +16,38 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Service;
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
-import com.kantboot.admin.util.old.nanshouxiangku.util.FindCommonUtil;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 
 
-/**
- * 通用查询
- * 对很早之前的代码稍微改了一下下
- * 很早之前的代码，代码太乱了，
- * 不适合维护和优化，但是需要使用，之后要重构
- * @param <T>
- * @param <ID>
- * @author 方某方
- */
-@Service
+@RestController
 @Slf4j
-public abstract class OldBaseService<T, ID> {
+public abstract class OldBaseAdminController<T, ID> {
 
     @Resource
-    private EntityManagerFactory entityManagerFactory;
+    EntityManagerFactory entityManagerFactory;
 
     @Resource
-    private FindCommonUtil<T,ID> findCommonUtil;
+    FindCommonUtil<T,ID> findCommonUtil;
 
     @Resource
-    private ISysExceptionService exceptionService;
+    IStateSuccessService stateSuccessService;
+
+    @Resource
+    ISysExceptionService exceptionService;
 
     /**
      * 通用查询
      *
      * @return
      */
-    public List<T> findCommonByList(CommonParam<T> commonParam) {
+    @PostMapping("/find_common_list")
+    public RestResult findCommonByList(@RequestBody CommonParam<T> commonEntity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -57,27 +58,28 @@ public abstract class OldBaseService<T, ID> {
 
             SimpleJpaRepository<T, ID> jpaRepository = new SimpleJpaRepository<T, ID>(aClass, entityManager);
 
-            Specification<T> specification = findCommonUtil.findCommon(commonParam, entityManager, transaction);
+            Specification<T> specification = findCommonUtil.findCommon(commonEntity, entityManager, transaction);
             List<T> all = jpaRepository.findAll(specification);
             transaction.commit();
             entityManager.close();
-            return all;
+
+            return stateSuccessService.success(all,"getSuccess");
         } catch (Exception e) {
             e.printStackTrace();
-            if(entityManager!=null){
-                entityManager.close();
-            }
-            throw exceptionService.getException("queryError");
         } finally {
             entityManager.close();
         }
+        throw exceptionService.getException("getFail");
     }
 
     /**
      * 通用查询
+     *
+     * @return
      */
-    public HashMap<String, Object> findCommonByPage(CommonParamPageParam<T> pageParam) {
-        CommonParam<T> commonParam = pageParam.getData();
+    @PostMapping("/find_common_page")
+    public RestResult<HashMap<String,Object>> findCommonByPage(@RequestBody CommonParamPageParam<T> pageParam) {
+        CommonParam<T> commonEntity = pageParam.getData();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -85,11 +87,10 @@ public abstract class OldBaseService<T, ID> {
             // 返回表示此类型实际类型参数的 Type 对象的数组(),赋值给this.classt
             Class entityClass = (Class)type.getActualTypeArguments()[0];
             Class<T> aClass = entityClass;
-
-            commonParam.setEntity((T) entityClass.newInstance());
+            commonEntity.setEntity((T) entityClass.newInstance());
 
             SimpleJpaRepository<T, ID> jpaRepository = new SimpleJpaRepository<T, ID>(aClass, entityManager);
-            Specification<T> specification = findCommonUtil.findCommon(commonParam, entityManager, transaction);
+            Specification<T> specification = findCommonUtil.findCommon(commonEntity, entityManager, transaction);
             Page<T> all = jpaRepository.findAll(specification, pageParam.getPageable());
             transaction.commit();
             entityManager.close();
@@ -100,13 +101,10 @@ public abstract class OldBaseService<T, ID> {
             result.put("number", all.getNumber()+1);
             result.put("size", all.getSize());
 
-            return result;
+            return stateSuccessService.success(result,"getSuccess");
         } catch (Exception e) {
             e.printStackTrace();
-            if(entityManager!=null){
-                entityManager.close();
-            }
-            throw exceptionService.getException("queryError");
+            throw exceptionService.getException("getException");
         } finally {
             if(entityManager!=null){
                 entityManager.close();

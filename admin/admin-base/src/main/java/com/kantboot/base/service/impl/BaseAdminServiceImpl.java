@@ -2,22 +2,20 @@ package com.kantboot.base.service.impl;
 
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
-import com.kantboot.admin.util.old.nanshouxiangku.service.OldBaseService;
 import com.kantboot.amin.util.operate.BaseAdminOperate;
 import com.kantboot.base.service.IBaseAdminService;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.util.common.exception.BaseException;
+import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,19 +37,6 @@ public class BaseAdminServiceImpl<T,ID> implements IBaseAdminService<T,ID> {
     @Resource
     private ISysExceptionService exceptionService;
 
-    @Resource
-    private OldBaseService<T,ID> oldBaseService;
-
-    @Override
-    public List<T> getList(CommonParam<T> commonParam) {
-        return oldBaseService.findCommonByList(commonParam);
-    }
-
-
-    @Override
-    public HashMap<String,Object> getPage(CommonParamPageParam<T> pageParam) {
-        return oldBaseService.findCommonByPage(pageParam);
-    }
 
     @Override
     public void delete(T entity) {

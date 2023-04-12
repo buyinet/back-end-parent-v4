@@ -1,5 +1,7 @@
 package com.kantboot.base.controller;
 
+import com.alibaba.fastjson2.JSON;
+import com.kantboot.admin.util.old.nanshouxiangku.controller.OldBaseAdminController;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.base.service.IBaseAdminService;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 /**
  * 管理员基础控制器
  * 用于继承
@@ -18,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 方某方
  */
 @RestController
-public class BaseAdminController<T,ID> {
+public class BaseAdminController<T,ID> extends OldBaseAdminController<T,ID> {
 
     @Resource
     private IBaseAdminService<T,ID> service;
@@ -62,12 +66,12 @@ public class BaseAdminController<T,ID> {
 
     @RequestMapping("/getList")
     public RestResult getList(@RequestBody CommonParam<T> param) {
-        return stateSuccessService.success(service.getList(param), "getSuccess");
+        return stateSuccessService.success(findCommonByList(param), "getSuccess");
     }
 
     @RequestMapping("/getPage")
-    public RestResult getPage(@RequestBody CommonParamPageParam<T> param) {
-        return stateSuccessService.success(service.getPage(param), "getSuccess");
+    public RestResult<HashMap<String,Object>> getPage(@RequestBody CommonParamPageParam<T> param) {
+        return stateSuccessService.success(findCommonByPage(param), "getSuccess");
     }
 
 }
