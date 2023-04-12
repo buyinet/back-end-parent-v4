@@ -31,7 +31,7 @@ public abstract class OldBaseAdminController<T, ID> {
     EntityManagerFactory entityManagerFactory;
 
     @Resource
-    FindCommonUtil<T,ID> findCommonUtil;
+    FindCommonUtil<T, ID> findCommonUtil;
 
     @Resource
     IStateSuccessService stateSuccessService;
@@ -49,9 +49,9 @@ public abstract class OldBaseAdminController<T, ID> {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
-            ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
+            ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
             //返回表示此类型实际类型参数的 Type 对象的数组(),赋值给this.classt
-            Class entityClass = (Class)type.getActualTypeArguments()[0];
+            Class entityClass = (Class) type.getActualTypeArguments()[0];
             Class<T> aClass = entityClass;
 
             SimpleJpaRepository<T, ID> jpaRepository = new SimpleJpaRepository<T, ID>(aClass, entityManager);
@@ -61,10 +61,10 @@ public abstract class OldBaseAdminController<T, ID> {
             transaction.commit();
             entityManager.close();
 
-            return stateSuccessService.success(all,"getSuccess");
+            return stateSuccessService.success(all, "getSuccess");
         } catch (Exception e) {
             log.error("findCommonByList", e);
-            throw exceptionService.getException("getException");
+            throw exceptionService.getException("getFail");
         } finally {
             entityManager.close();
         }
@@ -76,14 +76,14 @@ public abstract class OldBaseAdminController<T, ID> {
      * @return
      */
     @PostMapping("/find_common_page")
-    public RestResult<HashMap<String,Object>> findCommonByPage(@RequestBody CommonParamPageParam<T> pageParam) {
+    public RestResult<HashMap<String, Object>> findCommonByPage(@RequestBody CommonParamPageParam<T> pageParam) {
         CommonParam<T> commonEntity = pageParam.getData();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
-            ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
+            ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
             // 返回表示此类型实际类型参数的 Type 对象的数组(),赋值给this.classt
-            Class entityClass = (Class)type.getActualTypeArguments()[0];
+            Class entityClass = (Class) type.getActualTypeArguments()[0];
             Class<T> aClass = entityClass;
             commonEntity.setEntity((T) entityClass.newInstance());
 
@@ -96,17 +96,15 @@ public abstract class OldBaseAdminController<T, ID> {
             result.put("totalElements", all.getTotalElements());
             result.put("totalPage", all.getTotalPages());
             result.put("content", all.getContent());
-            result.put("number", all.getNumber()+1);
+            result.put("number", all.getNumber() + 1);
             result.put("size", all.getSize());
 
-            return stateSuccessService.success(result,"getSuccess");
+            return stateSuccessService.success(result, "getSuccess");
         } catch (Exception e) {
             log.error("findCommonByPage", e);
-            throw exceptionService.getException("getException");
+            throw exceptionService.getException("getFail");
         } finally {
-            if(entityManager!=null){
-                entityManager.close();
-            }
+            entityManager.close();
         }
     }
 

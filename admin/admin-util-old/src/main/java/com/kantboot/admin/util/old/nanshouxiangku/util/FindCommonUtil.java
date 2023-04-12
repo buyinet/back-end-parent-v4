@@ -1222,6 +1222,13 @@ public class FindCommonUtil<T,ID> {
         return false;
     }
 
+    /**
+     * 判断是否有@Transient注解
+     *
+     * @param object
+     * @param fieldName
+     * @return
+     */
     public static Boolean isHasTransientByFiled(Object object, String fieldName) {
         // 从Class对象中获取Demo中声明方法对应的Method对象
         Field field = null;
@@ -1233,7 +1240,8 @@ public class FindCommonUtil<T,ID> {
 
         // 判断方法是否被加上了@Transient这个注解
         if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(org.springframework.data.annotation.Transient.class)) {
-            field.setAccessible(true);
+            // 删除了访问权限检查
+
             return true;
         }
         return false;
@@ -1268,7 +1276,7 @@ public class FindCommonUtil<T,ID> {
         if (!ab) {
             // 判断方法是否被加上了@Transient这个注解
             if (method.isAnnotationPresent(Transient.class) || method.isAnnotationPresent(org.springframework.data.annotation.Transient.class)) {
-                method.setAccessible(true);
+                // 删除了访问检查
                 return true;
             }
 
@@ -1276,7 +1284,7 @@ public class FindCommonUtil<T,ID> {
         if (!bb) {
             // 判断方法是否被加上了@Transient这个注解
             if (method1.isAnnotationPresent(Transient.class) || method1.isAnnotationPresent(org.springframework.data.annotation.Transient.class)) {
-                method1.setAccessible(true);
+                // 删除了访问所有方法
                 return true;
             }
         }
