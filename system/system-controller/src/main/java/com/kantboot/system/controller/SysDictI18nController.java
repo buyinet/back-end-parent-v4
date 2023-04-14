@@ -44,22 +44,14 @@ public class SysDictI18nController {
                                @RequestParam("dictCode") String dictCode){
         return stateSuccessService.success(service.getValue(dictGroupCode, dictCode), "getSuccess");
     }
-//
-//    /**
-//     * 通过百度翻译生成国际化字典
-//     * @param q 待翻译的文本
-//     * @param from 源语言
-//     * @param dictGroupCode 字典分组编码
-//     * @param dictCode 字典子级编码
-//     * @return 结果
-//     */
-//    @RequestMapping("/generateDictI18n")
-//    public RestResult<String> generateDictI18n(@RequestParam("q") String q,
-//                                       @RequestParam("from") String from,
-//                                       @RequestParam("dictGroupCode") String dictGroupCode,
-//                                       @RequestParam("dictCode") String dictCode){
-//        service.generateDictI18n(q, from, dictGroupCode, dictCode);
-//        return stateSuccessService.success(null,"generateSuccess");
-//    }
 
+    /**
+     * 获取前端的字典表
+     * 获取分组编码是appFront的字典表
+     * @return 结果
+     */
+    @RequestMapping("/getAppFront")
+    public RestResult getAppFront(){
+        return stateSuccessService.success(service.getAppFront(), "getSuccess");
+    }
 }

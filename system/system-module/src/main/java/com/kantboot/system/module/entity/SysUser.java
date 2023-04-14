@@ -61,10 +61,10 @@ public class SysUser implements Serializable {
     private String introduction;
 
     /**
-     * 头像文件的uuid
+     * 头像文件的id
      */
-    @Column(name = "file_uuid_of_avatar")
-    private String fileUuidOfAvatar;
+    @Column(name = "file_id_of_avatar")
+    private String fileIdOfAvatar;
 
     /**
      * 邮箱

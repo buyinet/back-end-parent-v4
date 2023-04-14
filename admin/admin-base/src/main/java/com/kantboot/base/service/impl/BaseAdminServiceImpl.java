@@ -1,12 +1,9 @@
 package com.kantboot.base.service.impl;
 
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
-import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.amin.util.operate.BaseAdminOperate;
 import com.kantboot.base.service.IBaseAdminService;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.util.common.exception.BaseException;
-import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -15,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 管理员服务基类实现类

@@ -96,4 +96,8 @@ public class SysDictI18nServiceImpl implements ISysDictI18nService {
         return getValue(httpRequestHeaderUtil.getLanguageCode(), dictGroupCode, dictCode);
     }
 
+    @Override
+    public Map<String, String> getAppFront() {
+        return getMap("appFront");
+    }
 }

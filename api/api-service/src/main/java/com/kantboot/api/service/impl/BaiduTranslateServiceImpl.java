@@ -12,6 +12,7 @@ import com.kantboot.system.repository.SysDictI18nRepository;
 import com.kantboot.system.repository.SysDictRepository;
 import com.kantboot.system.repository.SysLanguageRepository;
 import com.kantboot.system.service.ISysSettingService;
+import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,8 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
     @Resource
     private SysDictRepository dictRepository;
 
+    @Resource
+    private RedisUtil redisUtil;
 
     @Override
     public BaiduTranslateResult translate(String q, String from, String to) {

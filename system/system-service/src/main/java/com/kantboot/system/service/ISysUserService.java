@@ -71,5 +71,22 @@ public interface ISysUserService {
      */
     Long getIdOfSelf();
 
+    /**
+     * 第三方注册，用于第三方接口调用
+     * @param user 用户信息
+     *             返回给客户端时，会隐藏敏感信息
+     * @return token
+     */
+    SysToken thirdRegister(SysUser user);
+
+
+    /**
+     * 第三方登录，用于第三方接口调用
+     * @param userId 用户信息
+     *             返回给客户端时，会隐藏敏感信息
+     * @return token
+     */
+    SysToken thirdLogin(Long userId);
+
 
 }

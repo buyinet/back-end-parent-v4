@@ -43,6 +43,13 @@ public interface ISysDictI18nService {
      */
     String getValue(String dictGroupCode, String dictCode);
 
+    /**
+     * 获取前端的字典表
+     * 获取分组编码是appFront的字典表
+     * @return 结果
+     */
+    Map<String,String> getAppFront();
+
 
 
 }

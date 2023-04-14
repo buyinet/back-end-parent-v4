@@ -14,6 +14,7 @@
         <module>start-all</module>
         <module>api</module>
         <module>admin</module>
+        <module>third-party</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -60,7 +61,13 @@
             <dependency>
                 <groupId>com.kantboot</groupId>
                 <artifactId>system-service</artifactId>
-                <version>1.0.0</version>
+                <version>${kantboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kantboot</groupId>
+                <artifactId>system-module</artifactId>
+                <version>${kantboot.version}</version>
             </dependency>
 
             <dependency>
