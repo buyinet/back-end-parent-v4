@@ -51,6 +51,7 @@ public class KantbootSystemSecurityFilter implements Filter {
         // 记录开始时间
         long start = System.currentTimeMillis();
 
+
         // 向上转型
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;

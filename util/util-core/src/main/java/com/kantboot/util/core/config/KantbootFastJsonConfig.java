@@ -6,14 +6,18 @@ import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.support.config.FastJsonConfig;
 import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -21,6 +25,7 @@ import java.util.TimeZone;
  * 配置fastjson
  * @author 方某方
  */
+@Component
 @Configuration
 public class KantbootFastJsonConfig implements WebMvcConfigurer {
 
@@ -39,8 +44,8 @@ public class KantbootFastJsonConfig implements WebMvcConfigurer {
     public FastJsonConfig fastJsonConfig() {
         //1.自定义配置...
         FastJsonConfig config = new FastJsonConfig();
-        config.setDateFormat("yyyy-MM-dd HH:mm:ss");
         config.setCharset(StandardCharsets.UTF_8);
+        config.setDateFormat("millis");
 
         //2.1配置序列化的行为
         //JSONWriter.Feature.PrettyFormat:格式化输出

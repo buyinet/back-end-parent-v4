@@ -101,6 +101,7 @@ public abstract class OldBaseAdminController<T, ID> {
 
             return stateSuccessService.success(result, "getSuccess");
         } catch (Exception e) {
+            entityManager.close();
             log.error("findCommonByPage", e);
             throw exceptionService.getException("getFail");
         } finally {

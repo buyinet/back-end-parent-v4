@@ -639,9 +639,9 @@ public class FindCommonUtil<T, ID> {
                                                     .lessThanOrEqualTo(root.get(s).as(String.class), format));
 
                                 } catch (ClassCastException ex) {
-                                    Date date = new Date((Long) map.get(s));
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    String format = sdf.format(date);
+//                                    Date date = new Date((Long) map.get(s));
+//                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    String format = map.get(s).toString();
                                     predicatesByOr.add(
                                             criteriaBuilder
                                                     .lessThanOrEqualTo(root.get(s).as(String.class), format));
@@ -1128,9 +1128,10 @@ public class FindCommonUtil<T, ID> {
                                     criteriaBuilder
                                             .greaterThanOrEqualTo(root.get(s).as(String.class), format));
                         } catch (ClassCastException ex) {
-                            Date date = new Date((Long) map.get(s));
+//                            Date date = new Date((Long) map.get(s));
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            String format = sdf.format(date);
+//                            String format = sdf.format(date);
+                            String format = map.get(s).toString();
                             predicatesByAnd.add(
                                     criteriaBuilder
                                             .greaterThanOrEqualTo(root.get(s).as(String.class), format));
