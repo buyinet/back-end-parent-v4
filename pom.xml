@@ -15,6 +15,7 @@
         <module>api</module>
         <module>admin</module>
         <module>third-party</module>
+        <module>admin/admin-module</module>
     </modules>
 
     <packaging>pom</packaging>

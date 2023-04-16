@@ -6,6 +6,7 @@ import com.kantboot.system.service.IRsaService;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author 方某方
  */
+@Slf4j
 @Service
 public class RsaServiceImpl implements IRsaService {
 
@@ -80,6 +82,8 @@ public class RsaServiceImpl implements IRsaService {
      */
     @Override
     public String decrypt(String encryptStr, String publicKey) {
+
+        // 根据公钥获取私钥
         RSA rsa = new RSA(getPrivateKey(publicKey), publicKey);
         try {
             // 尝试解密
@@ -88,6 +92,7 @@ public class RsaServiceImpl implements IRsaService {
             redisUtil.delete(getPrivateKeyKey(publicKey));
             return decryptStr;
         } catch (Exception e) {
+            log.error("解密失败", e);
             // 如果解密失败，则抛出异常
             throw exceptionService.getException("decryptionError");
         }

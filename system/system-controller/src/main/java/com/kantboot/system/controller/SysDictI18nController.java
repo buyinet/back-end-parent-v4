@@ -54,4 +54,5 @@ public class SysDictI18nController {
     public RestResult getAppFront(){
         return stateSuccessService.success(service.getAppFront(), "getSuccess");
     }
+
 }

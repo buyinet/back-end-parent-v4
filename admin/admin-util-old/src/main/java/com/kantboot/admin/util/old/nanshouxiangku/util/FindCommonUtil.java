@@ -6,7 +6,10 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
 import jakarta.annotation.Resource;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Transient;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -25,7 +28,7 @@ import java.util.*;
 
 @Component
 @Slf4j
-public class FindCommonUtil<T,ID> {
+public class FindCommonUtil<T, ID> {
 
     /**
      * 用来通用查询的方法
@@ -97,22 +100,22 @@ public class FindCommonUtil<T,ID> {
                 }
 
                 //查询所有 and 下的 = 条件
-                FindCommonUtil.findCommonAndEq(commonParam,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndEq(commonParam, predicatesByAnd, criteriaBuilder, root);
 
                 //查询所有 and 下的 % 条件
-                FindCommonUtil.findCommonAndLike(commonParam,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndLike(commonParam, predicatesByAnd, criteriaBuilder, root);
 
                 //查询所有 and 下的 模糊 条件
-                FindCommonUtil.findCommonAndVague(commonParam,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndVague(commonParam, predicatesByAnd, criteriaBuilder, root);
 
                 //查询所有 and 下的 > 条件
-                FindCommonUtil.findCommonAndGt(commonParam,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndGt(commonParam, predicatesByAnd, criteriaBuilder, root);
 
                 //查询所有 and 下的 < 条件
-                FindCommonUtil.findCommonAndLt(commonParam,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndLt(commonParam, predicatesByAnd, criteriaBuilder, root);
 
                 //查询所有 and 下的 >= 条件
-                FindCommonUtil.findCommonAndGe(commonParam,predicatesByAnd,criteriaBuilder,root);
+                FindCommonUtil.findCommonAndGe(commonParam, predicatesByAnd, criteriaBuilder, root);
 
                 //查询所有 and 下的 <= 条件
                 for (HashMap map : andLeMaps) {
@@ -124,7 +127,7 @@ public class FindCommonUtil<T,ID> {
                         }
                         if (bool) {
 
-                        } else if (!(null!=map.get(s))&&!("".equals(map.get(s)))) {
+                        } else if (!(null != map.get(s)) && !("".equals(map.get(s)))) {
 
                             if (!(map.get(s) instanceof JSONArray)) {
 
@@ -734,7 +737,7 @@ public class FindCommonUtil<T,ID> {
             CommonParam commonParam,
             List<Predicate> predicatesByAnd,
             CriteriaBuilder criteriaBuilder,
-            Root root){
+            Root root) {
         List andEq = commonParam.getAnd().getEq();
         String andEqJSONString = JSON.toJSONString(andEq);
         List<HashMap> andEqMaps = JSON.parseArray(andEqJSONString, HashMap.class);
@@ -743,8 +746,7 @@ public class FindCommonUtil<T,ID> {
             Set<String> set = map.keySet();
             for (String s : set) {
                 if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
-                }else
-                if (!StringUtils.isEmpty(map.get(s))) {
+                } else if (!StringUtils.isEmpty(map.get(s))) {
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
 
                         predicatesByAnd.add(
@@ -791,7 +793,7 @@ public class FindCommonUtil<T,ID> {
     public static void findCommonAndLike(CommonParam commonParam,
                                          List<Predicate> predicatesByAnd,
                                          CriteriaBuilder criteriaBuilder,
-                                         Root root){
+                                         Root root) {
         List andLike = commonParam.getAnd().getLike();
         String andLikeJSONString = JSON.toJSONString(andLike);
         List<HashMap> andLikeMaps = JSON.parseArray(andLikeJSONString, HashMap.class);
@@ -800,8 +802,7 @@ public class FindCommonUtil<T,ID> {
             Set<String> set = map.keySet();
             for (String s : set) {
                 if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
-                }
-                else if (!StringUtils.isEmpty(map.get(s))) {
+                } else if (!StringUtils.isEmpty(map.get(s))) {
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
                         predicatesByAnd.add(
                                 criteriaBuilder
@@ -836,7 +837,7 @@ public class FindCommonUtil<T,ID> {
     public static void findCommonAndVague(CommonParam commonParam,
                                           List<Predicate> predicatesByAnd,
                                           CriteriaBuilder criteriaBuilder,
-                                          Root root){
+                                          Root root) {
 
         List andVague = commonParam.getAnd().getVague();
         String andVagueJSONString = JSON.toJSONString(andVague);
@@ -846,8 +847,7 @@ public class FindCommonUtil<T,ID> {
             for (String s : set) {
 
                 if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
-                }
-                else if (!StringUtils.isEmpty(map.get(s))) {
+                } else if (!StringUtils.isEmpty(map.get(s))) {
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
                         predicatesByAnd.add(
                                 criteriaBuilder
@@ -870,7 +870,7 @@ public class FindCommonUtil<T,ID> {
                         JSONObject jsonObject = (JSONObject) map.get(s);
                         Set<String> set1 = jsonObject.keySet();
                         for (String s2 : set1) {
-                            if(!StringUtils.isEmpty(jsonObject.get(s2))){
+                            if (!StringUtils.isEmpty(jsonObject.get(s2))) {
                                 predicatesByAnd.add(
                                         criteriaBuilder
                                                 .like(root.get(s).get(s2), "%" + jsonObject.get(s2) + "%"));
@@ -886,7 +886,7 @@ public class FindCommonUtil<T,ID> {
     public static void findCommonAndGt(CommonParam commonParam,
                                        List<Predicate> predicatesByAnd,
                                        CriteriaBuilder criteriaBuilder,
-                                       Root root){
+                                       Root root) {
         List andGt = commonParam.getAnd().getGt();
         String andGtJSONString = JSON.toJSONString(andGt);
         List<HashMap> andGtMaps = JSON.parseArray(andGtJSONString, HashMap.class);
@@ -900,9 +900,7 @@ public class FindCommonUtil<T,ID> {
                 }
                 if (bool) {
 
-                } else
-
-                if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
+                } else if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
 
                     if (!(map.get(s) instanceof JSONArray)) {
 
@@ -997,7 +995,7 @@ public class FindCommonUtil<T,ID> {
     public static void findCommonAndLt(CommonParam commonParam,
                                        List<Predicate> predicatesByAnd,
                                        CriteriaBuilder criteriaBuilder,
-                                       Root root){
+                                       Root root) {
 
         List andLt = commonParam.getAnd().getLt();
         String andLtJSONString = JSON.toJSONString(andLt);
@@ -1007,8 +1005,7 @@ public class FindCommonUtil<T,ID> {
             for (String s : set) {
 
                 if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
-                }
-                else if (!StringUtils.isEmpty(map.get(s))) {
+                } else if (!StringUtils.isEmpty(map.get(s))) {
 
                     if (!(map.get(s) instanceof JSONArray) && !(map.get(s) instanceof JSONObject)) {
 
@@ -1102,7 +1099,7 @@ public class FindCommonUtil<T,ID> {
     public static void findCommonAndGe(CommonParam commonParam,
                                        List<Predicate> predicatesByAnd,
                                        CriteriaBuilder criteriaBuilder,
-                                       Root root){
+                                       Root root) {
         List andGe = commonParam.getAnd().getGe();
         String andGeJSONString = JSON.toJSONString(andGe);
         List<HashMap> andGeMaps = JSON.parseArray(andGeJSONString, HashMap.class);
@@ -1114,14 +1111,14 @@ public class FindCommonUtil<T,ID> {
                 if (FindCommonUtil.isHasTransientByFiled(commonParam.getEntity(), s)) {
                 } else if (!StringUtils.isEmpty(map.get(s))) {
 
-                    if ((!(map.get(s) instanceof JSONArray))&&(!(map.get(s) instanceof JSONObject))) {
+                    if ((!(map.get(s) instanceof JSONArray)) && (!(map.get(s) instanceof JSONObject))) {
 
                         try {
                             Number number = (Number) map.get(s);
                             predicatesByAnd.add(
                                     criteriaBuilder
                                             .ge(root.get(s), number));
-                            log.info("findCommonAndGe -> key:value -> "+s+":"+number);
+                            log.info("findCommonAndGe -> key:value -> " + s + ":" + number);
 
                         } catch (IllegalArgumentException ex) {
                             Date date = new Date((Long) map.get(s));

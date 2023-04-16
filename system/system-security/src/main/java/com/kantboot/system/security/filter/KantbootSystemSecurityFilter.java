@@ -54,6 +54,7 @@ public class KantbootSystemSecurityFilter implements Filter {
         // 向上转型
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         String requestUri = request.getRequestURI();
 
         List<String> pathList = requestUriSplit(requestUri);

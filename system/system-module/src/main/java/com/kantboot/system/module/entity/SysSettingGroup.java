@@ -37,6 +37,12 @@ public class SysSettingGroup {
     private String code;
 
     /**
+     * 设置名称
+     */
+    @Column(name = "name")
+    private String name;
+
+    /**
      * 设置描述
      */
     @Column(name = "description")

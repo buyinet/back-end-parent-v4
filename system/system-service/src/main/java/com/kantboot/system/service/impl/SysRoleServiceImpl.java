@@ -74,4 +74,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
         log.info("获取角色国际化名称耗时：{}ms，{}", end - start,JSON.toJSONString(roles));
         return roles;
     }
+
+    @Override
+    public Map<String, String> getI18nMap() {
+        return dictI18nService.getMap("role");
+    }
 }

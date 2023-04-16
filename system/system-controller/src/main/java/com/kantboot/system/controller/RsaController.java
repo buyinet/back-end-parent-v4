@@ -4,6 +4,7 @@ import com.kantboot.system.service.IRsaService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 用于前端获取公钥
  * @author 方某方
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/system/rsa")
 public class RsaController {

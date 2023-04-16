@@ -66,12 +66,12 @@ public class BaseAdminController<T,ID> extends OldBaseAdminController<T,ID> {
 
     @RequestMapping("/getList")
     public RestResult getList(@RequestBody CommonParam<T> param) {
-        return stateSuccessService.success(findCommonByList(param), "getSuccess");
+        return findCommonByList(param);
     }
 
     @RequestMapping("/getPage")
     public RestResult<HashMap<String,Object>> getPage(@RequestBody CommonParamPageParam<T> param) {
-        return stateSuccessService.success(findCommonByPage(param), "getSuccess");
+        return findCommonByPage(param);
     }
 
 }

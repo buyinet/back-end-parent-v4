@@ -228,8 +228,8 @@ public class SysUserServiceImpl implements ISysUserService {
         // 获取加密密码的公钥
         String publicKeyOfPassword = dto.getPublicKeyOfPassword();
 
-        // 解密用户名
-        String account = rsaService.decrypt(dto.getUsername(), publicKeyOfAccount);
+        // 解密账号
+        String account = rsaService.decrypt(dto.getAccount(), publicKeyOfAccount);
         // 解密密码
         String password = rsaService.decrypt(dto.getPassword(), publicKeyOfPassword);
 
