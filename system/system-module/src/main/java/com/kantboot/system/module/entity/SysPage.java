@@ -1,68 +1,49 @@
 package com.kantboot.system.module.entity;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.kantboot.util.core.jpa.KantbootGenerationType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 角色实体类
+ * 页面字典实体类
  * @author 方某方
  */
+@Table(name = "sys_page")
 @Entity
 @Getter
 @Setter
-@Table(name = "sys_role")
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class SysRole implements Serializable {
-
+public class SysPage {
     /**
      * 主键
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflakeId",strategy = KantbootGenerationType.SNOWFLAKE)
+    @GeneratedValue(generator = "snowflakeId")
     @Column(name = "id")
     private Long id;
 
     /**
-     * 角色编码
+     * 页面编码
      */
-    @Column(name = "code", length = 64)
+    @Column(name = "code",length = 64)
     private String code;
 
     /**
-     * 字典编码
-     */
-    @Column(name = "dict_code", length = 64)
-    private String dictCode;
-
-    /**
-     * 角色名称
+     * 页面名称
      */
     @Column(name = "name")
     private String name;
-
-    /**
-     * 角色描述
-     */
-    @JSONField(serialize = false)
-    @Column(name = "description")
-    private String description;
-
-    /**
-     * 角色优先级
-     */
-    @Column(name = "priority")
-    private Integer priority;
 
     /**
      * 创建时间
@@ -72,20 +53,17 @@ public class SysRole implements Serializable {
     private Date gmtCreate;
 
     /**
-     * 最后一次修改时间
+     * 修改时间
      */
     @LastModifiedDate
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    /**
+     * 字典列表
+     * 非数据库字段
+     */
+    @Transient
+    private List<SysDict> dictList;
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }

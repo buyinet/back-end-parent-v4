@@ -43,6 +43,15 @@ public class RedisUtil {
     }
 
     /**
+     * 删除开头为key的所有key
+     * @param key 键
+     */
+    public void deleteByPrefix(String key) {
+        Set<String> keys = stringRedisTemplate.keys(key + "*");
+        stringRedisTemplate.delete(keys);
+    }
+
+    /**
      * 批量删除key
      *
      * @param keys 键集合

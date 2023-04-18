@@ -3,25 +3,23 @@ package com.kantboot.system.module.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 字典实体类
+ * 页面和字典关联实体类
+ * 用于记录页面和字典的关联关系
  * @author 方某方
  */
-@Table(name="sys_dict")
 @Entity
 @Getter
 @Setter
-@Accessors(chain = true)
+@Table(name = "rel_sys_page_and_sys_dict")
 @EntityListeners(AuditingEntityListener.class)
-public class SysDict implements Serializable {
+public class RelSysPageAndSysDict {
 
     /**
      * 主键
@@ -31,30 +29,18 @@ public class SysDict implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    /**
+     * 页面编码
+     */
+    @Column(name = "page_code",length = 64)
+    private String pageCode;
 
     /**
      * 字典编码
      */
-    @Column(name = "code",length = 64)
-    private String code;
+    @Column(name = "dict_code",length = 64)
+    private String dictCode;
 
-    /**
-     * 值
-     */
-    @Column(name = "value")
-    private String value;
-
-    /**
-     * 组编码
-     */
-    @Column(name = "group_code",length = 64)
-    private String groupCode;
-
-    /**
-     * 描述
-     */
-    @Column(name = "description")
-    private String description;
 
     /**
      * 创建时间

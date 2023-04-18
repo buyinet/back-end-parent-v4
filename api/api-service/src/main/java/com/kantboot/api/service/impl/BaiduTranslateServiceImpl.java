@@ -12,6 +12,7 @@ import com.kantboot.system.repository.SysDictI18nRepository;
 import com.kantboot.system.repository.SysDictRepository;
 import com.kantboot.system.repository.SysLanguageRepository;
 import com.kantboot.system.service.ISysSettingService;
+import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,9 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
 
     @Resource
     private SysDictRepository dictRepository;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     @Override
     public BaiduTranslateResult translate(String q, String from, String to) {
@@ -90,6 +94,7 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
                 sysDictI18n.setValue(translate.getDst());
                 // 对于粤语，需要再次翻译，因为百度翻译的粤语是中文香港
                 if("yue".equals(to)){
+                    Thread.sleep(1000);
                     BaiduTranslateResult translate1 = translate(translate.getDst(), "zh", "cht");
                     sysDictI18n.setValue(translate1.getDst());
                 }
@@ -105,6 +110,9 @@ public class BaiduTranslateServiceImpl implements IBaiduTranslateService {
         SysDict sysDict = new SysDict().setCode(dictCode).setGroupCode(dictGroupCode).setDescription(q);
         // 保存字典
         dictRepository.save(sysDict);
+
+        // 清除redis缓存
+        redisUtil.deleteByPrefix("dictI18n");
     }
 
 

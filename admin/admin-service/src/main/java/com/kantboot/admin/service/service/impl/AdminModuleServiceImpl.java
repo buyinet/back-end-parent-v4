@@ -51,6 +51,12 @@ public class AdminModuleServiceImpl implements IAdminModuleService {
 
     @Override
     public List<AdminMenu> getNoDirectoryMenus() {
-        return repository.findByDirectoryIsFalseOrderByPriorityDesc();
+        List<AdminMenu> byDirectoryIsFalseOrderByPriorityDesc = repository.findByDirectoryIsFalseOrderByPriorityDesc();
+        Map<String, String> adminMenuMap = i18nService.getMap("adminMenu");
+        byDirectoryIsFalseOrderByPriorityDesc.forEach(menu -> {
+            String name = adminMenuMap.get(menu.getCode());
+            menu.setName(name!=null?name:menu.getName());
+        });
+        return byDirectoryIsFalseOrderByPriorityDesc;
     }
 }
