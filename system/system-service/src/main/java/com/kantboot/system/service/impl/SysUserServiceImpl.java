@@ -273,6 +273,9 @@ public class SysUserServiceImpl implements ISysUserService {
         user.setRoles(List.of(new SysRole().setCode(defaultRole)));
 
         // 保存用户
+        repository.save(user);
+
+        // 保存用户
         tokenService.createToken(user.getId());
         SysToken token = tokenService.createToken(user.getId());
         token.setUser(handleUser(token.getUser()));

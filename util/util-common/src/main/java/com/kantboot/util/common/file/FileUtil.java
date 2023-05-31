@@ -1,5 +1,8 @@
 package com.kantboot.util.common.file;
 
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.URLUtil;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileItemFactory;
@@ -188,6 +191,51 @@ public class FileUtil {
      */
     public static String getMd5(String filePath, String fileName){
         return DigestUtils.md5DigestAsHex(getBytes(filePath, fileName));
+    }
+
+
+
+
+    /**
+     * 网络文件下载
+     * @param urlAddress 文件地址
+     * @param destinationDir 文件保存目录
+     * @return 文件名，文件名是随机生成的UUID加上后缀
+     */
+    @SneakyThrows
+    public static String netFileDownload(String urlAddress, String destinationDir) {
+        String fileName = URLUtil.getPath(urlAddress);
+        String uuid= IdUtil.simpleUUID();
+        fileName = uuid + fileName.substring(fileName.lastIndexOf("."));
+        downloadFromUrl(urlAddress,destinationDir, fileName);
+
+        return fileName;
+    }
+
+
+    /**
+     * 本地文件下载
+     * @param filePath 文件地址
+     * @param fileName 文件名
+     * @return 文件流
+     */
+    public static FileItem createFileItem(String filePath, String fileName){
+        String fieldName = "file";
+        FileItemFactory factory = new DiskFileItemFactory(16, null);
+        FileItem item = factory.createItem(fieldName, "text/plain", false,fileName);
+        File newfile = new File(filePath+"/"+fileName);
+        int bytesRead;
+        byte[] buffer = new byte[8192];
+        try (FileInputStream fis = new FileInputStream(newfile);
+             OutputStream os = item.getOutputStream()) {
+            while ((bytesRead = fis.read(buffer, 0, 8192))!= -1)
+            {
+                os.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 
 }

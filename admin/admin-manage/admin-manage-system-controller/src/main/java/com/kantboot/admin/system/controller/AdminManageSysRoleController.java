@@ -1,6 +1,5 @@
 package com.kantboot.admin.system.controller;
 
-import com.alibaba.fastjson2.JSON;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.CommonParamPageParam;
 import com.kantboot.admin.util.old.nanshouxiangku.entity.OperatorEntity;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
