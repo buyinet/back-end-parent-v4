@@ -14,6 +14,7 @@ import com.kantboot.util.common.http.HttpRequestHeaderUtil;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -95,11 +96,14 @@ public class SysTokenServiceImpl implements ISysTokenService {
         token.setSceneCode(httpRequestHeaderUtil.getSceneCode());
         // 设置用户Ip
         token.setLastIp(httpRequestHeaderUtil.getIp());
+
+        SysToken save = repository.save(token);
+
         // 根据用户id查询用户
         SysUser sysUser = userRepository.findById(userId).orElseThrow(()->exceptionService.getException("userNotExist"));
 
         // 保存token，并返回告知用户
-        return hideSensitiveInfo(repository.save(token).setUser(sysUser));
+        return hideSensitiveInfo(new SysToken().setToken(save.getToken()).setUser(sysUser));
     }
 
 

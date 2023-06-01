@@ -276,9 +276,8 @@ public class SysUserServiceImpl implements ISysUserService {
         repository.save(user);
 
         // 保存用户
-        tokenService.createToken(user.getId());
         SysToken token = tokenService.createToken(user.getId());
-        token.setUser(handleUser(token.getUser()));
+//        token.setUser(handleUser(token.getUser()));
         return token;
     }
 

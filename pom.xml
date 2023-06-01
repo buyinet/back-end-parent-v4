@@ -16,6 +16,7 @@
         <module>admin</module>
         <module>third-party</module>
         <module>admin/admin-module</module>
+        <module>business</module>
     </modules>
 
     <packaging>pom</packaging>
