@@ -46,24 +46,7 @@ public class SysTokenServiceImpl implements ISysTokenService {
 
     @Override
     public SysToken hideSensitiveInfo(SysToken token) {
-        // 隐藏UserAgent
-        token.setCreateUserAgent(null);
-        // 隐藏创建时的ip
-        token.setCreateIp(null);
-        // 隐藏创建时的设备
-        token.setCreateDevice(null);
-        // 隐藏最后一次使用的ip
-        token.setLastIp(null);
-        // 隐藏场景
-        token.setSceneCode(null);
-        // 隐藏过期时间
-        token.setGmtExpire(null);
-        // 隐藏创建时间
-        token.setGmtCreate(null);
-        // 隐藏更新时间
-        token.setGmtModified(null);
-
-        return token;
+        return new SysToken().setToken(token.getToken()).setUserId(token.getUserId()).setUser(token.getUser());
     }
 
     @Override
@@ -103,7 +86,7 @@ public class SysTokenServiceImpl implements ISysTokenService {
         SysUser sysUser = userRepository.findById(userId).orElseThrow(()->exceptionService.getException("userNotExist"));
 
         // 保存token，并返回告知用户
-        return hideSensitiveInfo(new SysToken().setToken(save.getToken()).setUser(sysUser));
+        return save.setUser(sysUser);
     }
 
 

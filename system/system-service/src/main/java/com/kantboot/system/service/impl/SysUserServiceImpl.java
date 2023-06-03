@@ -102,28 +102,31 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public SysUser hideSensitiveInfo(SysUser user) {
 
+        SysUser result = new SysUser();
+
+        result.setId(user.getId());
+
         String phone = user.getPhone();
         // 如果手机号不为空
         if (phone != null) {
             // 隐私保护手机号
-            user.setPhone(protectPhoneNumber(phone));
+            result.setPhone(protectPhoneNumber(phone));
         }
 
         String email = user.getEmail();
         // 如果邮箱不为空
         if (email != null) {
             // 隐私保护邮箱
-            user.setEmail(protectEmail(email));
+            result.setEmail(protectEmail(email));
         }
 
-        // 清空密码
-        user.setPassword(null);
-        // 清空创建时间
-        user.setGmtCreate(null);
-        // 清空修改时间
-        user.setGmtModified(null);
+        // 设置用户的其它信息
+        result.setFileIdOfAvatar(user.getFileIdOfAvatar());
+        result.setNickname(user.getNickname());
+        result.setRoles(user.getRoles());
+        result.setUsername(user.getUsername());
 
-        return user;
+        return result;
     }
 
     /**
@@ -139,6 +142,8 @@ public class SysUserServiceImpl implements ISysUserService {
         SysUser result = hideSensitiveInfo(user);
         // 2、设置用户的角色信息
         result.setRoles(roleService.getByRoles(user.getRoles()));
+        result.setFileIdOfAvatar(user.getFileIdOfAvatar());
+        result.setNickname(user.getNickname());
         return result;
     }
 
@@ -245,8 +250,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public SysUser getSelf() {
-        SysToken self = tokenService.getSelf();
-        return handleUser(self.getUser());
+        Long userId = tokenService.getSelf().getUserId();
+        SysUser self = repository.findById(userId).orElseThrow(() -> exceptionService.getException("userNotExist"));
+        return handleUser(self);
     }
 
     @Override
@@ -277,8 +283,8 @@ public class SysUserServiceImpl implements ISysUserService {
 
         // 保存用户
         SysToken token = tokenService.createToken(user.getId());
-//        token.setUser(handleUser(token.getUser()));
-        return token;
+        SysToken result = new SysToken().setToken(token.getToken()).setUser(token.getUser());
+        return result;
     }
 
     @Override
@@ -286,7 +292,25 @@ public class SysUserServiceImpl implements ISysUserService {
         // 创建token
         SysToken token = tokenService.createToken(userId);
         // 处理用户信息
-        token.setUser(handleUser(token.getUser()));
-        return token;
+        SysToken result = new SysToken().setToken(token.getToken()).setUserId(token.getUserId()).setUser(token.getUser());
+        return result;
+    }
+
+
+    @Override
+    public SysUser updateAvatar(Long fileId) {
+        // 获取当前用户
+        Long idOfSelf = getIdOfSelf();
+        // 获取当前用户
+        SysUser user = repository.findById(idOfSelf).orElseThrow(() -> exceptionService.getException("userNotExist"));
+        // 更新用户头像
+        SysUser result = repository.save(user.setFileIdOfAvatar(fileId));
+        // 处理用户信息
+        return handleUser(result);
+    }
+
+    @Override
+    public SysUser getWithoutHideSensitiveInfo() {
+        return repository.findById(tokenService.getSelf().getUserId()).orElseThrow(() -> exceptionService.getException("userNotExist"));
     }
 }

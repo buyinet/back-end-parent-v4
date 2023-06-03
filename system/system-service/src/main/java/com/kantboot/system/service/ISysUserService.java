@@ -89,4 +89,18 @@ public interface ISysUserService {
     SysToken thirdLogin(Long userId);
 
 
+    /**
+     * 修改头像
+     * @param fileId 文件id
+     * @return 用户信息
+     */
+    SysUser updateAvatar(Long fileId);
+
+    /**
+     * 获取没有隐藏敏感信息的用户信息
+     * @return 用户信息
+     */
+    SysUser getWithoutHideSensitiveInfo();
+
+
 }

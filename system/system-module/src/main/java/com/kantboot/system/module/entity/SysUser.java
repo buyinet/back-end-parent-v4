@@ -64,7 +64,7 @@ public class SysUser implements Serializable {
      * 头像文件的id
      */
     @Column(name = "file_id_of_avatar")
-    private String fileIdOfAvatar;
+    private Long fileIdOfAvatar;
 
     /**
      * 邮箱
@@ -145,6 +145,12 @@ public class SysUser implements Serializable {
      */
     @Column(name = "create_device",length = 1024)
     private String createDevice;
+
+    /**
+     * 生日
+     */
+    @Column(name = "birthday")
+    private Date birthday;
 
     /**
      * 创建时间

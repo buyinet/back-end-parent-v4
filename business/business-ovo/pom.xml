@@ -3,17 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>kantboot-start-parent</artifactId>
+        <artifactId>business</artifactId>
         <groupId>com.kantboot</groupId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>business</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>business-ovo</module>
+        <module>business-ovo-module</module>
+        <module>business-ovo-service</module>
+        <module>business-ovo-controller</module>
     </modules>
+
+    <artifactId>business-ovo</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

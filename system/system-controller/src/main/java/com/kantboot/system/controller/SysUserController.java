@@ -64,4 +64,15 @@ public class SysUserController {
         return stateSuccessService.success(service.getSelf(), "getSuccess");
     }
 
+    /**
+     * 修改头像
+     * @param fileId 头像文件id
+     * @return 修改后的用户信息
+     */
+    @RequestMapping("/updateAvatar")
+    public RestResult updateAvatar(@RequestParam("fileId") Long fileId) {
+        // 调用service层的修改头像方法，返回结果，并返回成功信息
+        return stateSuccessService.success(service.updateAvatar(fileId), "saveSuccess");
+    }
+
 }
