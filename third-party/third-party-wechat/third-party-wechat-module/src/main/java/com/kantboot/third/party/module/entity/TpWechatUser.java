@@ -96,9 +96,7 @@ public class TpWechatUser {
     /**
      * 查看关联的用户实体
      */
-    @OneToOne(targetEntity = SysUser.class,
-            cascade = CascadeType.DETACH,
-            fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = SysUser.class)
     @JoinColumn(name = "user_id",referencedColumnName = "id",insertable = false,updatable = false)
     private SysUser sysUser;
 }

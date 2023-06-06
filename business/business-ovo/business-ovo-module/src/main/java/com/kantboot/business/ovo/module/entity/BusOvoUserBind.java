@@ -49,9 +49,15 @@ public class BusOvoUserBind {
     @Column(name = "sadomasochism_attr_code")
     private String sadomasochismAttrCode;
 
+    /**
+     * 自我介绍
+     */
+    @Column(name = "introduction")
+    private String introduction;
+
     @ManyToMany
     @JoinTable(name = "rel_bus_ovo_user_bind_and_bus_ovo_emotional_orientation",
-            joinColumns = @JoinColumn(name = "user_bind_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "emotional_orientation_code", referencedColumnName = "code"))
     private List<BusOvoEmotionalOrientation> emotionalOrientationList;
 
@@ -75,5 +81,12 @@ public class BusOvoUserBind {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private SysUser user;
+
+    /**
+     * 关联的用户绑定位置
+     */
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private BusOvoUserBindLocation location;
 
 }

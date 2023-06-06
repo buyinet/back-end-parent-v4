@@ -1,4 +1,4 @@
-package com.kantboot.business.ovo.module.entity;
+package com.kantboot.system.module.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,16 +11,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 /**
- * Ovo用户绑定表
+ * 余额表
+ * 用于记录用户的余额信息
  * @author 方某方
  */
-@Table(name="rel_bus_ovo_user_bind_and_bus_ovo_emotional_orientation")
+@Table(name="sys_balance_type")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class RelBusOvoUserBindAndBusOvoEmotionalOrientation {
+public class SysBalanceType {
+
     /**
      * 主键
      */
@@ -30,16 +32,17 @@ public class RelBusOvoUserBindAndBusOvoEmotionalOrientation {
     private Long id;
 
     /**
-     * 用户id
+     * 余额类型编码
      */
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "code",length = 64)
+    private String code;
 
     /**
-     * 情感取向id
+     * 余额类型名称
      */
-    @Column(name = "emotional_orientation_code", length = 64)
-    private String emotionalOrientationCode;
+    @Column(name = "name",length = 64)
+    private String name;
+
 
     /**
      * 创建时间

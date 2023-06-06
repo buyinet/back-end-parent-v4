@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 性取向的服务接口实现类
@@ -27,4 +28,15 @@ public class BusOvoSexualOrientationServiceImpl implements IBusOvoSexualOrientat
         return repository.findAll();
     }
 
+    /**
+     * 获取所有的性取向
+     * @return 性取向
+     */
+    @Override
+    public Map<String,String> getMap() {
+        List<BusOvoSexualOrientation> all = repository.findAll();
+        Map<String, String> result = all.stream().collect(
+                java.util.stream.Collectors.toMap(BusOvoSexualOrientation::getCode, BusOvoSexualOrientation::getName));
+        return result;
+    }
 }

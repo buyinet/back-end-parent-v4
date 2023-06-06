@@ -24,6 +24,12 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.kantboot</groupId>
+            <artifactId>api-service</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.kantboot</groupId>
             <artifactId>system-service</artifactId>

@@ -1,5 +1,7 @@
 package com.kantboot.third.party.wechat.service.service.impl;
 
+import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson2.JSON;
 import com.kantboot.api.util.wechat.mp.login.Code2Session;
 import com.kantboot.system.module.entity.SysToken;
 import com.kantboot.system.module.entity.SysUser;
@@ -13,6 +15,8 @@ import com.kantboot.util.common.exception.BaseException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 /**
  * <p>
@@ -67,6 +71,8 @@ public class TpWechatUserServiceImpl implements ITpWechatUserService {
 
         // 注册用户
         SysToken register = userService.thirdRegister(sysUser);
+
+        System.out.println("register = "+"-"+register.getUserId()+"-" + JSON.toJSONString(register));
 
         // 保存微信用户
         TpWechatUser tpWechatUser = new TpWechatUser();

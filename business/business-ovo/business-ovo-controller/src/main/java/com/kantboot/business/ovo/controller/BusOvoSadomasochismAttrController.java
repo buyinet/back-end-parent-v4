@@ -31,4 +31,12 @@ public class BusOvoSadomasochismAttrController {
         return stateSuccessService.success(service.getList(), "getSuccess");
     }
 
+    /**
+     * 获取字典
+     * @return 性虐属性字典
+     */
+    @RequestMapping("/getMap")
+    public RestResult getMap(){
+        return stateSuccessService.success(service.getMap(), "getSuccess");
+    }
 }

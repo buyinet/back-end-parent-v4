@@ -29,6 +29,11 @@ public class BusOvoUserBindDto {
     private List<String> emotionalOrientationCodeList;
 
     /**
+     * 自我介绍
+     */
+    private String introduction;
+
+    /**
      * 头像文件id
      */
     private Long fileIdOfAvatar;

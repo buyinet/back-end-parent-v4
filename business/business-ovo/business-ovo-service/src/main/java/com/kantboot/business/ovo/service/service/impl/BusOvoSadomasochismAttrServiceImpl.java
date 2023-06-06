@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Ovo性虐属性表服务接口实现类
@@ -21,5 +22,11 @@ public class BusOvoSadomasochismAttrServiceImpl implements IBusOvoSadomasochismA
     @Override
     public List<BusOvoSadomasochismAttr> getList() {
         return repository.findAll();
+    }
+
+    @Override
+    public Map<String, String> getMap() {
+        return repository.findAll().stream().collect(
+                java.util.stream.Collectors.toMap(BusOvoSadomasochismAttr::getCode, BusOvoSadomasochismAttr::getName));
     }
 }

@@ -4,6 +4,8 @@ import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
 import com.kantboot.system.module.entity.SysRole;
 import com.kantboot.system.module.entity.SysToken;
 import com.kantboot.system.module.entity.SysUser;
+import com.kantboot.system.repository.SysBalanceRepository;
+import com.kantboot.system.repository.SysBalanceTypeRepository;
 import com.kantboot.system.repository.SysUserRepository;
 import com.kantboot.system.service.*;
 import com.kantboot.util.common.password.KantbootPassword;
@@ -283,7 +285,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
         // 保存用户
         SysToken token = tokenService.createToken(user.getId());
-        SysToken result = new SysToken().setToken(token.getToken()).setUser(token.getUser());
+        SysToken result = new SysToken().setUserId(token.getUserId()).setToken(token.getToken()).setUser(token.getUser());
         return result;
     }
 

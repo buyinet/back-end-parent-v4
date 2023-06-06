@@ -30,5 +30,14 @@ public class BusOvoSexualOrientationController {
         return stateSuccessService.success(service.getAllSexualOrientation(), "getAllSuccess");
     }
 
+    /**
+     * 获取所有的性取向
+     * @return 性取向
+     */
+    @RequestMapping("/getMap")
+    public RestResult getMap(){
+        return stateSuccessService.success(service.getMap(), "getSuccess");
+    }
+
 
 }

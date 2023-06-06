@@ -1,6 +1,8 @@
 package com.kantboot.business.ovo.service.repository;
 
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.Repository;
 
@@ -17,6 +19,15 @@ public interface BusOvoUserBindRepository extends JpaRepository<BusOvoUserBind, 
      * @return BusOvoUserBind Ovo绑定的用户
      */
     BusOvoUserBind findByUserId(Long userId);
-    
+
+    /**
+     * 根据分页查询
+     * @param pageable 分页
+     * @return Page<BusOvoUserBind> Ovo绑定的用户
+     */
+     Page<BusOvoUserBind> findAll(Pageable pageable);
+
+
+
 
 }

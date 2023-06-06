@@ -2,10 +2,17 @@ package com.kantboot.business.ovo.controller;
 
 import com.kantboot.business.ovo.module.dto.BusOvoUserBindDto;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.service.repository.BusOvoUserBindLocationRepository;
+import com.kantboot.business.ovo.service.repository.BusOvoUserBindRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
+import lombok.SneakyThrows;
+import lombok.Synchronized;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +30,30 @@ public class BusOvoUserBindController {
 
     @Resource
     private IStateSuccessService stateSuccessService;
+
+
+    @Resource
+    private BusOvoUserBindLocationRepository repository;
+
+    @RequestMapping("/test")
+    public RestResult test(){
+
+        return stateSuccessService.success(
+                repository.findAllWithDistance(
+                        PageRequest.of(0, 15),20.0,100.0,1000.0)
+                , "getSuccess");
+    }
+
+    /**
+     * 读取附近的人
+     * @param pageNumber 页码
+     * @param range 范围
+     * @return 附近的人
+     */
+    @RequestMapping("/getNear")
+    public RestResult getNear(Integer pageNumber, Double range){
+        return stateSuccessService.success(service.getNear(pageNumber, range), "getSuccess");
+    }
 
     /**
      * 绑定用户
@@ -42,4 +73,29 @@ public class BusOvoUserBindController {
         return stateSuccessService.success(service.getSelf(), "getSuccess");
     }
 
+    /**
+     * 获取推荐列表
+     * @param pageNumber 页码
+     * @param sortField 排序的字段
+     * @param sortOrderBy 排序的方式
+     * @return 推荐列表
+     */
+    @SneakyThrows
+    @RequestMapping("/getRecommendList")
+    public RestResult getRecommendList(Integer pageNumber,
+                                       @DefaultValue("gmtCreate") String sortField,
+                                       @DefaultValue("desc") String sortOrderBy){
+        return stateSuccessService.success(service.getRecommendList(pageNumber,sortField,sortOrderBy), "getSuccess");
+    }
+
+    /**
+     * 修改位置信息
+     * @param latitude 纬度
+     * @param longitude 经度
+     * @return 修改后的信息
+     */
+    @RequestMapping("/updateLocation")
+    public RestResult updateLocation(Double latitude, Double longitude){
+        return stateSuccessService.success(service.updateLocation(latitude,longitude), "optSuccess");
+    }
 }
