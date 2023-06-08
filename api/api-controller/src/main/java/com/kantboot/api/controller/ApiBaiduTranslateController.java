@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/baiduTranslate")
-public class BaiduTranslateController {
+public class ApiBaiduTranslateController {
 
     @Resource
     private IBaiduTranslateService service;

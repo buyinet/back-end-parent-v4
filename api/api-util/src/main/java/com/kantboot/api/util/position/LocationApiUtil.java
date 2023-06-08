@@ -61,10 +61,37 @@ public class LocationApiUtil {
         return jsonObject;
     }
 
+    /**
+     * 根据经纬度范围查询
+     * https://apis.map.qq.com/ws/place/v1/explore?key=${key}&boundary=nearby(${latitude},${longitude},${range},${expand})
+     * @param latitude 纬度
+     * @param longitude 经度
+     * @param range 范围 单位：米
+     * @param expand 是否扩大范围 0：不扩大；1：扩大
+     * @param key 密钥
+     * @return 位置信息
+     */
+    public static JSONObject getLocationInfoByRange(Double latitude, Double longitude, Double range, Integer expand,String key) {
+        String url = "https://apis.map.qq.com/ws/place/v1/explore?orderby=_distance&page_size=20&key=" + key + "&boundary=nearby(" + latitude + "," + longitude + "," + range + "," + expand + ")";
+        // 向腾讯地图api发送请求
+        String jsonStr = webSent(url);
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        return jsonObject;
+    }
 
-    public static void main(String[] args) {
-        JSONObject locationInfoByIp = getLocationInfoByIp("115.193.38.142", "IXUBZ-VBPRB-XAKUZ-NKRRT-RDGSZ-37F6J");
-        System.out.println(locationInfoByIp);
+    /**
+     * ID查询
+     * https://apis.map.qq.com/ws/place/v1/detail
+     * @param id 腾讯地图POI（地点）唯一标识，支持多poiid检索，最大支持10个，用英文逗号分隔
+     * @param key 密钥
+     * @return 位置信息
+     */
+    public static JSONObject getLocationInfoById(String id,String key) {
+        String url = "https://apis.map.qq.com/ws/place/v1/detail?id=" + id + "&key=" + key;
+        // 向腾讯地图api发送请求
+        String jsonStr = webSent(url);
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        return jsonObject;
     }
 
 

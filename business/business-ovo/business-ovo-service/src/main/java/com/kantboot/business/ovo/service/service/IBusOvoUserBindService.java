@@ -1,6 +1,7 @@
 package com.kantboot.business.ovo.service.service;
 
-import com.kantboot.business.ovo.module.dto.BusOvoUserBindDto;
+import com.alibaba.fastjson2.JSONArray;
+import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public interface IBusOvoUserBindService {
      * @param dto 用户绑定信息
      * @return 用户绑定信息
      */
-    BusOvoUserBind bind(BusOvoUserBindDto dto);
+    BusOvoUserBind bind(BusOvoUserBindDTO dto);
 
     /**
      * 获取用户自身的绑定信息
@@ -49,5 +50,12 @@ public interface IBusOvoUserBindService {
      * @return 修改后的信息
      */
     BusOvoUserBind updateLocation(Double latitude, Double longitude);
+
+    /**
+     * 根据自身的经纬度范围查询
+     * https://apis.map.qq.com/ws/place/v1/explore?key=${key}&boundary=nearby(${latitude},${longitude},${range},${expand})
+     * @return 位置信息
+     */
+    JSONArray getLocationInfoByRangeSelf();
 
 }

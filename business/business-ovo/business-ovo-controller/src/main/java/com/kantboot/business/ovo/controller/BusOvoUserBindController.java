@@ -1,18 +1,14 @@
 package com.kantboot.business.ovo.controller;
 
-import com.kantboot.business.ovo.module.dto.BusOvoUserBindDto;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.service.repository.BusOvoUserBindLocationRepository;
-import com.kantboot.business.ovo.service.repository.BusOvoUserBindRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
-import lombok.Synchronized;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +56,7 @@ public class BusOvoUserBindController {
      * @return 绑定用户
      */
     @RequestMapping("/bind")
-    public RestResult bind(@RequestBody BusOvoUserBindDto dto){
+    public RestResult bind(@RequestBody BusOvoUserBindDTO dto){
         return stateSuccessService.success(service.bind(dto), "optSuccess");
     }
 
@@ -97,5 +93,14 @@ public class BusOvoUserBindController {
     @RequestMapping("/updateLocation")
     public RestResult updateLocation(Double latitude, Double longitude){
         return stateSuccessService.success(service.updateLocation(latitude,longitude), "optSuccess");
+    }
+
+    /**
+     * 根据范围获取附近位置信息
+     * @return 附近位置信息
+     */
+    @RequestMapping("/getLocationInfoByRangeSelf")
+    public RestResult getLocationInfoByRangeSelf(){
+        return stateSuccessService.success(service.getLocationInfoByRangeSelf(), "getSuccess");
     }
 }

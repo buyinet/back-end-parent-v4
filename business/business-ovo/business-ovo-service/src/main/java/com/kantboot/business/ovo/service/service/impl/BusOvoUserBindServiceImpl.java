@@ -1,8 +1,10 @@
 package com.kantboot.business.ovo.service.service.impl;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.service.IApiLocationService;
-import com.kantboot.business.ovo.module.dto.BusOvoUserBindDto;
+import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
@@ -52,7 +54,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
     private BusOvoUserBindLocationRepository busOvoUserBindLocationRepository;
 
     @Override
-    public BusOvoUserBind bind(BusOvoUserBindDto dto) {
+    public BusOvoUserBind bind(BusOvoUserBindDTO dto) {
         // 获取当前用户
         SysUser sysUser = sysUserService.getWithoutHideSensitiveInfo();
         sysUser.setFileIdOfAvatar(dto.getFileIdOfAvatar())
@@ -123,7 +125,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
                 }
                 String areaCode = adInfo.getString("adcode");
                 if(areaCode!=null){
-                    busOvoUserBindLocation.setAreaCode(areaCode);
+                    busOvoUserBindLocation.setAdCode(areaCode);
                 }
                 String countryCode = adInfo.getString("nation_code");
                 if(countryCode!=null){
@@ -169,9 +171,13 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
                 .findAllWithDistance(PageRequest.of(pageNumber-1, 15),latitude,longitude,range);
 
         List<BusOvoUserBindLocation> content = all.getContent();
+        System.out.println(JSON.toJSONString(content));
+        System.out.println(content.size());
         List<BusOvoUserBind> busOvoUserBindList = new ArrayList<>();
         for (BusOvoUserBindLocation busOvoUserBindLocation : content) {
-            busOvoUserBindList.add(repository.findByUserId(busOvoUserBindLocation.getUserId()));
+            if(!busOvoUserBindLocation.getUserId().equals(self.getUserId())){
+                busOvoUserBindList.add(repository.findByUserId(busOvoUserBindLocation.getUserId()));
+            }
         }
 
         HashMap<String, Object> result = new HashMap<>(5);
@@ -232,7 +238,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         // 获取城市代码
         String cityCode = locationInfo.getJSONObject("ad_info").getString("adcode");
         if (cityCode!=null){
-            busOvoUserBindLocation.setAreaCode(cityCode);
+            busOvoUserBindLocation.setAdCode(cityCode);
         }
         busOvoUserBindLocation.setLatitude(latitude);
         busOvoUserBindLocation.setLongitude(longitude);
@@ -240,6 +246,21 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         busOvoUserBindLocationRepository.save(busOvoUserBindLocation);
 
         return getSelf();
+    }
+
+
+    /**
+     * 通过经纬度获取位置信息
+     * @return 位置信息
+     */
+    @Override
+    public JSONArray getLocationInfoByRangeSelf() {
+        Long idOfSelf = sysUserService.getIdOfSelf();
+        BusOvoUserBindLocation busOvoUserBindLocation = busOvoUserBindLocationRepository.findByUserId(idOfSelf);
+        if (busOvoUserBindLocation==null){
+            return new JSONArray();
+        }
+        return apiLocationService.getLocationInfoByRange(busOvoUserBindLocation.getLatitude(), busOvoUserBindLocation.getLongitude(),500.0,0);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.kantboot.api.service.impl;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.service.IApiLocationService;
 import com.kantboot.api.util.position.LocationApiUtil;
@@ -28,7 +29,21 @@ public class ApiLocationServiceImpl implements IApiLocationService {
     public JSONObject getLocationInfoByIp(String ip) {
         String key = settingService.getValue("location", "tencentMapApiKey");
         JSONObject locationInfo = LocationApiUtil.getLocationInfoByIp(ip, key);
-        System.out.println(locationInfo);
         return locationInfo.getJSONObject("result");
+    }
+
+    @Override
+    public JSONArray getLocationInfoByRange(Double latitude, Double longitude, Double range, Integer expand) {
+        String key = settingService.getValue("location", "tencentMapApiKey");
+        JSONObject locationInfo = LocationApiUtil.getLocationInfoByRange(latitude, longitude, range, expand, key);
+        return locationInfo.getJSONArray("data");
+    }
+
+    @Override
+    public JSONObject getLocationInfoById(String id) {
+        String key = settingService.getValue("location", "tencentMapApiKey");
+        JSONObject locationInfo = LocationApiUtil.getLocationInfoById(id, key);
+        System.out.println(locationInfo);
+        return locationInfo.getJSONArray("data").getJSONObject(0);
     }
 }

@@ -89,10 +89,10 @@ public class BusOvoUserBindLocation {
     private String countryCode;
 
     /**
-     * 地区code
+     * 区域code
      */
-    @Column(name = "area_code")
-    private String areaCode;
+    @Column(name = "ad_code")
+    private String adCode;
 
     /**
      * 创建时间

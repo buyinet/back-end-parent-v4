@@ -1,6 +1,5 @@
 package com.kantboot.business.ovo.module.dto;
 
-import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +11,7 @@ import java.util.List;
  * @author 方某方
  */
 @Data
-public class BusOvoUserBindDto {
+public class BusOvoUserBindDTO {
     /**
      * 性取向编码
      */
