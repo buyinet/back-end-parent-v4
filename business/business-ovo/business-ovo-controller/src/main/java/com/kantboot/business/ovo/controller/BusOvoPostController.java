@@ -38,6 +38,21 @@ public class BusOvoPostController {
                 );
     }
 
+    /**
+     * 获取自己的帖子
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 自己的帖子
+     */
+    @RequestMapping("/getSelf")
+    public RestResult getSelf(Integer pageNumber, String sortField, String sortOrderBy){
+        return stateSuccessService.success(
+                        service.getSelf(pageNumber, sortField, sortOrderBy),
+                        "getSuccess"
+                );
+    }
+
 
 
 }

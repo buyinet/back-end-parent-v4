@@ -103,4 +103,7 @@ public class BusOvoUserBindController {
     public RestResult getLocationInfoByRangeSelf(){
         return stateSuccessService.success(service.getLocationInfoByRangeSelf(), "getSuccess");
     }
+
+
+
 }

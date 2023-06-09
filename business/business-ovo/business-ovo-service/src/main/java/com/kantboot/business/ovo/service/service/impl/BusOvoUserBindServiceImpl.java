@@ -17,6 +17,7 @@ import com.kantboot.system.repository.SysUserRepository;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
 import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -150,10 +151,26 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
 
         Page<BusOvoUserBind> all = repository.findAll(pageable);
+        List<BusOvoUserBind> content = all.getContent();
+        List<BusOvoUserBind> resultPage = new ArrayList<>();
+
+        boolean isHasSelf = false;
+        for (BusOvoUserBind busOvoUserBind : content) {
+            if(!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
+                isHasSelf = true;
+                resultPage.add(busOvoUserBind);
+            }
+        }
+
+        long totalElements = all.getTotalElements();
+        if(isHasSelf){
+            totalElements--;
+        }
+
         HashMap<String, Object> result = new HashMap<>(5);
-        result.put("totalElements", all.getTotalElements());
+        result.put("totalElements", totalElements);
         result.put("totalPage", all.getTotalPages());
-        result.put("content", all.getContent());
+        result.put("content", resultPage);
         result.put("number", all.getNumber() + 1);
         result.put("size", all.getSize());
         return result;

@@ -10,9 +10,14 @@ import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoPostService;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import jakarta.annotation.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -128,6 +133,24 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
             post.setAdCode(self.getLocation().getAdCode());
         }
         return repository.save(post);
+    }
+
+    @Override
+    public HashMap<String, Object> getSelf(Integer pageNumber, String sortField, String sortOrderBy) {
+        BusOvoUserBind self = userBindService.getSelf();
+        Sort sort = Sort.by(sortField);
+        Sort sort1=
+                sortOrderBy.toUpperCase().equals("ASC")?
+                        sort.ascending():sort.descending();
+        PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
+        Page<BusOvoPost> all = repository.findAllByUserId(self.getUserId(), pageable);
+        HashMap<String, Object> result = new HashMap<>(5);
+        result.put("totalElements", all.getTotalElements());
+        result.put("totalPage", all.getTotalPages());
+        result.put("content", all.getContent());
+        result.put("number", all.getNumber() + 1);
+        result.put("size", all.getSize());
+        return result;
     }
 }
 
