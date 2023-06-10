@@ -8,9 +8,11 @@ import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
+import com.kantboot.business.ovo.module.entity.RelBusOvoUserBindAndBusOvoEmotionalOrientation;
 import com.kantboot.business.ovo.service.repository.BusOvoEmotionalOrientationRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoUserBindLocationRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoUserBindRepository;
+import com.kantboot.business.ovo.service.repository.RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.repository.SysUserRepository;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 绑定的用户的服务实现类
@@ -53,6 +56,9 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
     @Resource
     private BusOvoUserBindLocationRepository busOvoUserBindLocationRepository;
+
+    @Resource
+    private RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository relBusOvoUserBindAndBusOvoEmotionalOrientationRepository;
 
     @Override
     public BusOvoUserBind bind(BusOvoUserBindDTO dto) {
@@ -83,13 +89,16 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
                 .setSexualOrientationCode(dto.getSexualOrientationCode())
                 .setSadomasochismAttrCode(dto.getSadomasochismAttrCode());
 
-        List<BusOvoEmotionalOrientation> busOvoEmotionalOrientationList = new ArrayList<>();
         List<String> emotionalOrientationCodeList = dto.getEmotionalOrientationCodeList();
-        for (String emotionalOrientationCode : emotionalOrientationCodeList) {
-            busOvoEmotionalOrientationList.add(emotionalOrientationRepository.findByCode(emotionalOrientationCode));
-        }
+        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.deleteByUserId(userId);
+        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.flush();
 
-        busOvoUserBind.setEmotionalOrientationList(busOvoEmotionalOrientationList);
+        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.saveAll(emotionalOrientationCodeList.stream().map(code -> {
+            return new RelBusOvoUserBindAndBusOvoEmotionalOrientation()
+                    .setUserId(userId)
+                    .setEmotionalOrientationCode(code);
+        }).collect(Collectors.toList()));
+
         BusOvoUserBind result = repository.save(busOvoUserBind);
 
 
@@ -183,13 +192,15 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         Double latitude = self.getLocation().getLatitude();
         // 获取经度
         Double longitude = self.getLocation().getLongitude();
+        // 经纬度保留五位小数
+        latitude = Double.valueOf(String.format("%.5f", latitude));
+        longitude = Double.valueOf(String.format("%.5f", longitude));
 
+        // 获取附近的人的经纬度地点信息
         Page<BusOvoUserBindLocation> all = busOvoUserBindLocationRepository
                 .findAllWithDistance(PageRequest.of(pageNumber-1, 15),latitude,longitude,range);
-
         List<BusOvoUserBindLocation> content = all.getContent();
-        System.out.println(JSON.toJSONString(content));
-        System.out.println(content.size());
+
         List<BusOvoUserBind> busOvoUserBindList = new ArrayList<>();
         for (BusOvoUserBindLocation busOvoUserBindLocation : content) {
             if(!busOvoUserBindLocation.getUserId().equals(self.getUserId())){
@@ -209,6 +220,9 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
     @Override
     public BusOvoUserBind updateLocation(Double latitude, Double longitude) {
+
+
+
         JSONObject locationInfo = apiLocationService.getLocationInfo(latitude, longitude,0);
         Long userId = sysUserService.getWithoutHideSensitiveInfo().getId();
         BusOvoUserBindLocation busOvoUserBindLocation = busOvoUserBindLocationRepository.findByUserId(userId);

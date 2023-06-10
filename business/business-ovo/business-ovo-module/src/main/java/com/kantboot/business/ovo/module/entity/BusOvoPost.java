@@ -65,9 +65,17 @@ public class BusOvoPost {
     private List<BusOvoPostImage> imageList;
 
     /**
+     * 用户
+     * 用于关联查询
+     */
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private BusOvoUserBind ovoUser;
+
+    /**
      * 发帖人id
      */
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Long userId;
 
     /**

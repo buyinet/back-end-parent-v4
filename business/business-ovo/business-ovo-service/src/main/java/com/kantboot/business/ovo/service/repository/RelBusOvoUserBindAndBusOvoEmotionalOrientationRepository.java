@@ -11,5 +11,10 @@ import org.springframework.data.repository.Repository;
  */
 public interface RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository extends JpaRepository<RelBusOvoUserBindAndBusOvoEmotionalOrientation, Long>, Repository<RelBusOvoUserBindAndBusOvoEmotionalOrientation, Long> {
 
-
+    /**
+     * 根据用户id删除
+     * @param userId 用户id
+     * @return 删除的数量
+     */
+    Integer deleteByUserId(Long userId);
 }

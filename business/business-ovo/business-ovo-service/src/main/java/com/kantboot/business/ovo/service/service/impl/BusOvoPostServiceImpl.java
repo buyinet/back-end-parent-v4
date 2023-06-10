@@ -12,7 +12,6 @@ import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -59,10 +58,10 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
 
 
         String detailIdOfLocation = dto.getDetailIdOfLocation();
-        if(detailIdOfLocation==null&&detailIdOfLocation==""&&
-                detailIdOfLocation.equals("province")
-        &&detailIdOfLocation.equals("city")
-        &&detailIdOfLocation.equals("district")
+        if(detailIdOfLocation!=null&&!detailIdOfLocation.equals("")
+                &&!detailIdOfLocation.equals("province")
+        &&!detailIdOfLocation.equals("city")
+        &&!detailIdOfLocation.equals("district")
         ){
 
             // 使用位置查询id获取位置信息
@@ -144,6 +143,48 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
                         sort.ascending():sort.descending();
         PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
         Page<BusOvoPost> all = repository.findAllByUserId(self.getUserId(), pageable);
+        HashMap<String, Object> result = new HashMap<>(5);
+        result.put("totalElements", all.getTotalElements());
+        result.put("totalPage", all.getTotalPages());
+        result.put("content", all.getContent());
+        result.put("number", all.getNumber() + 1);
+        result.put("size", all.getSize());
+        return result;
+    }
+
+    @Override
+    public HashMap<String, Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy) {
+        Sort sort = Sort.by(sortField);
+        Sort sort1=
+                sortOrderBy.toUpperCase().equals("ASC")?
+                        sort.ascending():sort.descending();
+        PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
+        Page<BusOvoPost> all = repository.findAllByAuditStatusCode("pass", pageable);
+        HashMap<String, Object> result = new HashMap<>(5);
+        result.put("totalElements", all.getTotalElements());
+        result.put("totalPage", all.getTotalPages());
+        result.put("content", all.getContent());
+        result.put("number", all.getNumber() + 1);
+        result.put("size", all.getSize());
+        return result;
+    }
+
+
+    @Override
+    public HashMap<String, Object> getNear(Integer pageNumber,Double range) {
+        BusOvoUserBind self = userBindService.getSelf();
+        // 获取纬度
+        Double latitude = self.getLocation().getLatitude();
+        // 获取经度
+        Double longitude = self.getLocation().getLongitude();
+        // 经纬度保留五位小数
+        latitude = Double.valueOf(String.format("%.5f", latitude));
+        longitude = Double.valueOf(String.format("%.5f", longitude));
+
+        Page<BusOvoPost> all =
+                repository.findAllWithDistance(PageRequest.of(pageNumber - 1, 15),
+                        latitude, longitude, range);
+
         HashMap<String, Object> result = new HashMap<>(5);
         result.put("totalElements", all.getTotalElements());
         result.put("totalPage", all.getTotalPages());

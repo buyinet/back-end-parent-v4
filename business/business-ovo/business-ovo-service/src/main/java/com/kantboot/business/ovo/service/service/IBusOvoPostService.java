@@ -28,4 +28,20 @@ public interface IBusOvoPostService {
      */
     HashMap<String,Object> getSelf(Integer pageNumber, String sortField, String sortOrderBy);
 
+    /**
+     * 获取推荐的帖子
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 推荐的帖子
+     */
+    HashMap<String,Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy);
+
+    /**
+     * 获取附近的帖子
+     * @param pageNumber 页码
+     * @param range 范围
+     * @return 附近的帖子
+     */
+    HashMap<String,Object> getNear(Integer pageNumber,Double range);
 }

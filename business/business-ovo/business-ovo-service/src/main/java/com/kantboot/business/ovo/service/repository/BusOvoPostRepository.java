@@ -1,9 +1,11 @@
 package com.kantboot.business.ovo.service.repository;
 
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
+import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * 帖子的repository
@@ -18,4 +20,35 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
      * @return 自己的帖子
      */
     Page<BusOvoPost> findAllByUserId(Long userId, Pageable pageable);
+
+    /**
+     * 根据审核状态获取帖子
+     * @param auditStatusCode 审核状态编码
+     * @param pageable 分页参数
+     * @return 帖子
+     */
+    Page<BusOvoPost> findAllByAuditStatusCode(String auditStatusCode, Pageable pageable);
+
+    /**
+     * 查看附近的帖子
+     * 即按时间倒序，距离正序
+     * 每10分钟大于十公里
+     * @param pageable 分页
+     * @param latitude 纬度
+     * @param longitude 经度
+     * @param range 范围
+     * @return Page<BusOvoUserBindLocation> 附近的帖子
+     */
+    @Query(value = "SELECT *," +
+            " ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((:latitude * PI() / 180 - e.latitude_of_select * PI() / 180) / 2), 2) " +
+            "+ COS(:latitude * PI() / 180) * COS(e.latitude_of_select * PI() / 180) *" +
+            " POW(SIN((:longitude * PI() / 180 - e.longitude_of_select * PI() / 180) / 2), 2)))) " +
+            "* 1000 AS distance " +
+            "FROM bus_ovo_post e " +
+            "WHERE distance <= :range " +
+            "ORDER BY CASE WHEN (e.gmt_create - INTERVAL 10 MINUTE) > NOW() THEN distance ELSE -distance END ASC, e.gmt_create DESC",
+            countQuery = "SELECT COUNT(*) FROM bus_ovo_post",
+            nativeQuery = true)
+    Page<BusOvoPost> findAllWithDistance(Pageable pageable, Double latitude, Double longitude, Double range);
+
 }

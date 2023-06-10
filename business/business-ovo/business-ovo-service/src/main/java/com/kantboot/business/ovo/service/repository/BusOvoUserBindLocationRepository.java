@@ -19,6 +19,7 @@ extends JpaRepository<BusOvoUserBindLocation, Long> {
      * @param pageable 分页
      * @param latitude 纬度
      * @param longitude 经度
+     * @param range 范围,单位米
      * @return Page<BusOvoUserBindLocation> Ovo绑定的用户
      */
     @Query(value = "SELECT *," +
@@ -30,7 +31,7 @@ extends JpaRepository<BusOvoUserBindLocation, Long> {
             "  HAVING" +
             "  distance <= :range" +
             " ORDER BY distance ASC",
-            countQuery = "SELECT COUNT(*) FROM bus_ovo_user_bind_position",
+            countQuery = "SELECT COUNT(*) FROM bus_ovo_user_bind_location",
             nativeQuery = true)
     Page<BusOvoUserBindLocation> findAllWithDistance(Pageable pageable,Double latitude,Double longitude,Double range);
 

@@ -53,6 +53,35 @@ public class BusOvoPostController {
                 );
     }
 
+    /**
+     * 获取推荐的帖子
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 推荐的帖子
+     */
+    @RequestMapping("/getRecommend")
+    public RestResult getRecommend(Integer pageNumber, String sortField, String sortOrderBy){
+        return stateSuccessService.success(
+                        service.getRecommend(pageNumber, sortField, sortOrderBy),
+                        "getSuccess"
+                );
+    }
+
+    /**
+     * 获取附近的帖子
+     * @param pageNumber 页码
+     * @param range 范围
+     * @return 附近的帖子
+     */
+    @RequestMapping("/getNear")
+    public RestResult getNear(Integer pageNumber,Double range){
+        return stateSuccessService.success(
+                        service.getNear(pageNumber, range),
+                        "getSuccess"
+                );
+    }
+
 
 
 }

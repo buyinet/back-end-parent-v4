@@ -2,6 +2,7 @@ package com.kantboot.business.ovo.service.repository;
 
 import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
