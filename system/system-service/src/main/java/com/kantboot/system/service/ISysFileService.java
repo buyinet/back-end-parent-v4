@@ -1,6 +1,8 @@
 package com.kantboot.system.service;
 
 import com.kantboot.system.module.entity.SysFile;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -38,7 +40,7 @@ public interface ISysFileService {
      * @param id 文件UUID
      * @return 文件
      */
-    void visitFile(Long id);
+    ResponseEntity<FileSystemResource> visitFile(Long id);
 
     /**
      * 根据uuid和文件组编码获取文件

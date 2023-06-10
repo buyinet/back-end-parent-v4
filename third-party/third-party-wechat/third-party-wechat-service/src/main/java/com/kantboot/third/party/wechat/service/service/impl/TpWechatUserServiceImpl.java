@@ -72,8 +72,6 @@ public class TpWechatUserServiceImpl implements ITpWechatUserService {
         // 注册用户
         SysToken register = userService.thirdRegister(sysUser);
 
-        System.out.println("register = "+"-"+register.getUserId()+"-" + JSON.toJSONString(register));
-
         // 保存微信用户
         TpWechatUser tpWechatUser = new TpWechatUser();
         tpWechatUser.setUserId(register.getUserId());

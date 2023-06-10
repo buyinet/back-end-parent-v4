@@ -102,5 +102,15 @@ public interface ISysUserService {
      */
     SysUser getWithoutHideSensitiveInfo();
 
+    /**
+     * 根据用户id获取没有隐藏敏感信息的用户信息
+     */
+    SysUser getWithoutHideSensitiveInfoById(Long id);
+
+    /**
+     * 刷新token
+     */
+    void refreshToken();
+
 
 }

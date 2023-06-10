@@ -2,6 +2,7 @@ package com.kantboot.system.repository;
 
 import com.kantboot.system.module.entity.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -53,4 +54,14 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long>, Reposit
      * @return 用户数量
      */
     Long countByPhone(String phone);
+
+    /**
+     * 修改用户头像id
+     * @param id 用户id
+     * @param avatarId 头像id
+     * @return 修改后的用户
+     */
+    @Query("update SysUser u set u.fileIdOfAvatar = ?2 where u.id = ?1")
+    SysUser updateAvatarIdById(Long id, Long avatarId);
+
 }

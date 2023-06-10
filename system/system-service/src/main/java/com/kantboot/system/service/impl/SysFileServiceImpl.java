@@ -18,6 +18,10 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -217,13 +221,20 @@ public class SysFileServiceImpl implements ISysFileService {
      * @param id 文件ID
      */
     @Override
-    public void visitFile(Long id) {
+    public ResponseEntity<FileSystemResource> visitFile(Long id) {
         String path = settingService.getValue("file","uploadPath");
         // 获取文件
-        SysFile file = repository.findByIdAndGroupCodeIsNull(id);
+        SysFile sysFile = repository.findByIdAndGroupCodeIsNull(id);
+        File file = new File(sysFile.getPath());
+        FileSystemResource resource = new FileSystemResource(file);
 
-        readFile(response, file,path+"/"+file.getPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", file.getName());
 
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
     }
 
     @Override
@@ -233,7 +244,6 @@ public class SysFileServiceImpl implements ISysFileService {
         SysFile file = repository.findByIdAndGroupCode(id, groupCode);
 
         // 设置响应头
-        System.out.println(byCode.getPath()+"/"+file.getPath());
         readFile(response,file,byCode.getPath()+"/"+file.getPath());
     }
 

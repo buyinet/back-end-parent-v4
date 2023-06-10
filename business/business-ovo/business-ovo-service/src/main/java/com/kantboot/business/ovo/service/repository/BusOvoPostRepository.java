@@ -39,16 +39,25 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
      * @param range 范围
      * @return Page<BusOvoUserBindLocation> 附近的帖子
      */
-    @Query(value = "SELECT *," +
-            " ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((:latitude * PI() / 180 - e.latitude_of_select * PI() / 180) / 2), 2) " +
+    @Query(value = "SELECT * FROM (" +
+            "SELECT *, " +
+            "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((:latitude * PI() / 180 - e.latitude_of_select * PI() / 180) / 2), 2) " +
             "+ COS(:latitude * PI() / 180) * COS(e.latitude_of_select * PI() / 180) *" +
-            " POW(SIN((:longitude * PI() / 180 - e.longitude_of_select * PI() / 180) / 2), 2)))) " +
+            "POW(SIN((:longitude * PI() / 180 - e.longitude_of_select * PI() / 180) / 2), 2)))) " +
             "* 1000 AS distance " +
             "FROM bus_ovo_post e " +
+            "WHERE e.latitude_of_select IS NOT NULL " +
+            "  AND e.longitude_of_select IS NOT NULL " +
+            "  AND e.audit_status_code = 'pass') AS subquery " +
             "WHERE distance <= :range " +
-            "ORDER BY CASE WHEN (e.gmt_create - INTERVAL 10 MINUTE) > NOW() THEN distance ELSE -distance END ASC, e.gmt_create DESC",
-            countQuery = "SELECT COUNT(*) FROM bus_ovo_post",
+            "ORDER BY CASE WHEN (gmt_create - INTERVAL 10 MINUTE) > NOW() THEN distance ELSE -distance END ASC, gmt_create DESC",
+            countQuery = "SELECT COUNT(*) FROM bus_ovo_post " +
+                    "WHERE latitude_of_select IS NOT NULL " +
+                    "  AND longitude_of_select IS NOT NULL " +
+                    "  AND audit_status_code = 'pass'",
             nativeQuery = true)
     Page<BusOvoPost> findAllWithDistance(Pageable pageable, Double latitude, Double longitude, Double range);
+
+
 
 }

@@ -20,9 +20,15 @@ import java.util.List;
  *
  * @author 方某方
  */
-@Service
+@Deprecated
+//@Service
 @Log4j2
 public class SysUserServiceImpl implements ISysUserService {
+
+    @Override
+    public SysUser getWithoutHideSensitiveInfoById(Long id) {
+        return null;
+    }
 
     @Resource
     private SysUserRepository repository;
@@ -314,5 +320,10 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public SysUser getWithoutHideSensitiveInfo() {
         return repository.findById(tokenService.getSelf().getUserId()).orElseThrow(() -> exceptionService.getException("userNotExist"));
+    }
+
+    @Override
+    public void refreshToken() {
+
     }
 }

@@ -7,6 +7,8 @@ import com.kantboot.system.service.ISysFileService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,8 +78,8 @@ public class SysFileController {
      * @return 文件
      */
     @RequestMapping("/visitFile/{id}")
-    public void visitFile(@PathVariable("id") Long id){
-        service.visitFile(id);
+    public ResponseEntity<FileSystemResource> visitFile(@PathVariable("id") Long id){
+        return service.visitFile(id);
     }
 
     /**
