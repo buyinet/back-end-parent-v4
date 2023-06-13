@@ -1,11 +1,9 @@
 package com.kantboot.business.ovo.service.service.impl;
 
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.service.IApiLocationService;
 import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
-import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
 import com.kantboot.business.ovo.module.entity.RelBusOvoUserBindAndBusOvoEmotionalOrientation;
@@ -15,11 +13,9 @@ import com.kantboot.business.ovo.service.repository.BusOvoUserBindRepository;
 import com.kantboot.business.ovo.service.repository.RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.system.module.entity.SysUser;
-import com.kantboot.system.repository.SysUserRepository;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
 import jakarta.annotation.Resource;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -39,14 +35,13 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
     @Resource
     private BusOvoUserBindRepository repository;
+
     @Resource
     private BusOvoEmotionalOrientationRepository emotionalOrientationRepository;
 
     @Resource
     private ISysUserService sysUserService;
 
-    @Resource
-    private SysUserRepository sysUserRepository;
 
     @Resource
     private HttpRequestHeaderUtil httpRequestHeaderUtil;
@@ -62,13 +57,17 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
     @Override
     public BusOvoUserBind bind(BusOvoUserBindDTO dto) {
+
         // 获取当前用户
         SysUser sysUser = sysUserService.getWithoutHideSensitiveInfo();
+
+        // 设置用户信息
         sysUser.setFileIdOfAvatar(dto.getFileIdOfAvatar())
                 .setNickname(dto.getNickname())
                 .setGender(dto.getGender())
                 .setBirthday(dto.getBirthday());
-        sysUserRepository.save(sysUser);
+
+        sysUserService.save(sysUser);
 
 
 
@@ -90,8 +89,8 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
                 .setSadomasochismAttrCode(dto.getSadomasochismAttrCode());
 
         List<String> emotionalOrientationCodeList = dto.getEmotionalOrientationCodeList();
-        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.deleteByUserId(userId);
-        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.flush();
+//        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.deleteByUserId(userId);
+//        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.flush();
 
         relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.saveAll(emotionalOrientationCodeList.stream().map(code -> {
             return new RelBusOvoUserBindAndBusOvoEmotionalOrientation()
@@ -115,7 +114,6 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
             if (busOvoUserBind.getLocation()==null) {
                 BusOvoUserBindLocation busOvoUserBindLocation = new BusOvoUserBindLocation();
                 JSONObject locationInfoByIp = apiLocationService.getLocationInfoByIp(httpRequestHeaderUtil.getIp());
-//            {"ip":"115.193.38.142","location":{"lat":30.18534,"lng":120.26457},"ad_info":{"nation":"中国","province":"浙江省","city":"杭州市","district":"萧山区","adcode":330109,"nation_code":156}}
                 JSONObject adInfo = locationInfoByIp.getJSONObject("ad_info");
                 String country = adInfo.getString("nation");
                 if(country!=null){

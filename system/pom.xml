@@ -16,6 +16,7 @@
         <module>system-service</module>
         <module>system-controller</module>
         <module>system-security</module>
+        <module>system-file</module>
     </modules>
 
     <properties>

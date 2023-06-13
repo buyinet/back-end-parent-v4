@@ -1,15 +1,25 @@
 package com.kantboot.business.ovo.service.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.google.common.collect.Interner;
+import com.google.common.collect.Interners;
+import com.google.common.util.concurrent.RateLimiter;
+import com.google.common.util.concurrent.Striped;
 import com.kantboot.api.service.IApiLocationService;
 import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
 import com.kantboot.business.ovo.module.entity.BusOvoPostImage;
+import com.kantboot.business.ovo.module.entity.BusOvoPostLike;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
+import com.kantboot.business.ovo.service.repository.BusOvoPostCommentRepository;
+import com.kantboot.business.ovo.service.repository.BusOvoPostLikeRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoPostService;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
+import com.kantboot.util.common.exception.BaseException;
 import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  * 帖子的service
@@ -35,6 +46,12 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
 
     @Resource
     private IApiLocationService locationService;
+
+    @Resource
+    private BusOvoPostLikeRepository postLikeRepository;
+
+    @Resource
+    private BusOvoPostCommentRepository postCommentRepository;
 
     @Override
     public BusOvoPost publish(BusOvoPostDTO dto) {
@@ -143,10 +160,19 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
                         sort.ascending():sort.descending();
         PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
         Page<BusOvoPost> all = repository.findAllByUserId(self.getUserId(), pageable);
+        List<BusOvoPostVO> content = new ArrayList<>();
+        for (BusOvoPost post : all.getContent()) {
+            BusOvoPostVO vo = new BusOvoPostVO();
+            BeanUtils.copyProperties(post, vo);
+            vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
+            vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
+            content.add(vo);
+        }
+
         HashMap<String, Object> result = new HashMap<>(5);
         result.put("totalElements", all.getTotalElements());
         result.put("totalPage", all.getTotalPages());
-        result.put("content", all.getContent());
+        result.put("content", content);
         result.put("number", all.getNumber() + 1);
         result.put("size", all.getSize());
         return result;
@@ -154,20 +180,32 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
 
     @Override
     public HashMap<String, Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy) {
+        BusOvoUserBind self = userBindService.getSelf();
         Sort sort = Sort.by(sortField);
         Sort sort1=
                 sortOrderBy.toUpperCase().equals("ASC")?
                         sort.ascending():sort.descending();
         PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
         Page<BusOvoPost> all = repository.findAllByAuditStatusCode("pass", pageable);
+        List<BusOvoPostVO> content = new ArrayList<>();
+        for (BusOvoPost post : all.getContent()) {
+            BusOvoPostVO vo = new BusOvoPostVO();
+            BeanUtils.copyProperties(post, vo);
+            vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
+            vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
+            vo.setLike(postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(),post.getId()));
+            content.add(vo);
+        }
+
         HashMap<String, Object> result = new HashMap<>(5);
         result.put("totalElements", all.getTotalElements());
         result.put("totalPage", all.getTotalPages());
-        result.put("content", all.getContent());
+        result.put("content", content);
         result.put("number", all.getNumber() + 1);
         result.put("size", all.getSize());
         return result;
     }
+
 
 
     @Override
@@ -184,14 +222,80 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         Page<BusOvoPost> all =
                 repository.findAllWithDistance(PageRequest.of(pageNumber - 1, 15),
                         latitude, longitude, range);
-
+        List<BusOvoPostVO> content = new ArrayList<>();
+        for (BusOvoPost post : all.getContent()) {
+            BusOvoPostVO vo = new BusOvoPostVO();
+            BeanUtils.copyProperties(post, vo);
+            vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
+            vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
+            vo.setLike(postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(),post.getId()));
+            content.add(vo);
+        }
         HashMap<String, Object> result = new HashMap<>(5);
         result.put("totalElements", all.getTotalElements());
         result.put("totalPage", all.getTotalPages());
-        result.put("content", all.getContent());
+        result.put("content", content);
         result.put("number", all.getNumber() + 1);
         result.put("size", all.getSize());
         return result;
+    }
+
+    // guava的锁
+    private static final Interner<String> pool = Interners.newWeakInterner();
+    @Override
+    public BusOvoPostVO like(Long postId) {
+        long l = System.currentTimeMillis();
+        BusOvoUserBind self = userBindService.getSelf();
+        synchronized (pool.intern(postId.toString())){
+            long l1 = System.currentTimeMillis();
+            int minTime = 1000;
+            // 只有锁在1秒内才处理，如果超过1秒，就不处理
+            if(l1-l<minTime){
+
+                Boolean aBoolean = postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(), postId);
+                if(aBoolean){
+                    List<BusOvoPostLike> allByUserIdAndPostId = postLikeRepository.findAllByUserIdAndPostId(self.getUserId(), postId);
+                    postLikeRepository.deleteAll(allByUserIdAndPostId);
+                }else{
+                    BusOvoPostLike like = new BusOvoPostLike();
+                    like.setUserId(self.getUserId());
+                    like.setPostId(postId);
+                    postLikeRepository.save(like);
+                }
+            }
+            BusOvoPost post = repository.findById(postId).get();
+            BusOvoPostVO vo = new BusOvoPostVO();
+            BeanUtils.copyProperties(post, vo);
+            vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
+            vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
+            vo.setLike(postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(),post.getId()));
+            return vo;
+        }
+
+    }
+
+
+    @Override
+    public BusOvoPostVO getById(Long id) {
+
+
+        BusOvoPost post = repository.findById(id).get();
+        BusOvoPostVO vo = new BusOvoPostVO();
+        BeanUtils.copyProperties(post, vo);
+
+        try{
+            BusOvoUserBind self = userBindService.getSelf();
+            vo.setLike(postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(),post.getId()));
+        }catch (BaseException e){
+            if (e.getStateCode().equals("notLogin")) {
+                // 如果没有登录，就将like设置为false
+                vo.setLike(false);
+            }
+        }
+
+        vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
+        vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
+        return vo;
     }
 }
 

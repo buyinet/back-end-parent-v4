@@ -76,18 +76,7 @@ public class FileUtil {
      * @return 后缀
      */
     public static String getSuffix(String fileName) {
-        if (fileName == null) {
-            return null;
-        }
-
-        // 进行了修复，原先的代码使用了lastIndexOf(".")，
-        // 现在使用了更快的lastIndexOf('.')
-        // 获取最后一个.的位置
-        int index = fileName.lastIndexOf('.');
-        if (index == -1) {
-            return null;
-        }
-        return fileName.substring(index + 1);
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     /**
@@ -98,7 +87,8 @@ public class FileUtil {
      * @return 文件类型
      */
     public static String getContentType(String fileName) {
-        String suffix = getSuffix(fileName);
+        String suffix = getSuffix(fileName).toLowerCase();
+        System.out.println(suffix);
         return CONTENT_TYPE_MAP_BY_SUFFIX.get(suffix);
     }
 

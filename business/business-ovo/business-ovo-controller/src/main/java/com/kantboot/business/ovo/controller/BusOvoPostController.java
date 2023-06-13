@@ -82,6 +82,31 @@ public class BusOvoPostController {
                 );
     }
 
+    /**
+     * 点赞
+     * @param postId 帖子id
+     * @return 点赞数
+     */
+    @RequestMapping("/like")
+    public RestResult like(Long postId){
+        return stateSuccessService.success(
+                        service.like(postId),
+                        "getSuccess"
+                );
+    }
+
+    /**
+     * 根据id获取帖子
+     * @param id 帖子id
+     * @return 帖子
+     */
+    @RequestMapping("/getById")
+    public RestResult getById(Long id){
+        return stateSuccessService.success(
+                        service.getById(id),
+                        "getSuccess"
+                );
+    }
 
 
 }

@@ -23,17 +23,12 @@ import java.util.List;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class BusOvoUserBind {
-    /**
-     * 主键
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
 
     /**
+     * 主键
      * 用户id
      */
+    @Id
     @Column(name = "user_id")
     private Long userId;
 

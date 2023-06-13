@@ -113,4 +113,10 @@ public interface ISysUserService {
     void refreshToken();
 
 
+    /**
+     * 保存用户信息
+     * @param user 用户信息
+     * @return 用户信息
+     */
+    SysUser save(SysUser user);
 }

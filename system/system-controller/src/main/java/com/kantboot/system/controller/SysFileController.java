@@ -89,11 +89,11 @@ public class SysFileController {
      * @return 文件
      */
     @RequestMapping("/visitFile/{groupCode}/{id}")
-    public void visitFile(
+    public ResponseEntity<FileSystemResource>  visitFile(
             @PathVariable("groupCode") String groupCode,
             @PathVariable("id") Long id
     ){
-        service.visitFile(groupCode,id);
+        return service.visitFile(groupCode,id);
     }
 
 }

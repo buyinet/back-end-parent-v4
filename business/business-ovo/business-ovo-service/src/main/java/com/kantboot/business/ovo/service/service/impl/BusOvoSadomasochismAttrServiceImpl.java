@@ -29,4 +29,5 @@ public class BusOvoSadomasochismAttrServiceImpl implements IBusOvoSadomasochismA
         return repository.findAll().stream().collect(
                 java.util.stream.Collectors.toMap(BusOvoSadomasochismAttr::getCode, BusOvoSadomasochismAttr::getName));
     }
+
 }

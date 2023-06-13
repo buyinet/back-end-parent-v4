@@ -2,6 +2,7 @@ package com.kantboot.business.ovo.service.service;
 
 import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
+import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
 
 import java.util.HashMap;
 
@@ -44,4 +45,19 @@ public interface IBusOvoPostService {
      * @return 附近的帖子
      */
     HashMap<String,Object> getNear(Integer pageNumber,Double range);
+
+    /**
+     * 点赞
+     * @param postId 帖子id
+     * @return 点赞数
+     */
+    BusOvoPostVO like(Long postId);
+
+    /**
+     * 根据id获取帖子
+     * @param id 帖子id
+     * @return 帖子
+     */
+    BusOvoPostVO getById(Long id);
+
 }

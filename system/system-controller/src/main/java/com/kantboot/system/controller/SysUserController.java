@@ -1,6 +1,8 @@
 package com.kantboot.system.controller;
 
 import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
+import com.kantboot.system.module.entity.SysUser;
+import com.kantboot.system.repository.SysUserRepository;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.result.RestResult;

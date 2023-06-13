@@ -14,6 +14,7 @@ import com.kantboot.system.service.ISysSettingService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.file.FileUtil;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
+import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 文件服务实现类
@@ -58,6 +60,9 @@ public class SysFileServiceImpl implements ISysFileService {
 
     @Resource
     private ISysExceptionService exceptionService;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     @SneakyThrows
     @Override
@@ -174,45 +179,22 @@ public class SysFileServiceImpl implements ISysFileService {
         return frontUploadFile(file, fileUploadPath, groupCode);
     }
 
-
     /**
-     * 读取文件
-     *
-     * @param response 响应
-     * @param filePath 文件路径
+     * 通过文件id得到文件路径
+     * @param id 文件id
+     * @return 文件路径
      */
-    private void readFile(HttpServletResponse response, SysFile sysFile,String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            throw new RuntimeException("File not found");
+    private String getPathById(Long id) {
+        String redisKey = "file:"+id+":settingPath";
+        String path = redisUtil.get(redisKey);
+        if (path != null) {
+            return path;
         }
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            OutputStream outputStream = response.getOutputStream();
-
-            // 设置响应头
-            response.setHeader("Content-Disposition", "attachment;filename=" + sysFile.getMd5()+ "." + sysFile.getType());
-            response.setHeader("Content-Type", sysFile.getContentType());
-            response.setHeader("Content-Length", String.valueOf(sysFile.getSize()));
-            response.setHeader("Content-Transfer-Encoding", "binary");
-            response.setHeader("Connection", "Keep-Alive");
-            response.setHeader("Cache-Control", "max-age=2592000");
-
-            // 设置响应状态码
-            response.setStatus(HttpServletResponse.SC_OK);
-
-            // 写入响应流
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            inputStream.close();
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read file", e);
-        }
+        String settingPath  = settingService.getValue("file","uploadPath");
+        // 获取文件
+        SysFile sysFile = repository.findByIdAndGroupCodeIsNull(id);
+        redisUtil.setEx(redisKey,settingPath+"/"+sysFile.getPath(),7, TimeUnit.DAYS);
+        return settingPath+"/"+sysFile.getPath();
     }
 
     /**
@@ -225,7 +207,7 @@ public class SysFileServiceImpl implements ISysFileService {
         String path = settingService.getValue("file","uploadPath");
         // 获取文件
         SysFile sysFile = repository.findByIdAndGroupCodeIsNull(id);
-        File file = new File(sysFile.getPath());
+        File file = new File(path+"/"+sysFile.getPath());
         FileSystemResource resource = new FileSystemResource(file);
 
         HttpHeaders headers = new HttpHeaders();
@@ -237,14 +219,37 @@ public class SysFileServiceImpl implements ISysFileService {
                 .body(resource);
     }
 
-    @Override
-    public void visitFile(String groupCode, Long id) {
+    /**
+     * 通过文件组和文件id得到文件路径
+     * @param groupCode 文件组编码
+     * @param id 文件id
+     * @return 文件路径
+     */
+    private String getPathByGroupCodeAndId(String groupCode, Long id) {
+        String redisKey="fileId:"+id+ ":path";
+        String s = redisUtil.get(redisKey);
+        if (s!=null){
+            return s;
+        }
         SysFileGroup byCode = groupRepository.findByCode(groupCode);
-        // 获取文件
-        SysFile file = repository.findByIdAndGroupCode(id, groupCode);
+        SysFile sysFile = repository.findByIdAndGroupCode(id, groupCode);
+        redisUtil.setEx(redisKey,byCode.getPath()+"/"+sysFile.getPath(),30, TimeUnit.DAYS);
+        return byCode.getPath()+"/"+sysFile.getPath();
+    }
 
-        // 设置响应头
-        readFile(response,file,byCode.getPath()+"/"+file.getPath());
+
+    @Override
+    public ResponseEntity<FileSystemResource> visitFile(String groupCode, Long id) {
+        File file = new File(getPathByGroupCodeAndId(groupCode, id));
+        FileSystemResource resource = new FileSystemResource(file);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", file.getName());
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
     }
 
     /**

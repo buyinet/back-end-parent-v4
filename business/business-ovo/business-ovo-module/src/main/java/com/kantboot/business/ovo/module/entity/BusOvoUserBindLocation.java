@@ -22,15 +22,9 @@ import java.util.Date;
 public class BusOvoUserBindLocation {
     /**
      * 主键
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
-    /**
      * 用户id
      */
+    @Id
     @Column(name = "user_id")
     private Long userId;
 

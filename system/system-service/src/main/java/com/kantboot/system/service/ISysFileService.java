@@ -50,7 +50,7 @@ public interface ISysFileService {
      * @param groupCode 文件组编码
      * @return 文件
      */
-    void visitFile(String groupCode,Long id);
+    ResponseEntity<FileSystemResource> visitFile(String groupCode,Long id);
 
 
 

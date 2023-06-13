@@ -167,7 +167,6 @@ public class SysUserServiceImpl2 implements ISysUserService {
             // 如果userId为空，抛出未登录异常
             throw exceptionService.getException("notLogin");
         }
-
         return getById(Long.parseLong(userId));
     }
 
@@ -181,8 +180,8 @@ public class SysUserServiceImpl2 implements ISysUserService {
         // 生成token字符串
         String token = IdUtil.simpleUUID();
         // 将token存入redis
-        redisUtil.setEx("token:" + token + ":userId", user.getId().toString(), 7, TimeUnit.DAYS);
         SysUser save = repository.save(user);
+        redisUtil.setEx("token:" + token + ":userId", save.getId().toString(), 7, TimeUnit.DAYS);
         SysToken sysToken = new SysToken();
         sysToken.setToken(token);
         sysToken.setUserId(save.getId());
@@ -241,5 +240,13 @@ public class SysUserServiceImpl2 implements ISysUserService {
     public void refreshToken() {
         String token = requestHeaderUtil.getToken();
         redisUtil.expire("token:" + token + ":userId", 7, TimeUnit.DAYS);
+    }
+
+    @Override
+    public SysUser save(SysUser user) {
+        SysUser save = repository.save(user);
+        String redisKey = "userId:" + save.getId() + ":SysUser";
+        redisUtil.setEx(redisKey, JSON.toJSONString(save), 7, TimeUnit.DAYS);
+        return save;
     }
 }
