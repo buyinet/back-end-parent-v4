@@ -4,7 +4,7 @@ server:
 spring:
   data:
     redis:
-      host: 127.0.0.1
+      host: maven.kantboot.com
       port: 6379
       password: woshifangziyuan1
       timeout: 30s
@@ -26,9 +26,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: kantboot1
+    username: ovo
     password: woshifangziyuan1
-    url: jdbc:mysql://127.0.0.1:3306/kantboot1?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://maven.kantboot.com:3306/ovo?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
   jpa:
     open-in-view: true
     generate-ddl: true
@@ -39,9 +39,9 @@ spring:
         jdbc:
           time_zone: GMT+8
       hibenate:
-        format_sql: false
+        format_sql: true
         enable_lazy_load_no_trans: true
-    show-sql: false
+    show-sql: true
     jackson:
       date-format: yyyy-MM-dd HH:mm:ss
       time-zone: GMT+8

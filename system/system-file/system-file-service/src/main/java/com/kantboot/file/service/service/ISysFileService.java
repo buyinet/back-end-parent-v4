@@ -20,12 +20,6 @@ public interface ISysFileService {
      */
     SysFile upload(MultipartFile file, String groupCode);
 
-    /**
-     * 根据id查询路径
-     * @param id 文件id
-     * @return 文件路径
-     */
-    String getNameById(Long id);
 
     /**
      * 根据id查询文件

@@ -11,8 +11,8 @@ import java.util.List;
  * 情感取向
  * @author 方某方
  */
-public interface BusOvoEmotionalOrientationRepository  extends JpaRepository<BusOvoEmotionalOrientation, Long>,
-        Repository<BusOvoEmotionalOrientation, Long> {
+public interface BusOvoEmotionalOrientationRepository
+        extends JpaRepository<BusOvoEmotionalOrientation, Long> {
 
 
     /**

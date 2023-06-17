@@ -1,4 +1,4 @@
-package com.kantboot.api.util.position;
+package com.kantboot.api.util.location;
 
 /**
  * 位置工具类

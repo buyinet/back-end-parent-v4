@@ -1,4 +1,4 @@
-package com.kantboot.api.util.position;
+package com.kantboot.api.util.location;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.SneakyThrows;

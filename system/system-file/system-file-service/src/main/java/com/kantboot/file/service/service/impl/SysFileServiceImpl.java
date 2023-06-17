@@ -98,7 +98,6 @@ public class SysFileServiceImpl implements ISysFileService {
                     .setType(byMd5.get(0).getType())
                     .setContentType(byMd5.get(0).getContentType())
             );
-            addRedis(save);
             return save;
         }
 
@@ -135,7 +134,6 @@ public class SysFileServiceImpl implements ISysFileService {
                 .setType(suffix)
                 .setContentType(contentType)
         );
-        addRedis(save);
         return save;
     }
 
@@ -154,31 +152,18 @@ public class SysFileServiceImpl implements ISysFileService {
 
 
     @Override
-    public String getNameById(Long id) {
-        SysFile redis = getByRedis(id);
-        if(redis!=null){
-            return redis.getName();
+    public SysFile getById(Long id) {
+        String redisKey = "fileId:" + id + ":SysFile";
+        String s = redisUtil.get(redisKey);
+        System.out.println(s);
+        if (s != null) {
+            return JSONObject.parseObject(s, SysFile.class);
         }
-
         SysFile sysFile = repository.findById(id).get();
         if(sysFile!=null){
-            String name = sysFile.getName();
             addRedis(sysFile);
-            return name;
+            return sysFile;
         }
-        return null;
-
-
-    }
-
-    @Override
-    public SysFile getById(Long id) {
-        SysFile redis = getByRedis(id);
-        if(redis!=null){
-            return redis;
-        }
-        SysFile sysFile = repository.findById(id).get();
-        addRedis(sysFile);
         return sysFile;
     }
 

@@ -1,4 +1,4 @@
-package com.kantboot.api.util.position;
+package com.kantboot.api.util.location;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

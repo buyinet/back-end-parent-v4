@@ -3,7 +3,7 @@ package com.kantboot.api.service.impl;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.service.IApiLocationService;
-import com.kantboot.api.util.position.LocationApiUtil;
+import com.kantboot.api.util.location.LocationApiUtil;
 import com.kantboot.system.service.ISysSettingService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
