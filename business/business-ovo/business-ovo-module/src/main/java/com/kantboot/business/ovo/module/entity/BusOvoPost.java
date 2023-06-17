@@ -35,6 +35,12 @@ public class BusOvoPost {
     private Long id;
 
     /**
+     * 是否删除
+     */
+    @Column(name = "is_delete")
+    private Boolean delete;
+
+    /**
      * 帖子标题
      * 暂时用不到
      */

@@ -47,33 +47,4 @@ spring:
 ribbon:
   restclient:
     enabled: true
-#
-#spring:
-#  jpa:
-#    generate-ddl: true
-#    hibernate:
-#      ddl-auto: update
-#  jackson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#  props:
-#    show-sql: true
-#  shardingsphere:
-#    datasource:
-#      names: ds1
-#      ds1:
-#        type: com.zaxxer.hikari.HikariDataSource
-#        driver-class-name: com.mysql.cj.jdbc.Driver
-#        jdbc-url: jdbc:mysql://127.0.0.1:3306/test_2?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-#        username: test_2
-#        password: woshifangziyuan1
-#    rules:
-#      sharding:
-#        tables:
-#          sys_user:
-#            actual-data-nodes: ds1.sys_user
-#    mode:
-#      type: Standalone
-#      overwrite: true
-#  data:
-#    redis:
-#      host: 127.0.0.1
+

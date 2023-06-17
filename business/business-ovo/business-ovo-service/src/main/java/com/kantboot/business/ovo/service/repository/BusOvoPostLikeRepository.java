@@ -57,4 +57,5 @@ public interface BusOvoPostLikeRepository extends JpaRepository<BusOvoPostLike,L
      * @return 点赞
      */
     List<BusOvoPostLike> findAllByUserIdAndPostId(Long userId, Long postId);
+
 }

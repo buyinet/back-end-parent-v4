@@ -28,4 +28,6 @@ public interface BusOvoPostCommentRepository extends JpaRepository<BusOvoPostCom
     Long countByPostId(Long postId);
 
 
+
+
 }

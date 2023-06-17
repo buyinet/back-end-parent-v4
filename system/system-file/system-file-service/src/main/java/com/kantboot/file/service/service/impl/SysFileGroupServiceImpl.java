@@ -2,7 +2,6 @@ package com.kantboot.file.service.service.impl;
 
 import com.kantboot.file.service.repository.SysFileGroupRepository;
 import com.kantboot.file.service.service.ISysFileGroupService;
-import com.kantboot.file.service.service.ISysFileService;
 import com.kantboot.system.file.SysFileGroup;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;

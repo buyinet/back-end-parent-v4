@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 帖子评论表
@@ -25,6 +25,7 @@ import java.util.List;
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+@Where(clause = "is_delete = false")
 public class BusOvoPostComment {
 
     /**
@@ -55,6 +56,12 @@ public class BusOvoPostComment {
     private String content;
 
     /**
+     * 是否已删除
+     */
+    @Column(name = "is_delete")
+    private Boolean delete;
+
+    /**
      * 绑定用户
      * 用于存储评论绑定的用户
      */
@@ -63,13 +70,21 @@ public class BusOvoPostComment {
     private BusOvoUserBind ovoUser;
 
     /**
-     * @的用户
-     * 用于存储评论@的用户
-     * 一个评论可以@多个用户
+     * 被@的评论id
+    */
+    @Column(name = "at_comment_id")
+    private Long atCommentId;
+
+    /**
+     * 被@的评论
+     * 用于存储被@的评论
      */
-    @OneToMany
-    @JoinColumn(name = "post_comment_id",referencedColumnName = "id")
-    private List<BusOvoPostCommentAtUser> atUsers;
+    @OneToOne
+    @JoinColumn(name = "at_comment_id",referencedColumnName = "id",insertable=false, updatable=false)
+    private BusOvoPostComment atComment;
+
+
+
 
     /**
      * 创建时间

@@ -1,10 +1,12 @@
 package com.kantboot.business.ovo.controller;
 
 
+import com.kantboot.business.ovo.module.entity.BusOvoPostComment;
 import com.kantboot.business.ovo.service.service.IBusOvoPostCommentService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +34,27 @@ public class BusOvoPostCommentController {
         return stateSuccessService.success(
                 service.getByPostId(postId, pageNumber),
                 "getSuccess"
+        );
+    }
+
+    @RequestMapping("/like")
+    public RestResult like(Long commentId){
+        return stateSuccessService.success(
+                service.like(commentId),
+                "getSuccess"
+        );
+    }
+
+    /**
+     * 发布评论
+     * @param comment 评论
+     * @return 评论
+     */
+    @RequestMapping("/publish")
+    public RestResult publish(@RequestBody BusOvoPostComment comment){
+        return stateSuccessService.success(
+                service.publish(comment),
+                "success"
         );
     }
 

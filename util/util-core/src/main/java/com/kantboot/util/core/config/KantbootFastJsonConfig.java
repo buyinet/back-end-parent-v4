@@ -47,6 +47,10 @@ public class KantbootFastJsonConfig implements WebMvcConfigurer {
         config.setCharset(StandardCharsets.UTF_8);
         config.setDateFormat("millis");
 
+        // 使用Wed Jun 14 2023 17:12:14 GMT+0800这种格式，时区根据系统设置
+//        config.setDateFormat("yyyy HH:mm:ss 'GMT'Z");
+
+
         //2.1配置序列化的行为
         //JSONWriter.Feature.PrettyFormat:格式化输出
         config.setWriterFeatures(

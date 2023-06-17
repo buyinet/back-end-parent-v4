@@ -98,7 +98,8 @@ public class SysFileServiceImpl implements ISysFileService {
                     .setType(byMd5.get(0).getType())
                     .setContentType(byMd5.get(0).getContentType())
             );
-            return save.setName(null);
+            addRedis(save);
+            return save;
         }
 
 
@@ -135,7 +136,7 @@ public class SysFileServiceImpl implements ISysFileService {
                 .setContentType(contentType)
         );
         addRedis(save);
-        return save.setName(null);
+        return save;
     }
 
     @Override
