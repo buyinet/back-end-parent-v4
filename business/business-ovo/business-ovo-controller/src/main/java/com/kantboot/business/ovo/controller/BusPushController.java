@@ -1,6 +1,6 @@
 package com.kantboot.business.ovo.controller;
 
-import com.kantboot.business.ovo.service.service.IBusPushService;
+import com.kantboot.business.ovo.service.service.IBusPushBindService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BusPushController {
 
     @Resource
-    private IBusPushService service;
+    private IBusPushBindService service;
 
     @Resource
     private IStateSuccessService stateSuccessService;

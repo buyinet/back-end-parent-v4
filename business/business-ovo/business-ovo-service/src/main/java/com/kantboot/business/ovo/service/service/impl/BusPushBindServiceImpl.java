@@ -1,8 +1,8 @@
 package com.kantboot.business.ovo.service.service.impl;
 
-import com.kantboot.business.ovo.module.entity.BusPush;
-import com.kantboot.business.ovo.service.repository.BusPushRepository;
-import com.kantboot.business.ovo.service.service.IBusPushService;
+import com.kantboot.business.ovo.module.entity.BusPushBind;
+import com.kantboot.business.ovo.service.repository.BusPushBindRepository;
+import com.kantboot.business.ovo.service.service.IBusPushBindService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.exception.BaseException;
 import jakarta.annotation.Resource;
@@ -15,10 +15,10 @@ import java.util.List;
  * @author 方某方
  */
 @Service
-public class BusPushServiceImpl implements IBusPushService {
+public class BusPushBindServiceImpl implements IBusPushBindService {
 
     @Resource
-    private BusPushRepository repository;
+    private BusPushBindRepository repository;
 
     @Resource
     private ISysUserService sysUserService;
@@ -42,16 +42,16 @@ public class BusPushServiceImpl implements IBusPushService {
             return;
         }
 
-        BusPush byCid = repository.findByCid(cid);
+        BusPushBind byCid = repository.findByCid(cid);
         if (byCid == null){
-            byCid = new BusPush();
+            byCid = new BusPushBind();
         }
         byCid.setCid(cid).setUserId(idOfSelf);
         repository.save(byCid);
     }
 
     @Override
-    public List<BusPush> getByUserId(Long userId) {
+    public List<BusPushBind> getByUserId(Long userId) {
         return repository.findByUserId(userId);
     }
 }

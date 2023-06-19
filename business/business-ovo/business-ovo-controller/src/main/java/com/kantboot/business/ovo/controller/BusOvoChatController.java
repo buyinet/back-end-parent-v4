@@ -19,11 +19,13 @@ public class BusOvoChatController {
     /**
      * 与私人进行聊天
      * @param otherUserId 对方用户id
+     * @param content 聊天内容
+     * @param typeCode 聊天类型
      * @return 聊天内容
      */
     @RequestMapping("/chatPrivate")
-    public void chatPrivate(Long otherUserId,String content){
-        service.chatPrivate(otherUserId, content);
+    public void chatPrivate(Long otherUserId,String typeCode, String content){
+        service.chatPrivate(otherUserId, typeCode,content);
     }
 
 

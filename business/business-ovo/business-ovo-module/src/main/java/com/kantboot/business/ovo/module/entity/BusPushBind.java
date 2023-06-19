@@ -15,13 +15,13 @@ import java.util.Date;
  * 用于推送消息给用户
  * @author 方某方
  */
-@Table(name="bus_push")
+@Table(name="bus_push_bind")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusPush {
+public class BusPushBind {
     /**
      * 主键
      */
@@ -41,7 +41,6 @@ public class BusPush {
      */
     @Column(name = "cid")
     private String cid;
-
 
     /**
      * 创建时间

@@ -28,6 +28,12 @@
 
         <dependency>
             <groupId>com.kantboot</groupId>
+            <artifactId>api-module</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kantboot</groupId>
             <artifactId>api-util</artifactId>
         </dependency>
 

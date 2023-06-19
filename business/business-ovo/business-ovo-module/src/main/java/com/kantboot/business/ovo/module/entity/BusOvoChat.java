@@ -40,17 +40,26 @@ public class BusOvoChat {
     private Long chatRoomId;
 
     /**
-     * 用户id
+     * 发消息的用户
      */
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_id_of_send")
+    private Long userIdOfSend;
+
+    /**
+     * 类型
+     * text 文本
+     * image 图片
+     * video 视频
+     * audio 音频
+     */
+    @Column(name = "type_code")
+    private String typeCode;
 
     /**
      * 内容
      */
     @Column(name = "content")
     private String content;
-
 
     /**
      * 创建时间

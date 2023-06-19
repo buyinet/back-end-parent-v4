@@ -9,8 +9,10 @@ public interface IBusOvoChatService {
     /**
      * 与私人进行聊天
      * @param otherUserId 对方用户id
+     * @param typeCode 聊天类型
+     * @param content 聊天内容
      * @return 聊天内容
      */
-    void chatPrivate(Long otherUserId,String content);
+    void chatPrivate(Long otherUserId,String typeCode, String content);
 
 }

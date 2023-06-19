@@ -7,6 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 发送推送的工具类
@@ -15,20 +16,8 @@ import java.util.HashMap;
  */
 public class PushUtil {
 
-
-    /**
-     * 发送推送
-     * "cid": "fcaab39df1186084c414cd241be2a1e4",
-     * "forceNotification": false,
-     * "title": "123",
-     * "content": "123",
-     * "payload": {
-     * "a": "1"
-     * }
-     */
     @SneakyThrows
-    public static JSONObject sendPush(HashMap<String, Object> map) {
-        String url = "https://fc-mp-7e7b6ab4-aab2-49a1-a448-b4a11cac4683.next.bspapp.com/push";
+    public static JSONObject sendPush(String url, Map<String, Object> map) {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -42,16 +31,16 @@ public class PushUtil {
     }
 
 
-    public static void main(String[] args) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("cid", "fcaab39df1186084c414cd241be2a1e4");
-        map.put("forceNotification", false);
-        map.put("title", "123");
-        map.put("content", "123");
-        map.put("payload", new HashMap<String, Object>() {{
-            put("a", "1");
-        }});
-        sendPush(map);
-    }
+//    public static void main(String[] args) {
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("cid", "fcaab39df1186084c414cd241be2a1e4");
+//        map.put("forceNotification", false);
+//        map.put("title", "123");
+//        map.put("content", "123");
+//        map.put("payload", new HashMap<String, Object>() {{
+//            put("a", "1");
+//        }});
+//        sendPush(map);
+//    }
 
 }
