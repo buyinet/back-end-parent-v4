@@ -36,8 +36,8 @@ public class BusOvoChat {
     /**
      * 聊天室id
      */
-    @Column(name = "chat_room_id")
-    private Long chatRoomId;
+    @Column(name = "room_id")
+    private Long roomId;
 
     /**
      * 发消息的用户
@@ -58,8 +58,15 @@ public class BusOvoChat {
     /**
      * 内容
      */
-    @Column(name = "content")
+    @Column(name = "content",length = 3000)
     private String content;
+
+    /**
+     * 关联的用户
+     */
+    @OneToOne
+    @JoinColumn(name = "user_id_of_send",referencedColumnName = "user_id",insertable = false,updatable = false)
+    private BusOvoUserBind ovoUserOfSend;
 
     /**
      * 创建时间

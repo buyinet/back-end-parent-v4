@@ -96,8 +96,6 @@ public class WechatPayParam {
     }
 
 
-
-
 //    @SneakyThrows
 //    public static void main(String[] args) {
 //        WechatPayParam wechatPayParam = new WechatPayParam();

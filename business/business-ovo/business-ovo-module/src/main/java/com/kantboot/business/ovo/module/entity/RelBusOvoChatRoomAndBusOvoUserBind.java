@@ -1,11 +1,9 @@
 package com.kantboot.business.ovo.module.entity;
 
-import com.kantboot.util.core.jpa.KantbootGenerationType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,13 +34,13 @@ public class RelBusOvoChatRoomAndBusOvoUserBind {
     /**
      * 聊天室id
      */
-    @Column(name = "chat_room_id")
-    private Long chatRoomId;
+    @Column(name = "room_id")
+    private Long roomId;
 
     /**
      * 用户id
      */
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique = false)
     private Long userId;
 
     /**
@@ -51,7 +49,7 @@ public class RelBusOvoChatRoomAndBusOvoUserBind {
      * 一个聊天室可以绑定多个用户
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id",insertable = false,updatable = false)
+    @JoinColumn(name = "room_id",insertable = false,updatable = false,unique = false)
     private BusOvoChatRoom busOvoChatRoom;
 
     /**
@@ -60,7 +58,7 @@ public class RelBusOvoChatRoomAndBusOvoUserBind {
      * 一个聊天室可以绑定多个用户
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",insertable = false,updatable = false)
+    @JoinColumn(name = "user_id",insertable = false,updatable = false,unique = false)
     private BusOvoUserBind busOvoUser;
 
 

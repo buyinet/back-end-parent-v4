@@ -1,5 +1,9 @@
 package com.kantboot.business.ovo.service.service;
 
+import com.kantboot.business.ovo.module.entity.BusOvoChat;
+
+import java.util.HashMap;
+
 /**
  * Ovo用户聊天室表Service接口
  * @author 方某方
@@ -13,6 +17,14 @@ public interface IBusOvoChatService {
      * @param content 聊天内容
      * @return 聊天内容
      */
-    void chatPrivate(Long otherUserId,String typeCode, String content);
+    BusOvoChat chatPrivate(Long otherUserId, String typeCode, String content);
+
+    /**
+     * 查询聊天室的聊天记录
+     * @param roomId 聊天室id
+     * @param pageNumber 页码
+     * @return 聊天记录
+     */
+    HashMap<String,Object> getByRoomId(Long roomId, Integer pageNumber);
 
 }

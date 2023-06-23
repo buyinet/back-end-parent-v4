@@ -11,4 +11,14 @@ import org.springframework.data.jpa.repository.Query;
 public interface BusOvoChatRoomRepository
         extends JpaRepository<BusOvoChatRoom, Long> {
 
+    /**
+     * 根据两个用户id查询房间，另外一个表是rel_bus_ovo_chat_room_and_bus_ovo_user_bind，里面有user_id和room_id
+     * @param userId1 用户id1
+     * @param userId2 用户id2
+     * @return 房间
+     */
+    @Query(value = "select * from bus_ovo_chat_room where id in (select room_id from rel_bus_ovo_chat_room_and_bus_ovo_user_bind where user_id = ?1 and room_id in (select room_id from rel_bus_ovo_chat_room_and_bus_ovo_user_bind where user_id = ?2))",nativeQuery = true)
+    BusOvoChatRoom findByUserId1AndUserId2(Long userId1, Long userId2);
+
+
 }

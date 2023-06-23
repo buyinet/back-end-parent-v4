@@ -56,6 +56,12 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
     private RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository relBusOvoUserBindAndBusOvoEmotionalOrientationRepository;
 
     @Override
+    public BusOvoUserBind getByUserId(Long userId) {
+        BusOvoUserBind busOvoUserBind = repository.findById(userId).orElse(null);
+        return busOvoUserBind;
+    }
+
+    @Override
     public BusOvoUserBind bind(BusOvoUserBindDTO dto) {
 
         // 获取当前用户

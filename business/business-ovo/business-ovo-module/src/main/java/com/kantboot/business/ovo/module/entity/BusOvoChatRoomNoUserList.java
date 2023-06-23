@@ -11,12 +11,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.List;
 
 /**
- * Ovo用户聊天室表
- * 一个用户可以加入多个聊天室
- * 一个聊天室可以有多个用户
+ * Ovo用户聊天室表实体类，不返回用户列表
  * @author 方某方
  */
 @Table(name="bus_ovo_chat_room")
@@ -25,7 +22,7 @@ import java.util.List;
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoChatRoom {
+public class BusOvoChatRoomNoUserList {
 
     /**
      * 主键
@@ -49,17 +46,6 @@ public class BusOvoChatRoom {
      */
     @Column(name = "type_code")
     private String typeCode;
-
-    @Column(name = "file_id_of_avatar")
-    private Long fileIdOfAvatar;
-
-
-    @OneToMany
-    @JoinTable(name = "rel_bus_ovo_chat_room_and_bus_ovo_user_bind",
-            joinColumns = @JoinColumn(name = "room_id",referencedColumnName = "id",insertable = false,updatable = false,unique = false),
-            inverseJoinColumns = @JoinColumn(name = "user_id",referencedColumnName = "user_id",insertable = false,updatable = false,unique = false),
-            uniqueConstraints = @UniqueConstraint(columnNames = { "room_id", "user_id" }))
-    private List<BusOvoUserBind> ovoUserList;
 
 
     /**

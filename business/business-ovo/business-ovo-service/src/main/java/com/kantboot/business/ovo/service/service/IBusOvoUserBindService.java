@@ -11,6 +11,10 @@ import java.util.HashMap;
  * @author 方某方
  */
 public interface IBusOvoUserBindService {
+    /**
+     * 根据用户id获取用户绑定信息
+     */
+    BusOvoUserBind getByUserId(Long userId);
 
 
     /**

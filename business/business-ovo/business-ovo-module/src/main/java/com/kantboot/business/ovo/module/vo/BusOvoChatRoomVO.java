@@ -1,10 +1,10 @@
 package com.kantboot.business.ovo.module.vo;
 
+import com.kantboot.business.ovo.module.entity.BusOvoChat;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Ovo用户聊天室表VO
@@ -25,11 +25,27 @@ public class BusOvoChatRoomVO {
     private String name;
 
     /**
+     * 群头像id
+     */
+    private Long fileIdOfAvatar;
+
+    /**
      * 聊天室类型编码
      * privateChat 私聊
      * groupChat 群聊
      */
     private String typeCode;
+
+
+    /**
+     * 房间id
+     */
+    private Long roomId;
+
+    /**
+     * 最后一条消息
+     */
+    private BusOvoChat lastChat;
 
     /**
      * 聊天室对方
