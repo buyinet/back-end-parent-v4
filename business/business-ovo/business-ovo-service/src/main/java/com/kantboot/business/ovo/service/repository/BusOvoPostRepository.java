@@ -59,5 +59,12 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
     Page<BusOvoPost> findAllWithDistance(Pageable pageable, Double latitude, Double longitude, Double range);
 
 
+    /**
+     * 根据用户id获取帖子数量
+     * @param userId 用户id
+     * @param auditStatusCode 审核状态编码
+     * @return 帖子数量
+     */
+    Long countByUserIdAndAuditStatusCode(Long userId,String auditStatusCode);
 
 }

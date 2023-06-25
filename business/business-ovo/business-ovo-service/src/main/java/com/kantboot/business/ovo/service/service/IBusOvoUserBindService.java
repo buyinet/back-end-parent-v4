@@ -3,6 +3,7 @@ package com.kantboot.business.ovo.service.service;
 import com.alibaba.fastjson2.JSONArray;
 import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.vo.BusOvoUserBindVO;
 
 import java.util.HashMap;
 
@@ -28,7 +29,7 @@ public interface IBusOvoUserBindService {
      * 获取用户自身的绑定信息
      * @return 用户绑定信息
      */
-    BusOvoUserBind getSelf();
+    BusOvoUserBindVO getSelf();
 
     /**
      * 获取推荐列表
@@ -66,14 +67,14 @@ public interface IBusOvoUserBindService {
      * 进行关注
      * @param userId 用户id
      */
-    void follow(Long userId);
+    BusOvoUserBindVO follow(Long userId);
 
 
     /**
      * 取消关注
      * @param userId 用户id
      */
-    void unFollow(Long userId);
+    BusOvoUserBindVO unFollow(Long userId);
 
     /**
      * 查看是否关注

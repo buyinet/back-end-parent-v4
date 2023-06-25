@@ -8,16 +8,19 @@ import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
 import com.kantboot.business.ovo.module.entity.BusOvoUserFollow;
 import com.kantboot.business.ovo.module.entity.RelBusOvoUserBindAndBusOvoEmotionalOrientation;
+import com.kantboot.business.ovo.module.vo.BusOvoUserBindVO;
 import com.kantboot.business.ovo.service.repository.*;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
 import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +56,9 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
     @Resource
     private BusOvoUserFollowRepository busOvoUserFollowRepository;
+
+    @Resource
+    private BusOvoPostRepository busOvoPostRepository;
 
     @Override
     public BusOvoUserBind getByUserId(Long userId) {
@@ -109,7 +115,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
 
     @Override
-    public BusOvoUserBind getSelf() {
+    public BusOvoUserBindVO getSelf() {
         SysUser sysUser = sysUserService.getWithoutHideSensitiveInfo();
         Long userId = sysUser.getId();
         BusOvoUserBind busOvoUserBind = repository.findByUserId(userId);
@@ -148,7 +154,20 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return busOvoUserBind;
+        BusOvoUserBindVO busOvoUserBindVO = new BusOvoUserBindVO();
+        BeanUtils.copyProperties(busOvoUserBind,busOvoUserBindVO);
+        // 获取用户的粉丝数
+        Long fansCount = busOvoUserFollowRepository.countByFollowUserId(userId);
+        // 获取用户的关注数
+        Long followCount = busOvoUserFollowRepository.countByUserId(userId);
+        busOvoUserBindVO.setFollowersCount(fansCount);
+        busOvoUserBindVO.setFollowingCount(followCount);
+
+        // 获取帖子数
+        Long postCount = busOvoPostRepository.countByUserIdAndAuditStatusCode(userId,"pass");
+        busOvoUserBindVO.setPostCount(postCount);
+
+        return busOvoUserBindVO;
     }
 
     @Override
@@ -296,7 +315,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
     }
 
     @Override
-    public void follow(Long userId) {
+    public BusOvoUserBindVO follow(Long userId) {
         Long idOfSelf = sysUserService.getIdOfSelf();
         boolean b = busOvoUserFollowRepository.existsByUserIdAndFollowUserId(idOfSelf, userId);
         if (!b){
@@ -305,13 +324,18 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
             busOvoUserFollow.setFollowUserId(userId);
             busOvoUserFollowRepository.save(busOvoUserFollow);
         }
+
+
+        return getSelf();
     }
 
     @Override
-    public void unFollow(Long userId) {
+    public BusOvoUserBindVO unFollow(Long userId) {
         Long idOfSelf = sysUserService.getIdOfSelf();
+
         List<BusOvoUserFollow> byUserIdAndFollowUserId = busOvoUserFollowRepository.findByUserIdAndFollowUserId(idOfSelf, userId);
         busOvoUserFollowRepository.deleteAll(byUserIdAndFollowUserId);
+        return getSelf();
     }
 
     @Override

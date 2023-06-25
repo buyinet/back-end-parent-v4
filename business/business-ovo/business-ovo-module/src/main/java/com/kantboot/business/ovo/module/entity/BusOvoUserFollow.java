@@ -14,7 +14,7 @@ import java.util.Date;
  * Ovo用户关注表
  * @author 方某方
  */
-@Table(name="bus_push_follow")
+@Table(name="bus_user_follow")
 @Entity
 @Getter
 @Setter

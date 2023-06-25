@@ -1,7 +1,10 @@
 package com.kantboot.business.ovo.service.repository;
 
 import com.kantboot.business.ovo.module.entity.BusOvoUserFollow;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -34,6 +37,9 @@ extends JpaRepository<BusOvoUserFollow, Long>
      * @param followUserId 被关注者id
      * @return 删除数量
      */
+    @Transactional
+    @Modifying
+    @Query("delete from BusOvoUserFollow where userId = ?1 and followUserId = ?2")
     int deleteByUserIdAndFollowUserId(Long userId, Long followUserId);
 
     /**
@@ -41,12 +47,12 @@ extends JpaRepository<BusOvoUserFollow, Long>
      * @param userId 用户id
      * @return 关注的人的数量
      */
-    int countByUserId(Long userId);
+    long countByUserId(Long userId);
 
     /**
      * 查看粉丝的数量
      * @param followUserId 被关注者id
      * @return 粉丝数量
      */
-    int countByFollowUserId(Long followUserId);
+    long countByFollowUserId(Long followUserId);
 }

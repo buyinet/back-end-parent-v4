@@ -117,8 +117,7 @@ public class BusOvoUserBindController {
      */
     @RequestMapping("/follow")
     public RestResult follow(Long userId){
-        service.follow(userId);
-        return stateSuccessService.success(null, "optSuccess");
+        return stateSuccessService.success(service.follow(userId), "optSuccess");
     }
 
     /**
@@ -126,8 +125,7 @@ public class BusOvoUserBindController {
      */
     @RequestMapping("/unFollow")
     public RestResult unFollow(Long userId){
-        service.unFollow(userId);
-        return stateSuccessService.success(null, "optSuccess");
+        return stateSuccessService.success(service.unFollow(userId), "optSuccess");
     }
 
 
