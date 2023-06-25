@@ -34,7 +34,7 @@ public class RelBusOvoChatRoomAndBusOvoUserBind {
     /**
      * 聊天室id
      */
-    @Column(name = "room_id")
+    @Column(name = "room_id", unique = false)
     private Long roomId;
 
     /**

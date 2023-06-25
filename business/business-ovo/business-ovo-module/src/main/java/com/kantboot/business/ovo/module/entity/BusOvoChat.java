@@ -46,11 +46,24 @@ public class BusOvoChat {
     private Long userIdOfSend;
 
     /**
+     * 时长
+     */
+    @Column(name = "duration")
+    private Long duration;
+
+    /**
+     * 封面，仅有视频有
+     */
+    @Column(name = "file_id_of_cover")
+    private Long fileIdOfCover;
+
+    /**
      * 类型
      * text 文本
      * image 图片
      * video 视频
      * audio 音频
+     * voice 语音
      */
     @Column(name = "type_code")
     private String typeCode;

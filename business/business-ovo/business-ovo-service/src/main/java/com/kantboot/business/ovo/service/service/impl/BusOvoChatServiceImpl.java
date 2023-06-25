@@ -67,7 +67,7 @@ public class BusOvoChatServiceImpl
      * @return 聊天内容
      */
     @Override
-    public BusOvoChat chatPrivate(Long otherUserId,String typeCode, String content) {
+    public BusOvoChat chatPrivate(Long otherUserId,String typeCode, String content,Long duration,Long fileIdOfCover) {
         BusOvoUserBind userOfSelf = ovoUserBindService.getSelf();
         // 根据两个用户id查询聊天室
         BusOvoChatRoom privateChatRoom = chatRoomRepository.findByUserId1AndUserId2(userOfSelf.getUserId(), otherUserId);
@@ -85,6 +85,8 @@ public class BusOvoChatServiceImpl
                         .setUserIdOfSend(userOfSelf.getUserId())
                         .setTypeCode(typeCode)
                         .setContent(content)
+                        .setDuration(duration)
+                        .setFileIdOfCover(fileIdOfCover)
         );
 
         BusOvoChat busOvoChat = repository.findById(save.getId()).orElseThrow(NoSuchElementException::new);

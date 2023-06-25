@@ -5,6 +5,7 @@ import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,8 +30,18 @@ public class BusOvoChatController {
      * @return 聊天内容
      */
     @RequestMapping("/chatPrivate")
-    public RestResult chatPrivate(Long otherUserId,String typeCode, String content){
-        return stateSuccessService.success(service.chatPrivate(otherUserId, typeCode,content),"sendSuccess");
+    public RestResult chatPrivate(
+            @RequestParam("otherUserId")
+            Long otherUserId,
+            @RequestParam("typeCode")
+            String typeCode,
+            @RequestParam("content")
+            String content,
+            @RequestParam("duration")
+            Long duration,
+            @RequestParam("fileIdOfCover")
+            Long fileIdOfCover){
+        return stateSuccessService.success(service.chatPrivate(otherUserId, typeCode,content,duration,fileIdOfCover),"sendSuccess");
     }
 
 

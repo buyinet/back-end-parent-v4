@@ -82,6 +82,11 @@ public class SysFileServiceImpl implements ISysFileService {
         // 获取上传时文件名
         String originalName = file.getOriginalFilename();
 
+        // 如果文件后缀是m4a，则修改为mp3
+        if (originalName != null && originalName.endsWith(".m4a")) {
+            originalName = originalName.replace(".m4a", ".mp3");
+        }
+
         // 检查文件是否已存在
         List<SysFile> byMd5 = repository.findByMd5AndGroupCode(md5, groupCode);
 
@@ -134,6 +139,8 @@ public class SysFileServiceImpl implements ISysFileService {
                 .setType(suffix)
                 .setContentType(contentType)
         );
+
+        log.info("文件上传成功：{}", JSON.toJSONString(save));
         return save;
     }
 
@@ -155,7 +162,6 @@ public class SysFileServiceImpl implements ISysFileService {
     public SysFile getById(Long id) {
         String redisKey = "fileId:" + id + ":SysFile";
         String s = redisUtil.get(redisKey);
-        System.out.println(s);
         if (s != null) {
             return JSONObject.parseObject(s, SysFile.class);
         }

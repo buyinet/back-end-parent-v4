@@ -15,9 +15,11 @@ public interface IBusOvoChatService {
      * @param otherUserId 对方用户id
      * @param typeCode 聊天类型
      * @param content 聊天内容
+     * @param duration 语音时长
+     * @param fileIdOfCover 封面的文件id
      * @return 聊天内容
      */
-    BusOvoChat chatPrivate(Long otherUserId, String typeCode, String content);
+    BusOvoChat chatPrivate(Long otherUserId, String typeCode, String content,Long duration,Long fileIdOfCover);
 
     /**
      * 查询聊天室的聊天记录
