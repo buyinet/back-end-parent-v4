@@ -104,6 +104,32 @@ public class BusOvoUserBindController {
         return stateSuccessService.success(service.getLocationInfoByRangeSelf(), "getSuccess");
     }
 
+    /**
+     * 查看是否已关注
+     */
+    @RequestMapping("/isFollow")
+    public RestResult isFollow(Long userId){
+        return stateSuccessService.success(service.isFollow(userId), "getSuccess");
+    }
+
+    /**
+     * 关注
+     */
+    @RequestMapping("/follow")
+    public RestResult follow(Long userId){
+        service.follow(userId);
+        return stateSuccessService.success(null, "optSuccess");
+    }
+
+    /**
+     * 取消关注
+     */
+    @RequestMapping("/unFollow")
+    public RestResult unFollow(Long userId){
+        service.unFollow(userId);
+        return stateSuccessService.success(null, "optSuccess");
+    }
+
 
 
 }

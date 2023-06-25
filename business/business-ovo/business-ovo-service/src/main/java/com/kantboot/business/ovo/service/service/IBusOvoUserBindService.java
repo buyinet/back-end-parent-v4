@@ -62,4 +62,22 @@ public interface IBusOvoUserBindService {
      */
     JSONArray getLocationInfoByRangeSelf();
 
+    /**
+     * 进行关注
+     * @param userId 用户id
+     */
+    void follow(Long userId);
+
+
+    /**
+     * 取消关注
+     * @param userId 用户id
+     */
+    void unFollow(Long userId);
+
+    /**
+     * 查看是否关注
+     */
+    boolean isFollow(Long userId);
+
 }

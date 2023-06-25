@@ -6,11 +6,9 @@ import com.kantboot.api.service.IApiLocationService;
 import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
+import com.kantboot.business.ovo.module.entity.BusOvoUserFollow;
 import com.kantboot.business.ovo.module.entity.RelBusOvoUserBindAndBusOvoEmotionalOrientation;
-import com.kantboot.business.ovo.service.repository.BusOvoEmotionalOrientationRepository;
-import com.kantboot.business.ovo.service.repository.BusOvoUserBindLocationRepository;
-import com.kantboot.business.ovo.service.repository.BusOvoUserBindRepository;
-import com.kantboot.business.ovo.service.repository.RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository;
+import com.kantboot.business.ovo.service.repository.*;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.service.ISysUserService;
@@ -36,8 +34,6 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
     @Resource
     private BusOvoUserBindRepository repository;
 
-    @Resource
-    private BusOvoEmotionalOrientationRepository emotionalOrientationRepository;
 
     @Resource
     private ISysUserService sysUserService;
@@ -54,6 +50,9 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
 
     @Resource
     private RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository relBusOvoUserBindAndBusOvoEmotionalOrientationRepository;
+
+    @Resource
+    private BusOvoUserFollowRepository busOvoUserFollowRepository;
 
     @Override
     public BusOvoUserBind getByUserId(Long userId) {
@@ -95,8 +94,6 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
                 .setSadomasochismAttrCode(dto.getSadomasochismAttrCode());
 
         List<String> emotionalOrientationCodeList = dto.getEmotionalOrientationCodeList();
-//        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.deleteByUserId(userId);
-//        relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.flush();
 
         relBusOvoUserBindAndBusOvoEmotionalOrientationRepository.saveAll(emotionalOrientationCodeList.stream().map(code -> {
             return new RelBusOvoUserBindAndBusOvoEmotionalOrientation()
@@ -296,6 +293,30 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
             return new JSONArray();
         }
         return apiLocationService.getLocationInfoByRange(busOvoUserBindLocation.getLatitude(), busOvoUserBindLocation.getLongitude(),500.0,0);
+    }
+
+    @Override
+    public void follow(Long userId) {
+        Long idOfSelf = sysUserService.getIdOfSelf();
+        boolean b = busOvoUserFollowRepository.existsByUserIdAndFollowUserId(idOfSelf, userId);
+        if (!b){
+            BusOvoUserFollow busOvoUserFollow = new BusOvoUserFollow();
+            busOvoUserFollow.setUserId(idOfSelf);
+            busOvoUserFollow.setFollowUserId(userId);
+            busOvoUserFollowRepository.save(busOvoUserFollow);
+        }
+    }
+
+    @Override
+    public void unFollow(Long userId) {
+        Long idOfSelf = sysUserService.getIdOfSelf();
+        List<BusOvoUserFollow> byUserIdAndFollowUserId = busOvoUserFollowRepository.findByUserIdAndFollowUserId(idOfSelf, userId);
+        busOvoUserFollowRepository.deleteAll(byUserIdAndFollowUserId);
+    }
+
+    @Override
+    public boolean isFollow(Long userId) {
+        return busOvoUserFollowRepository.existsByUserIdAndFollowUserId(sysUserService.getIdOfSelf(), userId);
     }
 }
 
