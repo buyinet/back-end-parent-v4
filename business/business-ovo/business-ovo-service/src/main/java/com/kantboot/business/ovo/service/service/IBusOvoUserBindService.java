@@ -78,7 +78,47 @@ public interface IBusOvoUserBindService {
 
     /**
      * 查看是否关注
+     * @param userId 用户id
+     * @return 是否关注
      */
     boolean isFollow(Long userId);
 
+    /**
+     * 根据用户id查看关注ta的人
+     * @param userId 用户id
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 关注ta的人
+     */
+    HashMap<String,Object> getFollowerListByUserId(Long userId, Integer pageNumber, String sortField, String sortOrderBy);
+
+
+    /**
+     * 获取所有关注我的人
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 所有关注我的人
+     */
+    HashMap<String,Object> getFollowerListSelf(Integer pageNumber, String sortField, String sortOrderBy);
+
+    /**
+     * 获取所有ta关注的人
+     * @param userId 用户id
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 所有ta关注的人
+     */
+    HashMap<String,Object> getFollowingListByUserId(Long userId, Integer pageNumber, String sortField, String sortOrderBy);
+
+    /**
+     * 获取所有我关注的人
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 所有我关注的人
+     */
+    HashMap<String,Object> getFollowingListSelf(Integer pageNumber, String sortField, String sortOrderBy);
 }

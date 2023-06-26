@@ -4,6 +4,7 @@ import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -25,9 +26,7 @@ public interface BusOvoUserBindRepository extends JpaRepository<BusOvoUserBind, 
      * @param pageable 分页
      * @return Page<BusOvoUserBind> Ovo绑定的用户
      */
-     Page<BusOvoUserBind> findAll(Pageable pageable);
-
-
+    Page<BusOvoUserBind> findAll(Pageable pageable);
 
 
 }

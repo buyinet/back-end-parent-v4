@@ -120,7 +120,6 @@ public class WechatPayParam {
                 timeStamp+"\n" +
                 nonceStr+"\n" +
                 JSON.toJSONString(this)+"\n";
-        System.out.println(data);
         String base64Signature = PemUtil.getBase64Signature(data, certUrl);
 
         String authorization="WECHATPAY2-SHA256-RSA2048 "

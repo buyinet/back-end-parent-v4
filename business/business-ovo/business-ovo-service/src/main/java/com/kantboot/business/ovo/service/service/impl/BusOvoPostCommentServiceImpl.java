@@ -69,7 +69,6 @@ public class BusOvoPostCommentServiceImpl implements IBusOvoPostCommentService {
         Long idOfSelf = userService.getIdOfSelf();
         res.setUserId(idOfSelf);
         BusOvoPostComment save = repository.save(res);
-        System.out.println(JSON.toJSONString(save));
         Boolean aBoolean = likeRepository.existsBusOvoPostCommentLikeByUserIdAndCommentId(idOfSelf, comment.getId());
         BusOvoPostCommentVO vo = new BusOvoPostCommentVO();
         BeanUtils.copyProperties(save, vo);

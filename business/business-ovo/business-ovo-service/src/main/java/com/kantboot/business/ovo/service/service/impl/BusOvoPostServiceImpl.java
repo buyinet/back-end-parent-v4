@@ -1,16 +1,13 @@
 package com.kantboot.business.ovo.service.service.impl;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
-import com.google.common.util.concurrent.RateLimiter;
-import com.google.common.util.concurrent.Striped;
-import com.kantboot.api.service.IApiLocationService;
+import com.kantboot.api.service.ITencentApiLocationService;
 import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
-import com.kantboot.business.ovo.module.entity.BusOvoPost;
-import com.kantboot.business.ovo.module.entity.BusOvoPostImage;
-import com.kantboot.business.ovo.module.entity.BusOvoPostLike;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.entity.*;
 import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
 import com.kantboot.business.ovo.service.repository.BusOvoPostCommentRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostLikeRepository;
@@ -18,6 +15,7 @@ import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoPostService;
 import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
 import com.kantboot.util.common.exception.BaseException;
+import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -28,7 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 帖子的service
@@ -45,13 +43,16 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     private IBusOvoUserBindService userBindService;
 
     @Resource
-    private IApiLocationService locationService;
+    private ITencentApiLocationService locationService;
 
     @Resource
     private BusOvoPostLikeRepository postLikeRepository;
 
     @Resource
     private BusOvoPostCommentRepository postCommentRepository;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     @Override
     public BusOvoPost publish(BusOvoPostDTO dto) {
@@ -80,9 +81,9 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         &&!detailIdOfLocation.equals("city")
         &&!detailIdOfLocation.equals("district")
         ){
-
             // 使用位置查询id获取位置信息
-            JSONObject locationInfoById = locationService.getLocationInfoById(dto.getDetailIdOfLocation());
+            JSONObject locationInfoById = null;
+            locationInfoById = locationService.getLocationInfoById(dto.getDetailIdOfLocation());
 
             // 之后再加：异常处理
             // ...

@@ -14,7 +14,7 @@ import java.util.Date;
  * Ovo用户关注表
  * @author 方某方
  */
-@Table(name="bus_user_follow")
+@Table(name="bus_ovo_user_follow")
 @Entity
 @Getter
 @Setter
@@ -41,6 +41,14 @@ public class BusOvoUserFollow {
      */
     @Column(name = "follow_user_id")
     private Long followUserId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private BusOvoUserBind ovoUser;
+
+    @OneToOne
+    @JoinColumn(name = "follow_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private BusOvoUserBind followOvoUser;
 
     /**
      * 创建时间

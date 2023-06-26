@@ -129,5 +129,47 @@ public class BusOvoUserBindController {
     }
 
 
+    /**
+     * 根据用户id获取关注ta的人
+     */
+    @RequestMapping("/getFollowerListByUserId")
+    public RestResult getFollowerListByUserId(Long userId,Integer pageNumber,String sortField,String sortOrderBy){
+        return stateSuccessService.success(service.getFollowerListByUserId(userId,pageNumber,sortField,sortOrderBy), "getSuccess");
+    }
+
+    /**
+     * 根据用户id获取关注自己的人
+     */
+    @RequestMapping("/getFollowerListSelf")
+    public RestResult getFollowerListSelf(Integer pageNumber,String sortField,String sortOrderBy){
+        return stateSuccessService.success(service.getFollowerListSelf(pageNumber,sortField,sortOrderBy), "getSuccess");
+    }
+
+    /**
+     * 获取所有ta关注的人
+     * @param userId 用户id
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 所有ta关注的人
+     */
+    @RequestMapping("/getFollowingListByUserId")
+    public RestResult getFollowingListByUserId(Long userId,Integer pageNumber,String sortField,String sortOrderBy){
+        return stateSuccessService.success(service.getFollowingListByUserId(userId,pageNumber,sortField,sortOrderBy), "getSuccess");
+    }
+
+    /**
+     * 获取所有自己关注的人
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 所有关注自己的人
+     */
+    @RequestMapping("/getFollowingListSelf")
+    public RestResult getFollowingListSelf(Integer pageNumber,String sortField,String sortOrderBy){
+        return stateSuccessService.success(service.getFollowingListSelf(pageNumber,sortField,sortOrderBy), "getSuccess");
+    }
+
+
 
 }

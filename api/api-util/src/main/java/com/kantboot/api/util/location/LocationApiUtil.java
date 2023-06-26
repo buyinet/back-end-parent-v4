@@ -2,6 +2,7 @@ package com.kantboot.api.util.location;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
  * 位置api工具类
  * @author 方某方
  */
+@Slf4j
 public class LocationApiUtil {
 
     @SneakyThrows

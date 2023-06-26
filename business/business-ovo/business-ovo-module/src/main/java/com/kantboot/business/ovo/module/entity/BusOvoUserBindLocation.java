@@ -102,4 +102,10 @@ public class BusOvoUserBindLocation {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    /**
+     * 腾讯地图api调用时间
+     */
+    @Column(name = "gmt_tencent_map_api_time")
+    private Date gmtTencentMapApiTime;
+
 }

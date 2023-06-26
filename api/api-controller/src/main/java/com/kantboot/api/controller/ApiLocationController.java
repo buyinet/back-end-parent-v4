@@ -1,6 +1,6 @@
 package com.kantboot.api.controller;
 
-import com.kantboot.api.service.IApiLocationService;
+import com.kantboot.api.service.ITencentApiLocationService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiLocationController {
 
     @Resource
-    private IApiLocationService service;
+    private ITencentApiLocationService service;
 
     @Resource
     private IStateSuccessService stateSuccessService;

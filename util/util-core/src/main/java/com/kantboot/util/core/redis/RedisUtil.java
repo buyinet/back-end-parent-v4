@@ -31,6 +31,22 @@ public class RedisUtil {
         return this;
     }
 
+    /**
+     * 加锁
+     */
+    public Boolean lock(String key, String value, long timeout, TimeUnit unit) {
+        return stringRedisTemplate.opsForValue().setIfAbsent(key, value, timeout, unit);
+    }
+
+    /**
+     * 解锁
+     */
+    public void unlock(String key) {
+        stringRedisTemplate.delete(key);
+    }
+
+
+
     /** -------------------key相关操作--------------------- */
 
     /**

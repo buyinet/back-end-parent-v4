@@ -7,7 +7,7 @@ import com.alibaba.fastjson2.JSONObject;
  * 位置服务
  * @author 方某方
  */
-public interface IApiLocationService {
+public interface ITencentApiLocationService {
 
 
     /**
@@ -19,6 +19,9 @@ public interface IApiLocationService {
      * @return 位置信息
      */
     JSONObject getLocationInfo(Double latitude, Double longitude, Integer poi);
+
+
+    JSONObject getLocationInfo2(Double latitude, Double longitude, Integer poi, String key);
 
     /**
      * 根据ip获取位置信息

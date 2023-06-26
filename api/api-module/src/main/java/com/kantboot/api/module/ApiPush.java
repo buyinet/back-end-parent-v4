@@ -27,6 +27,11 @@ public class ApiPush {
     private String title;
 
     /**
+     * 消息离线时间设置，单位毫秒，-1表示不设离线，-1 ～ 3 * 24 * 3600 * 1000(3天)之间
+     */
+    private Integer ttl;
+
+    /**
      * 通知内容
      */
     private String content;
