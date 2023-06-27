@@ -21,4 +21,5 @@ extends JpaRepository<RelBusOvoChatRoomAndBusOvoUserBind, Long>
      */
     Page<RelBusOvoChatRoomAndBusOvoUserBind> findByUserId(Pageable pageable, Long userId);
 
+
 }

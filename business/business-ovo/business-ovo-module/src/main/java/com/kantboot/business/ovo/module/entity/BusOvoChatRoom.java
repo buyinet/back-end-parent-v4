@@ -54,7 +54,7 @@ public class BusOvoChatRoom {
     private Long fileIdOfAvatar;
 
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "rel_bus_ovo_chat_room_and_bus_ovo_user_bind",
             joinColumns = @JoinColumn(name = "room_id",referencedColumnName = "id",insertable = false,updatable = false,unique = false),
             inverseJoinColumns = @JoinColumn(name = "user_id",referencedColumnName = "user_id",insertable = false,updatable = false,unique = false),

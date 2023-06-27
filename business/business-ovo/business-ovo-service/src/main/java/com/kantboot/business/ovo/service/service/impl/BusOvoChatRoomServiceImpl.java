@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Ovo用户聊天室表Service接口实现类
@@ -65,6 +66,38 @@ public class BusOvoChatRoomServiceImpl
                 .setOvoUserList(userBindList);
 
         return repository.save(chatRoom);
+    }
+
+    @Override
+    public BusOvoChatRoomVO getPrivateChatRoomByOtherUserId(Long otherUserId) {
+//        根据对方用户id和自身用户id查询
+        BusOvoChatRoom busOvoChatRoom = repository.findPrivateByUserId1AndUserId2(
+                sysUserService.getIdOfSelf(), otherUserId
+        );
+        System.err.println(JSON.toJSONString(busOvoChatRoom));
+        if (busOvoChatRoom==null) {
+            return null;
+        }
+        BusOvoChatRoomVO busOvoChatRoomVO = new BusOvoChatRoomVO();
+        // 传入房间id
+        busOvoChatRoomVO.setTypeCode(busOvoChatRoom.getTypeCode());
+        busOvoChatRoomVO.setId(busOvoChatRoom.getId());
+        busOvoChatRoom.setName(busOvoChatRoom.getName());
+        boolean privateChat = busOvoChatRoom.getTypeCode().equals("privateChat");
+        if(privateChat){
+            BusOvoChat firstByRoomIdOrderByCreateTimeDesc = chatRepository.findFirstByRoomIdOrderByGmtCreateDesc(busOvoChatRoom.getId());
+            busOvoChatRoomVO.setLastChat(firstByRoomIdOrderByCreateTimeDesc);
+            // 如果是私聊，那么就要获取对方的信息
+            List<BusOvoUserBind> ovoUserList = busOvoChatRoom.getOvoUserList();
+            for (BusOvoUserBind busOvoUserBind : ovoUserList) {
+                if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
+                    busOvoChatRoomVO.setOtherUser(busOvoUserBind);
+                    busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());
+                    busOvoChatRoomVO.setFileIdOfAvatar(busOvoUserBind.getUser().getFileIdOfAvatar());
+                }
+            }
+        }
+        return busOvoChatRoomVO;
     }
 
     @Override

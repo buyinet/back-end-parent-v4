@@ -84,6 +84,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
     private ISysExceptionService sysExceptionService;
 
 
+
     @Override
     public BusOvoUserBind getByUserId(Long userId) {
         BusOvoUserBind busOvoUserBind = repository.findById(userId).orElse(null);
@@ -575,6 +576,18 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
     @Override
     public HashMap<String, Object> getFollowingListSelf(Integer pageNumber, String sortField, String sortOrderBy) {
         return getFollowingListByUserId(sysUserService.getIdOfSelf(), pageNumber, sortField, sortOrderBy);
+    }
+
+    @Override
+    public HashMap<String, Object> getFollowerAndFollowingCountByUserId(Long userId) {
+        // 获取用户的粉丝数
+        Long followersCount = busOvoUserFollowRepository.countByFollowUserId(userId);
+        // 获取用户的关注数
+        Long followCount = busOvoUserFollowRepository.countByUserId(userId);
+        HashMap<String, Object> map = new HashMap<>(2);
+        map.put("followersCount", followersCount);
+        map.put("followCount", followCount);
+        return map;
     }
 }
 

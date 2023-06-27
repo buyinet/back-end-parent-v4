@@ -121,4 +121,12 @@ public interface IBusOvoUserBindService {
      * @return 所有我关注的人
      */
     HashMap<String,Object> getFollowingListSelf(Integer pageNumber, String sortField, String sortOrderBy);
+
+    /**
+     * 根据用户id获取关注和粉丝数量
+     * @param userId 用户id
+     * @return 关注和粉丝数量
+     */
+    HashMap<String,Object> getFollowerAndFollowingCountByUserId(Long userId);
+
 }

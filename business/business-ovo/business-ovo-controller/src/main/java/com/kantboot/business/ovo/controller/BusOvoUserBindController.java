@@ -170,6 +170,16 @@ public class BusOvoUserBindController {
         return stateSuccessService.success(service.getFollowingListSelf(pageNumber,sortField,sortOrderBy), "getSuccess");
     }
 
+    /**
+     * 根据用户id获取关注和被关注的数量
+     * getFollowerAndFollowingCountByUserId
+     * @param userId 用户id
+     * @return 关注和被关注的数量
+     */
+    @RequestMapping("/getFollowerAndFollowingCountByUserId")
+    public RestResult getFollowerAndFollowingCountByUserId(Long userId){
+        return stateSuccessService.success(service.getFollowerAndFollowingCountByUserId(userId), "getSuccess");
+    }
 
 
 }

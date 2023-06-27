@@ -35,6 +35,13 @@ public interface IBusOvoChatRoomService {
      */
     BusOvoChatRoomVO getById(Long id);
 
+    /**
+     * 根据对方用户id获取私人聊天室
+     * @param otherUserId 对方用户id
+     * @return 聊天室
+     */
+    BusOvoChatRoomVO getPrivateChatRoomByOtherUserId(Long otherUserId);
+
 
 
 }
