@@ -545,6 +545,8 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         Page<BusOvoUserFollow> byFollowUserId = busOvoUserFollowRepository.findByFollowUserId(userId, pageable);
 
         HashMap<String, Object> map = new HashMap<>(10);
+
+        map.put("pageSize", 15);
         map.put("totalElements", byFollowUserId.getTotalElements());
         map.put("totalPages", byFollowUserId.getTotalPages());
         map.put("content", byFollowUserId.getContent());
@@ -567,6 +569,7 @@ public class BusOvoUserBindServiceImpl implements IBusOvoUserBindService {
         Page<BusOvoUserFollow> byUserId = busOvoUserFollowRepository.findByUserId(userId, pageable);
 
         HashMap<String, Object> map = new HashMap<>(10);
+        map.put("pageSize", 15);
         map.put("totalElements", byUserId.getTotalElements());
         map.put("totalPages", byUserId.getTotalPages());
         map.put("content", byUserId.getContent());
