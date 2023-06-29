@@ -435,8 +435,8 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
      */
     @Override
     public JSONArray getLocationInfoByRangeSelf() {
-        if(redisUtil.lock("getLocationInfoByRangeSelf:token:"+httpRequestHeaderUtil.getToken(),
-                "1", 100, TimeUnit.MILLISECONDS)){
+        if(redisUtil.lock("getLocationInfoByRangeSelf:token:"+httpRequestHeaderUtil.getToken()
+                , 100, TimeUnit.MILLISECONDS)){
             // 告诉用户请求太频繁，虽然一般不会出现这种情况
             throw sysExceptionService.getException("requestTooMuch");
         }

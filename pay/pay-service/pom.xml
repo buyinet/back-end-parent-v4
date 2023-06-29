@@ -3,50 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>business-ovo</artifactId>
+        <artifactId>pay</artifactId>
         <groupId>com.kantboot</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>business-ovo-service</artifactId>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <artifactId>pay-service</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.kantboot</groupId>
-            <artifactId>business-ovo-module</artifactId>
+            <artifactId>pay-module</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
-
-
         <dependency>
             <groupId>com.kantboot</groupId>
-            <artifactId>api-service</artifactId>
+            <artifactId>api-util</artifactId>
+            <version>1.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.kantboot</groupId>
             <artifactId>system-service</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.kantboot</groupId>
-            <artifactId>pay-service</artifactId>
+            <artifactId>third-party-wechat-service</artifactId>
             <version>1.0.0</version>
         </dependency>
-
     </dependencies>
 
 </project>

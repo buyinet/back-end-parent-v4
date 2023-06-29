@@ -42,6 +42,27 @@ public class TpWechatUserServiceImpl implements ITpWechatUserService {
     private ISysUserService userService;
 
     @Override
+    public String getOpenIdByCode(String code) {
+        // 获取微信小程序appId
+        String appid = settingService.getValue("wechat", "mpAppId");
+        // 获取微信小程序appSecret
+        String appSecret = settingService.getValue("wechat", "mpAppSecret");
+
+        Code2Session.Param param = new Code2Session.Param();
+        param.setAppid(appid);
+        param.setSecret(appSecret);
+        param.setJsCode(code);
+        param.setGrantType("authorization_code");
+        Code2Session.Result result;
+        try{
+            result = Code2Session.getResult(param);
+        }catch (BaseException e){
+            throw exceptionService.getException(e.getStateCode());
+        }
+        return result.getOpenid();
+    }
+
+    @Override
     @Transactional
     public SysToken loginInMp(String code) {
         // 获取微信小程序appId
@@ -82,6 +103,11 @@ public class TpWechatUserServiceImpl implements ITpWechatUserService {
         return register;
     }
 
+    @Override
+    public TpWechatUser getSelf() {
+        Long idOfSelf = userService.getIdOfSelf();
+        return repository.findByUserId(idOfSelf);
+    }
 }
 
 

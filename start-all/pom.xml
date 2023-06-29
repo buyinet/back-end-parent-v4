@@ -24,6 +24,12 @@
 
         <dependency>
             <groupId>com.kantboot</groupId>
+            <artifactId>pay-controller</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kantboot</groupId>
             <artifactId>admin-controller</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -58,6 +64,7 @@
             <artifactId>system-controller</artifactId>
             <version>1.0.0</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

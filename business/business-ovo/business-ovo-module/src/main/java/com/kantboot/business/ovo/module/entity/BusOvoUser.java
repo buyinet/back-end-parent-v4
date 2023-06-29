@@ -50,7 +50,7 @@ public class BusOvoUser {
     @Column(name = "introduction")
     private String introduction;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "rel_bus_ovo_user_and_bus_ovo_emotional_orientation",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "emotional_orientation_code", referencedColumnName = "code"))
@@ -73,7 +73,8 @@ public class BusOvoUser {
     /**
      * 关联的用户
      */
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private SysUser user;
 
     /**

@@ -17,4 +17,11 @@ public interface TpWechatUserRepository extends JpaRepository<TpWechatUser, Long
      */
     TpWechatUser findByUnionid(String unionid);
 
+    /**
+     * 根据用户id查询
+     * @param userId 用户id
+     * @return 微信用户
+     */
+    TpWechatUser findByUserId(Long userId);
+
 }

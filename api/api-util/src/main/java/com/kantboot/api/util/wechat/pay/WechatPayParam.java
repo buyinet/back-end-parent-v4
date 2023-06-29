@@ -130,6 +130,8 @@ public class WechatPayParam {
                 +"serial_no=\""+"74E2D8400D1DBC2E92EB23938A4E8D9BB55C912F"+"\"";
 
         String url = "https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi";
+        System.err.println(JSON.toJSONString(this));
+
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody
                 .create(MediaType.parse("application/json;charset=utf-8"),
@@ -144,7 +146,9 @@ public class WechatPayParam {
         String response = client.newCall(request).execute().body().string();
 
         JSONObject jsonObject = JSON.parseObject(response);
+        System.out.println(JSON.toJSONString(jsonObject));
         String prepayId = jsonObject.getString("prepay_id");
+
 
         String paySignAfter= this.getAppId()+"\n"
                 +timeStamp+"\n"
