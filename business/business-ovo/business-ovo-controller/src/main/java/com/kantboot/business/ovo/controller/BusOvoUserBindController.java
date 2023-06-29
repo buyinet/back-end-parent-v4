@@ -2,7 +2,7 @@ package com.kantboot.business.ovo.controller;
 
 import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.service.repository.BusOvoUserBindLocationRepository;
-import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
+import com.kantboot.business.ovo.service.service.IBusOvoUserService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BusOvoUserBindController {
 
     @Resource
-    private IBusOvoUserBindService service;
+    private IBusOvoUserService service;
 
     @Resource
     private IStateSuccessService stateSuccessService;
@@ -106,11 +106,24 @@ public class BusOvoUserBindController {
 
     /**
      * 查看是否已关注
+     * @param userId 用户id
+     * @return 是否已关注
      */
     @RequestMapping("/isFollow")
     public RestResult isFollow(Long userId){
         return stateSuccessService.success(service.isFollow(userId), "getSuccess");
     }
+
+    /**
+     * 查看是否互相关注
+     * @param userId 用户id
+     * @return 是否互相关注
+     */
+    @RequestMapping("/isMutual")
+    public RestResult isMutual(Long userId){
+        return stateSuccessService.success(service.isMutual(userId), "getSuccess");
+    }
+
 
     /**
      * 关注
@@ -179,6 +192,19 @@ public class BusOvoUserBindController {
     @RequestMapping("/getFollowerAndFollowingCountByUserId")
     public RestResult getFollowerAndFollowingCountByUserId(Long userId){
         return stateSuccessService.success(service.getFollowerAndFollowingCountByUserId(userId), "getSuccess");
+    }
+
+    /**
+     * getMutualSelf
+     * 获取互相关注的人
+     * @param pageNumber 页码
+     * @param sortField 排序字段
+     * @param sortOrderBy 排序方式
+     * @return 互相关注的人
+     */
+    @RequestMapping("/getMutualSelf")
+    public RestResult getMutualSelf(Integer pageNumber,String sortField,String sortOrderBy){
+        return stateSuccessService.success(service.getMutualSelf(pageNumber,sortField,sortOrderBy), "getSuccess");
     }
 
 

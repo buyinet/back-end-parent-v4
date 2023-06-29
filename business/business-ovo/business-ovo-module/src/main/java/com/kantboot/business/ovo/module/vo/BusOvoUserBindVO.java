@@ -1,6 +1,6 @@
 package com.kantboot.business.ovo.module.vo;
 
-import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.entity.BusOvoUser;
 import lombok.Data;
 
 /**
@@ -8,7 +8,7 @@ import lombok.Data;
  * @author 方某方
  */
 @Data
-public class BusOvoUserBindVO extends BusOvoUserBind {
+public class BusOvoUserBindVO extends BusOvoUser {
 
     /**
      * 粉丝数

@@ -38,7 +38,7 @@ spring:
       hibenate:
         format_sql: false
         enable_lazy_load_no_trans: true
-    show-sql: false
+    show-sql: true
     jackson:
       date-format: yyyy-MM-dd HH:mm:ss
       time-zone: GMT+8

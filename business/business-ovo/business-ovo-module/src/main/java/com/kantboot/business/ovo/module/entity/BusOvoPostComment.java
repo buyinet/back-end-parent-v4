@@ -67,7 +67,7 @@ public class BusOvoPostComment {
      */
     @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "user_id",insertable=false, updatable=false)
-    private BusOvoUserBind ovoUser;
+    private BusOvoUser ovoUser;
 
     /**
      * 被@的评论id

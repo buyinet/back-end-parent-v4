@@ -1,7 +1,5 @@
 package com.kantboot.business.ovo.service.service.impl;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
@@ -13,7 +11,7 @@ import com.kantboot.business.ovo.service.repository.BusOvoPostCommentRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostLikeRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoPostService;
-import com.kantboot.business.ovo.service.service.IBusOvoUserBindService;
+import com.kantboot.business.ovo.service.service.IBusOvoUserService;
 import com.kantboot.util.common.exception.BaseException;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 帖子的service
@@ -40,7 +37,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     private BusOvoPostRepository repository;
 
     @Resource
-    private IBusOvoUserBindService userBindService;
+    private IBusOvoUserService userBindService;
 
     @Resource
     private ITencentApiLocationService locationService;
@@ -72,7 +69,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
             postImageList.add(new BusOvoPostImage().setFileId(fileId));
         });
         post.setImageList(postImageList);
-        BusOvoUserBind self = userBindService.getSelf();
+        BusOvoUser self = userBindService.getSelf();
 
 
         String detailIdOfLocation = dto.getDetailIdOfLocation();
@@ -154,7 +151,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
 
     @Override
     public HashMap<String, Object> getSelf(Integer pageNumber, String sortField, String sortOrderBy) {
-        BusOvoUserBind self = userBindService.getSelf();
+        BusOvoUser self = userBindService.getSelf();
         Sort sort = Sort.by(sortField);
         Sort sort1=
                 sortOrderBy.toUpperCase().equals("ASC")?
@@ -181,7 +178,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
 
     @Override
     public HashMap<String, Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy) {
-        BusOvoUserBind self = userBindService.getSelf();
+        BusOvoUser self = userBindService.getSelf();
         Sort sort = Sort.by(sortField);
         Sort sort1=
                 sortOrderBy.toUpperCase().equals("ASC")?
@@ -211,7 +208,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
 
     @Override
     public HashMap<String, Object> getNear(Integer pageNumber,Double range) {
-        BusOvoUserBind self = userBindService.getSelf();
+        BusOvoUser self = userBindService.getSelf();
         // 获取纬度
         Double latitude = self.getLocation().getLatitude();
         // 获取经度
@@ -246,7 +243,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     @Override
     public BusOvoPostVO like(Long postId) {
         long l = System.currentTimeMillis();
-        BusOvoUserBind self = userBindService.getSelf();
+        BusOvoUser self = userBindService.getSelf();
         synchronized (pool.intern(postId.toString())){
             long l1 = System.currentTimeMillis();
             int minTime = 1000;
@@ -285,7 +282,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         BeanUtils.copyProperties(post, vo);
 
         try{
-            BusOvoUserBind self = userBindService.getSelf();
+            BusOvoUser self = userBindService.getSelf();
             vo.setLike(postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(),post.getId()));
         }catch (BaseException e){
             if (e.getStateCode().equals("notLogin")) {

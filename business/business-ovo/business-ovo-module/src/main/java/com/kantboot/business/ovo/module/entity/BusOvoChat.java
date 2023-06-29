@@ -79,7 +79,7 @@ public class BusOvoChat {
      */
     @OneToOne
     @JoinColumn(name = "user_id_of_send",referencedColumnName = "user_id",insertable = false,updatable = false)
-    private BusOvoUserBind ovoUserOfSend;
+    private BusOvoUser ovoUserOfSend;
 
     /**
      * 创建时间

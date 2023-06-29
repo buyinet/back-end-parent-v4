@@ -143,7 +143,7 @@ public class SysUserServiceImpl2 implements ISysUserService {
             SysUser sysUser = JSON.parseObject(sysUserJsonStr, SysUser.class);
             return hideSensitiveInfo(sysUser);
         }
-        SysUser result = repository.findById(id).get();
+        SysUser result = repository.findById(id).orElse(null);
         if (result == null) {
             throw exceptionService.getException("userNotExist");
         }

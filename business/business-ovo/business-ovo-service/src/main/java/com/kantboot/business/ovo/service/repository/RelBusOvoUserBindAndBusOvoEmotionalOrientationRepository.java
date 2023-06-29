@@ -1,6 +1,6 @@
 package com.kantboot.business.ovo.service.repository;
 
-import com.kantboot.business.ovo.module.entity.RelBusOvoUserBindAndBusOvoEmotionalOrientation;
+import com.kantboot.business.ovo.module.entity.RelBusOvoUserAndBusOvoEmotionalOrientation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.Repository;
 
@@ -9,7 +9,7 @@ import org.springframework.data.repository.Repository;
  * 由于是多对多关系，所以不需要实现类
  * @author 方某方
  */
-public interface RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository extends JpaRepository<RelBusOvoUserBindAndBusOvoEmotionalOrientation, Long>, Repository<RelBusOvoUserBindAndBusOvoEmotionalOrientation, Long> {
+public interface RelBusOvoUserBindAndBusOvoEmotionalOrientationRepository extends JpaRepository<RelBusOvoUserAndBusOvoEmotionalOrientation, Long>, Repository<RelBusOvoUserAndBusOvoEmotionalOrientation, Long> {
 
     /**
      * 根据用户id删除

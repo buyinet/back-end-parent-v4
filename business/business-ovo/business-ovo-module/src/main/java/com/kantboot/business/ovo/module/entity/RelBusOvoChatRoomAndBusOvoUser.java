@@ -21,7 +21,7 @@ import java.util.Date;
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class RelBusOvoChatRoomAndBusOvoUserBind {
+public class RelBusOvoChatRoomAndBusOvoUser {
     /**
      * 主键
      */
@@ -59,7 +59,7 @@ public class RelBusOvoChatRoomAndBusOvoUserBind {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",insertable = false,updatable = false,unique = false)
-    private BusOvoUserBind busOvoUser;
+    private BusOvoUser busOvoUser;
 
 
     /**

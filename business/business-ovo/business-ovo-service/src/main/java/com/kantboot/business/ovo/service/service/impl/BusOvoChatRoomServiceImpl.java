@@ -3,12 +3,12 @@ package com.kantboot.business.ovo.service.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.kantboot.business.ovo.module.entity.BusOvoChat;
 import com.kantboot.business.ovo.module.entity.BusOvoChatRoom;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
-import com.kantboot.business.ovo.module.entity.RelBusOvoChatRoomAndBusOvoUserBind;
+import com.kantboot.business.ovo.module.entity.BusOvoUser;
+import com.kantboot.business.ovo.module.entity.RelBusOvoChatRoomAndBusOvoUser;
 import com.kantboot.business.ovo.module.vo.BusOvoChatRoomVO;
 import com.kantboot.business.ovo.service.repository.BusOvoChatRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoChatRoomRepository;
-import com.kantboot.business.ovo.service.repository.BusOvoUserBindRepository;
+import com.kantboot.business.ovo.service.repository.BusOvoUserRepository;
 import com.kantboot.business.ovo.service.repository.RelBusOvoChatRoomAndBusOvoUserBindRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoChatRoomService;
 import com.kantboot.system.service.ISysUserService;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Ovo用户聊天室表Service接口实现类
@@ -41,7 +40,7 @@ public class BusOvoChatRoomServiceImpl
     private ISysUserService sysUserService;
 
     @Resource
-    private BusOvoUserBindRepository userBindRepository;
+    private BusOvoUserRepository userBindRepository;
 
     @Resource
     private RelBusOvoChatRoomAndBusOvoUserBindRepository relBusOvoChatRoomAndBusOvoUserBindRepository;
@@ -54,7 +53,7 @@ public class BusOvoChatRoomServiceImpl
     @Override
     public BusOvoChatRoom createPrivateChatRoom(Long otherUserId) {
 
-        List<BusOvoUserBind> userBindList = new ArrayList<>();
+        List<BusOvoUser> userBindList = new ArrayList<>();
         userBindList.add(
                 userBindRepository.findByUserId(sysUserService.getIdOfSelf())
         );
@@ -88,8 +87,9 @@ public class BusOvoChatRoomServiceImpl
             BusOvoChat firstByRoomIdOrderByCreateTimeDesc = chatRepository.findFirstByRoomIdOrderByGmtCreateDesc(busOvoChatRoom.getId());
             busOvoChatRoomVO.setLastChat(firstByRoomIdOrderByCreateTimeDesc);
             // 如果是私聊，那么就要获取对方的信息
-            List<BusOvoUserBind> ovoUserList = busOvoChatRoom.getOvoUserList();
-            for (BusOvoUserBind busOvoUserBind : ovoUserList) {
+            List<BusOvoUser> ovoUserList = busOvoChatRoom.getOvoUserList();
+            for (BusOvoUser busOvoUserBind : ovoUserList) {
+                busOvoUserBind.setUser(sysUserService.getById(busOvoUserBind.getUserId()));
                 if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
                     busOvoChatRoomVO.setOtherUser(busOvoUserBind);
                     busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());
@@ -103,13 +103,13 @@ public class BusOvoChatRoomServiceImpl
     @Override
     public HashMap<String,Object> getSelfRoom(Integer pageNumber) {
         Pageable pageable = Pageable.ofSize(50).withPage(pageNumber-1);
-        Page<RelBusOvoChatRoomAndBusOvoUserBind> byUserId
+        Page<RelBusOvoChatRoomAndBusOvoUser> byUserId
                 = relBusOvoChatRoomAndBusOvoUserBindRepository.findByUserId(pageable,
                 sysUserService.getIdOfSelf());
 
-        List<RelBusOvoChatRoomAndBusOvoUserBind> byUserIdContent = byUserId.getContent();
+        List<RelBusOvoChatRoomAndBusOvoUser> byUserIdContent = byUserId.getContent();
         List<BusOvoChatRoomVO> content = new ArrayList<>();
-        for (RelBusOvoChatRoomAndBusOvoUserBind relBusOvoChatRoomAndBusOvoUserBind : byUserIdContent) {
+        for (RelBusOvoChatRoomAndBusOvoUser relBusOvoChatRoomAndBusOvoUserBind : byUserIdContent) {
             BusOvoChatRoomVO busOvoChatRoomVO = new BusOvoChatRoomVO();
             // 传入房间id
             busOvoChatRoomVO.setRoomId(relBusOvoChatRoomAndBusOvoUserBind.getRoomId());
@@ -122,8 +122,9 @@ public class BusOvoChatRoomServiceImpl
                 BusOvoChat firstByRoomIdOrderByCreateTimeDesc = chatRepository.findFirstByRoomIdOrderByGmtCreateDesc(busOvoChatRoom.getId());
                 busOvoChatRoomVO.setLastChat(firstByRoomIdOrderByCreateTimeDesc);
                 // 如果是私聊，那么就要获取对方的信息
-                List<BusOvoUserBind> ovoUserList = busOvoChatRoom.getOvoUserList();
-                for (BusOvoUserBind busOvoUserBind : ovoUserList) {
+                List<BusOvoUser> ovoUserList = busOvoChatRoom.getOvoUserList();
+                for (BusOvoUser busOvoUserBind : ovoUserList) {
+                    busOvoUserBind.setUser(sysUserService.getById(busOvoUserBind.getUserId()));
                     if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
                         busOvoChatRoomVO.setOtherUser(busOvoUserBind);
                         busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());
@@ -155,8 +156,9 @@ public class BusOvoChatRoomServiceImpl
             BusOvoChat firstByRoomIdOrderByCreateTimeDesc = chatRepository.findFirstByRoomIdOrderByGmtCreateDesc(busOvoChatRoom.getId());
             busOvoChatRoomVO.setLastChat(firstByRoomIdOrderByCreateTimeDesc);
             // 如果是私聊，那么就要获取对方的信息
-            List<BusOvoUserBind> ovoUserList = busOvoChatRoom.getOvoUserList();
-            for (BusOvoUserBind busOvoUserBind : ovoUserList) {
+            List<BusOvoUser> ovoUserList = busOvoChatRoom.getOvoUserList();
+            for (BusOvoUser busOvoUserBind : ovoUserList) {
+                busOvoUserBind.setUser(sysUserService.getById(busOvoUserBind.getUserId()));
                 if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
                     busOvoChatRoomVO.setOtherUser(busOvoUserBind);
                     busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());

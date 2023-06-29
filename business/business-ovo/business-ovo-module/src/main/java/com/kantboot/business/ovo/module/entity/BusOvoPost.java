@@ -76,7 +76,7 @@ public class BusOvoPost {
      */
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private BusOvoUserBind ovoUser;
+    private BusOvoUser ovoUser;
 
     /**
      * 发帖人id

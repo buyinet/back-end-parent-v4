@@ -1,6 +1,6 @@
 package com.kantboot.business.ovo.service.repository;
 
-import com.kantboot.business.ovo.module.entity.RelBusOvoChatRoomAndBusOvoUserBind;
+import com.kantboot.business.ovo.module.entity.RelBusOvoChatRoomAndBusOvoUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author 方某方
  */
 public interface RelBusOvoChatRoomAndBusOvoUserBindRepository
-extends JpaRepository<RelBusOvoChatRoomAndBusOvoUserBind, Long>
+extends JpaRepository<RelBusOvoChatRoomAndBusOvoUser, Long>
 {
 
     /**
@@ -19,7 +19,7 @@ extends JpaRepository<RelBusOvoChatRoomAndBusOvoUserBind, Long>
      * @param userId 用户id
      * @return
      */
-    Page<RelBusOvoChatRoomAndBusOvoUserBind> findByUserId(Pageable pageable, Long userId);
+    Page<RelBusOvoChatRoomAndBusOvoUser> findByUserId(Pageable pageable, Long userId);
 
 
 }

@@ -13,16 +13,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Ovo用户绑定表
+ * Ovo用户表
  * @author 方某方
  */
-@Table(name="bus_ovo_user_bind")
+@Table(name="bus_ovo_user")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoUserBind {
+public class BusOvoUser {
 
     /**
      * 主键
@@ -51,7 +51,7 @@ public class BusOvoUserBind {
     private String introduction;
 
     @ManyToMany
-    @JoinTable(name = "rel_bus_ovo_user_bind_and_bus_ovo_emotional_orientation",
+    @JoinTable(name = "rel_bus_ovo_user_and_bus_ovo_emotional_orientation",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "emotional_orientation_code", referencedColumnName = "code"))
     private List<BusOvoEmotionalOrientation> emotionalOrientationList;
@@ -73,8 +73,7 @@ public class BusOvoUserBind {
     /**
      * 关联的用户
      */
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @Transient
     private SysUser user;
 
     /**

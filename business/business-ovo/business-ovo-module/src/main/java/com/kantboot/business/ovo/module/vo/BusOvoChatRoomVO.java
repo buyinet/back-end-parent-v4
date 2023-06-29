@@ -1,7 +1,7 @@
 package com.kantboot.business.ovo.module.vo;
 
 import com.kantboot.business.ovo.module.entity.BusOvoChat;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.entity.BusOvoUser;
 import lombok.Data;
 
 import java.util.Date;
@@ -51,7 +51,7 @@ public class BusOvoChatRoomVO {
      * 聊天室对方
      * 只有私聊才有
      */
-    private BusOvoUserBind otherUser;
+    private BusOvoUser otherUser;
 
     /**
      * 创建时间

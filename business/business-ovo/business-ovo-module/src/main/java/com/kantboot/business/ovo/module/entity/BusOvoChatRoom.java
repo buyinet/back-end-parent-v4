@@ -59,7 +59,7 @@ public class BusOvoChatRoom {
             joinColumns = @JoinColumn(name = "room_id",referencedColumnName = "id",insertable = false,updatable = false,unique = false),
             inverseJoinColumns = @JoinColumn(name = "user_id",referencedColumnName = "user_id",insertable = false,updatable = false,unique = false),
             uniqueConstraints = @UniqueConstraint(columnNames = { "room_id", "user_id" }))
-    private List<BusOvoUserBind> ovoUserList;
+    private List<BusOvoUser> ovoUserList;
 
 
     /**

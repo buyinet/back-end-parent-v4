@@ -14,13 +14,13 @@ import java.util.Date;
  * Ovo用户绑定表
  * @author 方某方
  */
-@Table(name="rel_bus_ovo_user_bind_and_bus_ovo_emotional_orientation")
+@Table(name="rel_bus_ovo_user_and_bus_ovo_emotional_orientation")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class RelBusOvoUserBindAndBusOvoEmotionalOrientation {
+public class RelBusOvoUserAndBusOvoEmotionalOrientation {
     /**
      * 主键
      */

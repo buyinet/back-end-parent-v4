@@ -1,21 +1,18 @@
 package com.kantboot.business.ovo.service.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import com.alibaba.fastjson2.JSON;
 import com.kantboot.api.module.ApiPush;
 import com.kantboot.api.module.ApiPushPayload;
 import com.kantboot.api.service.IApiPushService;
 import com.kantboot.business.ovo.module.entity.BusOvoChat;
 import com.kantboot.business.ovo.module.entity.BusOvoChatRoom;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBind;
+import com.kantboot.business.ovo.module.entity.BusOvoUser;
 import com.kantboot.business.ovo.module.entity.BusPushBind;
 import com.kantboot.business.ovo.service.repository.BusOvoChatRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoChatRoomRepository;
 import com.kantboot.business.ovo.service.service.*;
 import com.kantboot.system.service.ISysUserService;
 import jakarta.annotation.Resource;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,9 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Ovo用户聊天室表Service接口实现类
@@ -55,7 +49,7 @@ public class BusOvoChatServiceImpl
     private IApiPushService apiPushService;
 
     @Resource
-    private IBusOvoUserBindService ovoUserBindService;
+    private IBusOvoUserService ovoUserBindService;
 
 
     /**
@@ -68,7 +62,7 @@ public class BusOvoChatServiceImpl
      */
     @Override
     public BusOvoChat chatPrivate(Long otherUserId,String typeCode, String content,Long duration,Long fileIdOfCover) {
-        BusOvoUserBind userOfSelf = ovoUserBindService.getSelf();
+        BusOvoUser userOfSelf = ovoUserBindService.getSelf();
         // 根据两个用户id查询聊天室
         BusOvoChatRoom privateChatRoom = chatRoomRepository.findByUserId1AndUserId2(userOfSelf.getUserId(), otherUserId);
 
@@ -134,6 +128,10 @@ public class BusOvoChatServiceImpl
     public HashMap<String, Object> getByRoomId(Long roomId, Integer pageNumber) {
         Pageable pageable = Pageable.ofSize(10).withPage(pageNumber-1);
         Page<BusOvoChat> byRoomIdOrderByGmtCreateDesc = repository.findByRoomIdOrderByGmtCreateDesc(pageable, roomId);
+        for (BusOvoChat busOvoChat : byRoomIdOrderByGmtCreateDesc.getContent()) {
+            busOvoChat.getOvoUserOfSend().setUser(sysUserService.getById(busOvoChat.getUserIdOfSend()));
+        }
+
         HashMap<String, Object> map = new HashMap<>(10);
         map.put("content",byRoomIdOrderByGmtCreateDesc.getContent());
         map.put("totalPages",byRoomIdOrderByGmtCreateDesc.getTotalPages());

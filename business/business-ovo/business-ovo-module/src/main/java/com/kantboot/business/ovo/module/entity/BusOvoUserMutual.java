@@ -1,5 +1,6 @@
 package com.kantboot.business.ovo.module.entity;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,17 +12,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 /**
- * Ovo用户关注表
+ * Ovo用户互相关注表
  * @author 方某方
  */
-@Table(name="bus_ovo_user_follow")
+@Table(name="bus_ovo_user_mutual")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoUserFollow {
-
+public class BusOvoUserMutual {
     /**
      * 主键
      */
@@ -31,38 +31,32 @@ public class BusOvoUserFollow {
     private Long id;
 
     /**
-     * 追随者的用户id
+     * 非数据库字段，但是需要用到的字段，可以被映射到数据库中
      */
     @Column(name = "user_id")
     private Long userId;
 
-    /**
-     * 被关注者的用户id
-     */
-    @Column(name = "follow_user_id")
-    private Long followUserId;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @Transient
     private BusOvoUser ovoUser;
 
-    @OneToOne
-    @JoinColumn(name = "follow_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private BusOvoUser followOvoUser;
+    /**
+     * 用户id
+     */
+    @Column(name = "user1_id")
+    private Long user1Id;
 
     /**
-     * 创建时间
+     * 互相关注的用户id
      */
+    @Column(name = "user2_id")
+    private Long user2Id;
+
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
-    /**
-     * 修改时间
-     */
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gmt_modified")
     private Date gmtModified;
+
 }
