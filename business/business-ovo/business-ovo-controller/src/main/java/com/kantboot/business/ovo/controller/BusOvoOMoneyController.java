@@ -5,6 +5,7 @@ import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -37,6 +38,15 @@ public class BusOvoOMoneyController {
     @RequestMapping("/buy")
     public RestResult buy(Long id){
         return stateSuccessService.success(service.buy(id),"buySuccess");
+    }
+
+    /**
+     * O币充值的回调
+     */
+    @RequestMapping("/rechargeCallback")
+    public RestResult rechargeCallback(@RequestParam("orderId") String orderId){
+        service.rechargeCallback(orderId);
+        return stateSuccessService.success(null,"rechargeSuccess");
     }
 
 

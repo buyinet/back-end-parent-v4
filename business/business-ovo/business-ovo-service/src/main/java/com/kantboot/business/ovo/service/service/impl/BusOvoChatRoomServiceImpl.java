@@ -73,7 +73,6 @@ public class BusOvoChatRoomServiceImpl
         BusOvoChatRoom busOvoChatRoom = repository.findPrivateByUserId1AndUserId2(
                 sysUserService.getIdOfSelf(), otherUserId
         );
-        System.err.println(JSON.toJSONString(busOvoChatRoom));
         if (busOvoChatRoom==null) {
             return null;
         }

@@ -33,6 +33,8 @@ public class WechatPayParam {
     @JSONField(name = "mchid")
     private String mchid;
 
+    private String attach;
+
 
     /**
      * 商户订单号
@@ -95,20 +97,6 @@ public class WechatPayParam {
         private String openid;
     }
 
-
-//    @SneakyThrows
-//    public static void main(String[] args) {
-//        WechatPayParam wechatPayParam = new WechatPayParam();
-//        wechatPayParam.setAppId("wxe5df44af44e7b005");
-//        wechatPayParam.setMchid("1607966646");
-//        wechatPayParam.setOutTradeNo(IdUtil.simpleUUID().toUpperCase());
-//        wechatPayParam.setDescription("OVO-官方运营-避孕套");
-//        wechatPayParam.setNotifyUrl("https://www.weixin.qq.com/wxpay/pay");
-//        wechatPayParam.setAmount(new Amount().setTotal(10));
-//        wechatPayParam.setPayer(new Payer().setOpenid("oTwcv4yZdnBODLO0uiGbwkxrmn_U"));
-//        wechatPayParam.createResult("https://file1.kantboot.com/cert/wechatPay/apiclient_key.pem");
-//    }
-
     @SneakyThrows
     public WechatPayResult createResult(String certUrl) {
         String timeStamp = String.valueOf(System.currentTimeMillis()/1000);
@@ -130,7 +118,6 @@ public class WechatPayParam {
                 +"serial_no=\""+"74E2D8400D1DBC2E92EB23938A4E8D9BB55C912F"+"\"";
 
         String url = "https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi";
-        System.err.println(JSON.toJSONString(this));
 
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody
@@ -146,7 +133,6 @@ public class WechatPayParam {
         String response = client.newCall(request).execute().body().string();
 
         JSONObject jsonObject = JSON.parseObject(response);
-        System.out.println(JSON.toJSONString(jsonObject));
         String prepayId = jsonObject.getString("prepay_id");
 
 
@@ -164,7 +150,6 @@ public class WechatPayParam {
         result.setSignType("RSA");
         result.setPaySign(paySign);
 
-        System.out.println(JSON.toJSONString(result));
         return result;
     }
 

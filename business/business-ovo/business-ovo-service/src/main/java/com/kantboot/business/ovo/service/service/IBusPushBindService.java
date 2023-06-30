@@ -1,5 +1,7 @@
 package com.kantboot.business.ovo.service.service;
 
+import com.kantboot.api.module.ApiPush;
+import com.kantboot.api.module.ApiPushPayload;
 import com.kantboot.business.ovo.module.entity.BusPushBind;
 
 import java.util.List;
@@ -22,4 +24,12 @@ public interface IBusPushBindService {
      * @return 推送列表
      */
     List<BusPushBind> getByUserId(Long userId);
+
+    /**
+     * 根据用户id推送
+     * @param userId 用户id
+     * @param apiPush 推送内容
+     */
+    void pushByUserId(Long userId, ApiPush apiPush);
+
 }

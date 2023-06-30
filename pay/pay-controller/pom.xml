@@ -26,6 +26,11 @@
             <artifactId>pay-service</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.softwaremill.sttp.client3</groupId>
+            <artifactId>okhttp-backend-monix_2.11</artifactId>
+            <version>3.3.2</version>
+        </dependency>
 
     </dependencies>
 

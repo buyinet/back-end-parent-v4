@@ -50,6 +50,12 @@ public class BusOvoOMoneyOrder {
     @Column(name="status_code")
     private String statusCode;
 
+    /**
+     * 用户id
+     */
+    @Column(name="user_id")
+    private Long userId;
+
 
     /**
      * 创建时间

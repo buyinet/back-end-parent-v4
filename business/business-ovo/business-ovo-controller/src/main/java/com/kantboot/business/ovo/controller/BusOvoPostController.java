@@ -61,9 +61,9 @@ public class BusOvoPostController {
      * @return 推荐的帖子
      */
     @RequestMapping("/getRecommend")
-    public RestResult getRecommend(Integer pageNumber, String sortField, String sortOrderBy){
+    public RestResult getRecommend(Integer pageNumber, String sortField, String sortOrderBy,Long time){
         return stateSuccessService.success(
-                        service.getRecommend(pageNumber, sortField, sortOrderBy),
+                        service.getRecommend(pageNumber, sortField, sortOrderBy,time),
                         "getSuccess"
                 );
     }

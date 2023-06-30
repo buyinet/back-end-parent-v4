@@ -1,6 +1,6 @@
 package com.kantboot.business.ovo.module.entity;
 
-import jakarta.annotation.Resource;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,46 +12,53 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 /**
- * O币的实体类
- * @author 方奕丰
+ * O币获取明细的实体类
+ * 用来记录已经支付的订单
+ * @author 方某方
  */
-@Table(name="bus_ovo_o_money")
+@Table(name="bus_ovo_o_money_detail")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoOMoney {
+public class BusOvoOMoneyDetail {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     /**
-     * 金额（人民币）
+     * O币id
+     */
+    @Column(name="o_money_id")
+    private Long oMoneyId;
+
+    /**
+     * 订单号
+     */
+    @Column(name="order_id")
+    private Long orderId;
+
+    /**
+     * 花费金额
      */
     @Column(name="amount")
     private Double amount;
 
     /**
-     * O币数量
+     * 得到的O币数量
      */
     @Column(name="num")
     private Long num;
 
     /**
-     * 优先级
+     * 用户id
      */
-    @Column(name="priority")
-    private Integer priority;
+    @Column(name="user_id")
+    private Long userId;
 
-    /**
-     * 状态编码
-     * 不使用 noUse
-     * 使用 use
-     */
-    @Column(name="status_code")
-    private String statusCode;
 
     /**
      * 创建时间

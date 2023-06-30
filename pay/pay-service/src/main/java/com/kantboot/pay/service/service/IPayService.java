@@ -1,5 +1,6 @@
 package com.kantboot.pay.service.service;
 
+import com.kantboot.api.util.wechat.pay.PayNotifyParam;
 import com.kantboot.api.util.wechat.pay.WechatPayResult;
 import com.kantboot.pay.module.entity.PayOrder;
 
@@ -19,6 +20,12 @@ public interface IPayService {
      */
     PayOrder generatePayOrder(String productCode,Double amount,String description,String currency);
 
+    /**
+     * 根据id查询支付订单
+     * @param id id
+     * @return 支付订单
+     */
+    PayOrder getById(Long id);
 
     /**
      * 生成微信支付的参数
@@ -28,5 +35,11 @@ public interface IPayService {
      * @return 微信支付的参数
      */
     WechatPayResult wechatPay(String orderId, String sceneCode,String code);
+
+    /**
+     * 微信支付回调
+     *
+     */
+    void wechatPayCallback(PayNotifyParam payNotify,String orderId);
 
 }

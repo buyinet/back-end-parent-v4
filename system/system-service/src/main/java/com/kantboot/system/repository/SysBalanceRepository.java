@@ -21,4 +21,5 @@ public interface SysBalanceRepository   extends
      */
     List<SysBalance> findByUserId(Long userId);
 
+    SysBalance findByUserIdAndBalanceTypeCode(Long userId,String balanceTypeCode);
 }

@@ -36,7 +36,7 @@ public interface IBusOvoPostService {
      * @param sortOrderBy 排序方式
      * @return 推荐的帖子
      */
-    HashMap<String,Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy);
+    HashMap<String,Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy,Long time);
 
     /**
      * 获取附近的帖子

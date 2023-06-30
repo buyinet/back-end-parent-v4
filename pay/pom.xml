@@ -13,6 +13,7 @@
     <modules>
         <module>pay-module</module>
         <module>pay-service</module>
+        <module>pay-controller</module>
     </modules>
     <artifactId>pay</artifactId>
 

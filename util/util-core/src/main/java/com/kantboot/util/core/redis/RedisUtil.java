@@ -35,7 +35,11 @@ public class RedisUtil {
      * 加锁
      */
     public Boolean lock(String key, long timeout, TimeUnit unit) {
-        return stringRedisTemplate.opsForValue().setIfAbsent(key, "0", timeout, unit);
+       if(get(key) == null){
+           setEx(key, "0", timeout, unit);
+           return false;
+       }
+       return true;
     }
 
     /**

@@ -114,4 +114,10 @@ public class RestResult<T> implements Serializable {
                 .setErrMsg(msg)
                 .setStateCode(stateCode);
     }
+    /**
+     * 检测是否成功
+     */
+    public boolean isSuccess() {
+        return SUCCESS_STATE.equals(this.state);
+    }
 }

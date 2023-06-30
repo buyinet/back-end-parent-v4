@@ -47,6 +47,7 @@ public class PayOrder {
      * 已支付 paid
      * 已退款 refunded
      * 已取消 canceled
+     * 异常 error
      */
     @Column(name="status_code")
     private String statusCode;

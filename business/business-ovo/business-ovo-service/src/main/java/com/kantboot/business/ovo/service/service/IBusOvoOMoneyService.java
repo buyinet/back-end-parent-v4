@@ -1,6 +1,8 @@
 package com.kantboot.business.ovo.service.service;
 
 import com.kantboot.business.ovo.module.entity.BusOvoOMoney;
+import com.kantboot.util.common.result.PageResult;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,4 +20,12 @@ public interface IBusOvoOMoneyService {
      * @return 购买结果
      */
     Long buy(Long id);
+
+    /**
+     * 充值成功的回调
+     */
+    void rechargeCallback(String orderId);
+
+
+
 }

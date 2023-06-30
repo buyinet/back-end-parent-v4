@@ -16,6 +16,6 @@ public interface BusOvoOMoneyRepository extends JpaRepository<BusOvoOMoney, Long
      * @param statusCode 状态编码
      * @return O币列表
      */
-    List<BusOvoOMoney> findByStatusCode(String statusCode);
+    List<BusOvoOMoney> findByStatusCodeOrderByPriorityDesc(String statusCode);
 
 }

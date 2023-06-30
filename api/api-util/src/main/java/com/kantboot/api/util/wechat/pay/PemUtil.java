@@ -62,6 +62,8 @@ public class PemUtil {
         return null;
     }
 
+
+
     private static byte[] parsePrivateKey(String privateKeyPem) throws IOException {
         privateKeyPem = privateKeyPem
                 .replace("-----BEGIN PRIVATE KEY-----", "")

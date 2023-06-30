@@ -2,10 +2,13 @@ package com.kantboot.business.ovo.service.repository;
 
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
 import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
+import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.Date;
 
 /**
  * 帖子的repository
@@ -28,6 +31,15 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
      * @return 帖子
      */
     Page<BusOvoPost> findAllByAuditStatusCode(String auditStatusCode, Pageable pageable);
+
+    /**
+     * 根据审核状态和大于gmtCreate获取帖子
+     * @param auditStatusCode 审核状态编码
+     * @param gmtCreate 时间
+     * @param pageable 分页参数
+     * @return 帖子
+     */
+    Page<BusOvoPost> findAllByAuditStatusCodeAndGmtCreateGreaterThan(String auditStatusCode, Date gmtCreate, Pageable pageable);
 
     /**
      * 查看附近的帖子

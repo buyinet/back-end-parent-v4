@@ -1,9 +1,12 @@
 package com.kantboot.pay.controller;
 
+import com.kantboot.api.util.wechat.pay.PayNotifyParam;
 import com.kantboot.pay.service.service.IPayService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +28,13 @@ public class PayController {
     @RequestMapping("/wechatPay")
     public RestResult wechatPay(String orderId, String sceneCode,String code){
         return stateSuccessService.success(service.wechatPay(orderId,sceneCode,code),"getSuccess");
+    }
+
+    @RequestMapping("/wechatPayCallback/{orderId}")
+    public Object wechatPayCallback(@RequestBody PayNotifyParam payNotify,
+                                    @PathVariable("orderId") String orderId){
+        service.wechatPayCallback(payNotify,orderId);
+        return null;
     }
 
 

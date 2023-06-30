@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -177,14 +178,20 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     }
 
     @Override
-    public HashMap<String, Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy) {
+    public HashMap<String, Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy,Long time) {
         BusOvoUser self = userBindService.getSelf();
         Sort sort = Sort.by(sortField);
         Sort sort1=
                 sortOrderBy.toUpperCase().equals("ASC")?
                         sort.ascending():sort.descending();
         PageRequest pageable = PageRequest.of(pageNumber-1, 15, sort1);
-        Page<BusOvoPost> all = repository.findAllByAuditStatusCode("pass", pageable);
+//        Page<BusOvoPost> all = repository.findAllByAuditStatusCode("pass", pageable);
+//        findAllByAuditStatusCodeAndGmtCreateGreaterThan
+        Page<BusOvoPost> all = repository.findAllByAuditStatusCodeAndGmtCreateGreaterThan("pass",
+                new Date(time)
+                , pageable);
+
+
         List<BusOvoPostVO> content = new ArrayList<>();
         for (BusOvoPost post : all.getContent()) {
             BusOvoPostVO vo = new BusOvoPostVO();
