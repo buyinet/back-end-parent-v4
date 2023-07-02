@@ -60,4 +60,12 @@ public interface IBusOvoPostService {
      */
     BusOvoPostVO getById(Long id);
 
+    /**
+     * 审核帖子
+     * @param busOvoPost 帖子
+     * @return 帖子
+     */
+    BusOvoPostVO audit(BusOvoPost busOvoPost);
+
+
 }

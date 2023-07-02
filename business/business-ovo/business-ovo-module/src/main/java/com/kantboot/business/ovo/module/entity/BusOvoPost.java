@@ -66,15 +66,15 @@ public class BusOvoPost {
     /**
      * 图片列表
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "postId", referencedColumnName = "id")
+    @OneToMany(targetEntity = BusOvoPostImage.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     private List<BusOvoPostImage> imageList;
 
     /**
      * 用户
      * 用于关联查询
      */
-    @OneToOne
+    @OneToOne(targetEntity = BusOvoUser.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private BusOvoUser ovoUser;
 
@@ -171,6 +171,11 @@ public class BusOvoPost {
     @Column(name = "audit_reject_reason")
     private String auditRejectReason;
 
+    /**
+     * 审核时间
+     */
+    @Column(name = "gmt_audit")
+    private Date gmtAudit;
 
     /**
      * 选择显示的地址

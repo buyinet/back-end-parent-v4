@@ -303,5 +303,23 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
         return vo;
     }
+
+    @Override
+    public BusOvoPostVO audit(BusOvoPost busOvoPost) {
+        BusOvoPost post = repository.findById(busOvoPost.getId()).get();
+        post.setAuditStatusCode(busOvoPost.getAuditStatusCode());
+        post.setGmtAudit(new Date());
+
+        if(busOvoPost.getAuditStatusCode().equals("reject")){
+            post.setAuditRejectReason(busOvoPost.getAuditRejectReason());
+        }
+
+        BusOvoPost save = repository.save(post);
+        BusOvoPostVO vo = new BusOvoPostVO();
+        BeanUtils.copyProperties(save, vo);
+        vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
+        vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
+        return vo;
+    }
 }
 

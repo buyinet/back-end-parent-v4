@@ -32,13 +32,13 @@ public class BusOvoPostImage {
     /**
      * 帖子id
      */
-    @Column(name = "postId")
+    @Column(name = "post_id")
     private Long postId;
 
     /**
      * 文件id
      */
-    @Column(name = "fileId")
+    @Column(name = "file_id")
     private Long fileId;
 
 

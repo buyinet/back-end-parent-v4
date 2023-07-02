@@ -27,7 +27,7 @@
 
         <dependency>
             <groupId>com.kantboot</groupId>
-            <artifactId>business-ovo-module</artifactId>
+            <artifactId>business-ovo-service</artifactId>
             <version>1.0.0</version>
         </dependency>
 
