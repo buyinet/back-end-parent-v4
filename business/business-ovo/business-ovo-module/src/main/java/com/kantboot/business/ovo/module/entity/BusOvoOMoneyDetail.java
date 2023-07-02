@@ -30,6 +30,14 @@ public class BusOvoOMoneyDetail {
     private Long id;
 
     /**
+     * 类型编码，驼峰式
+     * 充值：recharge
+     * 兑换礼物：exchangeGift
+     */
+    @Column(name="type_code")
+    private String typeCode;
+
+    /**
      * O币id
      */
     @Column(name="o_money_id")

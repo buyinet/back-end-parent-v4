@@ -163,6 +163,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         for (BusOvoPost post : all.getContent()) {
             BusOvoPostVO vo = new BusOvoPostVO();
             BeanUtils.copyProperties(post, vo);
+            vo.setLike(postLikeRepository.existsBusOvoPostLikeByUserIdAndPostId(self.getUserId(), post.getId()));
             vo.setLikeCount(postLikeRepository.countByPostId(post.getId()));
             vo.setCommentCount(postCommentRepository.countByPostId(post.getId()));
             content.add(vo);

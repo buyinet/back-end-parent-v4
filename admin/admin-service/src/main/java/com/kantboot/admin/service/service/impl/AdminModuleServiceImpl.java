@@ -1,5 +1,6 @@
 package com.kantboot.admin.service.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.kantboot.admin.module.entity.AdminMenu;
 import com.kantboot.admin.service.repository.AdminModuleRepository;
 import com.kantboot.admin.service.service.IAdminModuleService;
@@ -39,6 +40,7 @@ public class AdminModuleServiceImpl implements IAdminModuleService {
             // 设置子菜单名称
             children.forEach(child ->{
                 String childName = adminMenuMap.get(child.getCode());
+                // 设置子菜单名称,如果国际化名称不为空，则设置子菜单名称为国际化名称,否则设置子菜单名称为原始名称
                 child.setName(childName!=null?childName:child.getName());
             });
 

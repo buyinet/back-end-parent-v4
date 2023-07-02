@@ -114,7 +114,6 @@ public class BusOvoOMoneyServiceImpl implements IBusOvoOMoneyService {
             throw sysExceptionService.getException("payOrderStatusExist");
         }
 
-
         PayOrder byId = payService.getById(aLong);
         if(!"paid".equals(byId.getStatusCode())){
             throw sysExceptionService.getException("payOrderStatusError");
@@ -132,6 +131,8 @@ public class BusOvoOMoneyServiceImpl implements IBusOvoOMoneyService {
         busOvoOMoneyDetail.setOrderId(aLong);
         busOvoOMoneyDetail.setUserId(busOvoOMoneyOrder.getUserId());
         busOvoOMoneyDetail.setOMoneyId(oMoneyId);
+        // 设置类型为充值
+        busOvoOMoneyDetail.setTypeCode("recharge");
         busOvoOMoneyDetail.setNum(busOvoOMoney.getNum());
         busOvoOMoneyDetail.setAmount(busOvoOMoney.getAmount());
         busOvoOMoneyDetailRepository.save(busOvoOMoneyDetail);

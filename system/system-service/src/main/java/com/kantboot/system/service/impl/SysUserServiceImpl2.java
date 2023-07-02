@@ -3,16 +3,25 @@ package com.kantboot.system.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson2.JSON;
 import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
+import com.kantboot.system.module.entity.SysException;
+import com.kantboot.system.module.entity.SysRole;
 import com.kantboot.system.module.entity.SysToken;
 import com.kantboot.system.module.entity.SysUser;
+import com.kantboot.system.repository.SysTokenRepository;
 import com.kantboot.system.repository.SysUserRepository;
-import com.kantboot.system.service.ISysExceptionService;
-import com.kantboot.system.service.ISysUserService;
+import com.kantboot.system.service.*;
+import com.kantboot.util.common.exception.BaseException;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
+import com.kantboot.util.common.password.KantbootPassword;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,6 +46,95 @@ public class SysUserServiceImpl2 implements ISysUserService {
 
     @Resource
     private ISysExceptionService exceptionService;
+
+    @Resource
+    private SysTokenRepository tokenRepository;
+
+    @Resource
+    private KantbootPassword kantbootPassword;
+
+    @Resource
+    private ISysSettingService settingService;
+
+    @Resource
+    private ISysRoleService roleService;
+
+    @Resource
+    private IRsaService rsaService;
+
+    /**
+     * 保存token
+     * @param token token
+     * @param userId 用户id
+     * @return token
+     */
+    private SysToken saveToken(String token, Long userId) {
+        String redisKey = "token:" + token + ":userId";
+
+        SysToken sysToken = new SysToken();
+        sysToken.setToken(token);
+        sysToken.setUserId(userId);
+        // 过期时间, 7天后过期
+        sysToken.setGmtExpire(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000));
+
+        // 保存token
+        SysToken save = tokenRepository.save(sysToken);
+        // 保存token到redis, 7天后过期
+        redisUtil.setEx(redisKey, userId+"", 7, TimeUnit.DAYS);
+        // 获取用户
+        SysUser user = getById(userId);
+        save.setUser(hideSensitiveInfo(user));
+
+        return save;
+    }
+
+
+    /**
+     * 保存token
+     * @param userId 用户id
+     * @return token
+     */
+    private SysToken saveToken(Long userId) {
+        String token = IdUtil.simpleUUID();
+        return saveToken(token, userId);
+    }
+
+
+    /**
+     * 通过token获取用户
+     * @param token token
+     * @return 用户
+     */
+    private SysUser getUserByToken(String token) {
+        String redisKey = "token:" + token + ":userId";
+        String userId = redisUtil.get(redisKey);
+
+        if (userId == null) {
+            SysToken byToken = tokenRepository.findByToken(token);
+            if (byToken == null) {
+                // 提示用户未登录
+                throw exceptionService.getException("notLogin");
+            }
+            userId = byToken.getUserId() + "";
+
+            // 保存token到redis, 7天后过期
+            redisUtil.setEx("token:" + token + ":userId", userId+"", 7, TimeUnit.DAYS);
+        }
+
+
+        try {
+            return getById(Long.parseLong(userId));
+        } catch (BaseException e) {
+            // 如果用户不存在，提示用户未登录
+            if (e.getStateCode().equals("userNotExist")) {
+                // 提示用户未登录
+                throw exceptionService.getException("notLogin");
+            }
+            throw e;
+        }
+
+    }
+
 
     /**
      * 对用户的手机号进行隐私保护，将中间4位数字用星号替代
@@ -112,7 +210,27 @@ public class SysUserServiceImpl2 implements ISysUserService {
 
     @Override
     public SysToken register(String username, String password) {
-        return null;
+        // 根据用户名查询用户
+        SysUser byUsername = repository.findByUsername(username);
+        // 判断用户是否重复
+        if (byUsername != null) {
+            // 如果用户重复，抛出异常，提示客户端用户名重复
+            throw exceptionService.getException("usernameRepeat");
+        }
+        // 密码加密
+        String encodePassword = kantbootPassword.encode(password);
+        // 创建用户
+        SysUser user = new SysUser().setPassword(encodePassword).setUsername(username);
+        // 获取用户注册时的默认角色
+        String defaultRole = settingService.getValue("user", "newUserRegisterRoleCode");
+        // 设置用户角色
+        List<SysRole> roles = new ArrayList<>();
+        roles.add(roleService.getByCode(defaultRole));
+        user.setRoles(roles);
+        // 保存用户
+        SysUser save = repository.save(user);
+
+        return saveToken(save.getId());
     }
 
     @Override
@@ -123,14 +241,45 @@ public class SysUserServiceImpl2 implements ISysUserService {
 
     @Override
     public SysToken login(String account, String password) {
-        // 先用微信小程序，后面再加
-        return null;
+                // 根据用户名查询用户
+        SysUser user = repository.findByUsername(account);
+        if (user == null) {
+            // 如果用户不存在，则继续根据手机号查询用户
+            user = repository.findByPhone(account);
+        }
+
+        if (user == null) {
+            // 如果用户不存在，则继续根据邮箱查询用户
+            user = repository.findByEmailIgnoreCase(account);
+        }
+
+        if (user == null) {
+            //如果用户不存在，抛出异常，提示客户端账号不存在
+            throw exceptionService.getException("accountNotExist");
+        }
+
+        // 判断密码是否正确
+        if (!kantbootPassword.matches(password, user.getPassword())) {
+            // 如果密码不正确，抛出异常，提示客户端账号或密码错误
+            throw exceptionService.getException("accountOrPasswordError");
+        }
+
+        return saveToken(user.getId());
     }
 
     @Override
     public SysToken securityLogin(SecurityLoginAndRegisterDTO dto) {
-        // 先用微信小程序，后面再加
-        return null;
+        // 获取加密账号的公钥
+        String publicKeyOfAccount = dto.getPublicKeyOfAccount();
+        // 获取加密密码的公钥
+        String publicKeyOfPassword = dto.getPublicKeyOfPassword();
+
+        // 解密账号
+        String account = rsaService.decrypt(dto.getAccount(), publicKeyOfAccount);
+        // 解密密码
+        String password = rsaService.decrypt(dto.getPassword(), publicKeyOfPassword);
+
+        return login(account, password);
     }
 
     @Override
@@ -154,20 +303,8 @@ public class SysUserServiceImpl2 implements ISysUserService {
 
     @Override
     public SysUser getSelf() {
-        String token = requestHeaderUtil.getToken();
-
-        if (token == null) {
-
-            // 如果token为空，抛出未登录异常
-            throw exceptionService.getException("notLogin");
-        }
-
-        String userId = redisUtil.get("token:" + token + ":userId");
-        if (userId == null) {
-            // 如果userId为空，抛出未登录异常
-            throw exceptionService.getException("notLogin");
-        }
-        return getById(Long.parseLong(userId));
+        SysUser userByToken = getUserByToken(requestHeaderUtil.getToken());
+        return userByToken;
     }
 
     @Override
@@ -181,25 +318,13 @@ public class SysUserServiceImpl2 implements ISysUserService {
         String token = IdUtil.simpleUUID();
         // 将token存入redis
         SysUser save = repository.save(user);
-        redisUtil.setEx("token:" + token + ":userId", save.getId().toString(), 7, TimeUnit.DAYS);
-        SysToken sysToken = new SysToken();
-        sysToken.setToken(token);
-        sysToken.setUserId(save.getId());
-        sysToken.setUser(hideSensitiveInfo(save));
-        return sysToken;
+        SysToken sysToken = saveToken(save.getId());
+         return sysToken;
     }
 
     @Override
     public SysToken thirdLogin(Long userId) {
-        SysUser byId = getById(userId);
-        // 生成token字符串
-        String token = IdUtil.simpleUUID();
-        // 将token存入redis
-        redisUtil.setEx("token:" + token + ":userId", userId.toString(), 7, TimeUnit.DAYS);
-        SysToken sysToken = new SysToken();
-        sysToken.setToken(token);
-        sysToken.setUserId(userId);
-        sysToken.setUser(byId);
+        SysToken sysToken = saveToken(userId);
         return sysToken;
     }
 
@@ -212,15 +337,6 @@ public class SysUserServiceImpl2 implements ISysUserService {
 
     @Override
     public SysUser getWithoutHideSensitiveInfo() {
-        String redisKey = "token:" + requestHeaderUtil.getToken() + ":userId";
-        String userId = redisUtil.get(redisKey);
-        if (userId == null) {
-            throw exceptionService.getException("loginStateExpired");
-        }
-        SysUser withoutHideSensitiveInfoById = getWithoutHideSensitiveInfoById(Long.parseLong(userId));
-        if (withoutHideSensitiveInfoById != null) {
-            return withoutHideSensitiveInfoById;
-        }
         return repository.findById(getIdOfSelf()).orElseThrow(() -> exceptionService.getException("userNotExist"));
     }
 
@@ -240,6 +356,9 @@ public class SysUserServiceImpl2 implements ISysUserService {
     public void refreshToken() {
         String token = requestHeaderUtil.getToken();
         redisUtil.expire("token:" + token + ":userId", 7, TimeUnit.DAYS);
+        SysToken byToken = tokenRepository.findByToken(token);
+        byToken.setGmtExpire(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000));
+        tokenRepository.save(byToken);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.kantboot.business.ovo.module.entity;
 
+import com.kantboot.system.module.entity.SysRole;
 import com.kantboot.system.module.entity.SysUser;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -50,7 +51,7 @@ public class BusOvoUser {
     @Column(name = "introduction")
     private String introduction;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = BusOvoEmotionalOrientation.class,fetch = FetchType.EAGER)
     @JoinTable(name = "rel_bus_ovo_user_and_bus_ovo_emotional_orientation",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "emotional_orientation_code", referencedColumnName = "code"))

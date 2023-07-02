@@ -2,6 +2,7 @@ package com.kantboot.system.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.kantboot.system.module.entity.SysRole;
+import com.kantboot.system.repository.SysRoleRepository;
 import com.kantboot.system.service.ISysDictI18nService;
 import com.kantboot.system.service.ISysRoleService;
 import jakarta.annotation.Resource;
@@ -20,6 +21,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Resource
     private ISysDictI18nService dictI18nService;
+
+    @Resource
+    private SysRoleRepository repository;
 
     @Override
     public Set<SysRole> getByRoles(Set<SysRole> roles) {
@@ -73,6 +77,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
         long end = System.currentTimeMillis();
         log.info("获取角色国际化名称耗时：{}ms，{}", end - start,JSON.toJSONString(roles));
         return roles;
+    }
+
+    @Override
+    public SysRole getByCode(String code) {
+        return repository.findByCode(code);
     }
 
     @Override

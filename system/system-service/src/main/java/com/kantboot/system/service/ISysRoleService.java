@@ -32,8 +32,16 @@ public interface ISysRoleService {
     List<SysRole> getByRoles(List<SysRole> roles);
 
     /**
+     * 根据角色code获取角色信息
+     * @param code 角色code
+     * @return 角色信息
+     */
+    SysRole getByCode(String code);
+
+    /**
      * 获取角色信息国际化字典
      * @return 结果
      */
     Map<String,String> getI18nMap();
+
 }
