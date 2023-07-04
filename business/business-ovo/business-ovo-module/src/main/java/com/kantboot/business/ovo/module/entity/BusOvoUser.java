@@ -72,6 +72,15 @@ public class BusOvoUser {
     private Date gmtModified;
 
     /**
+     * 关联魅力值
+     */
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private BusOvoUserCharm charm;
+
+
+
+    /**
      * 关联的用户
      */
     @OneToOne

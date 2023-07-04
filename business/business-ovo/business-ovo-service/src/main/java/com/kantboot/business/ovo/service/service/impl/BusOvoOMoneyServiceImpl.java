@@ -144,6 +144,11 @@ public class BusOvoOMoneyServiceImpl implements IBusOvoOMoneyService {
         busPushBindService.pushByUserId(busOvoOMoneyOrder.getUserId(), apiPush);
     }
 
+
+    @Override
+    public void reduce(Long oMoney, String typeCode){
+
+    }
 }
 
 

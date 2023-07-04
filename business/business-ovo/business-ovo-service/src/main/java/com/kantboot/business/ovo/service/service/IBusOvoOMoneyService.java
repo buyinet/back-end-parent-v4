@@ -26,6 +26,14 @@ public interface IBusOvoOMoneyService {
      */
     void rechargeCallback(String orderId);
 
+    /**
+     * 减少O币
+     * @param oMoney O币
+     * @param typeCode 类型编码
+     * @return 减少结果
+     */
+    void reduce(Long oMoney,String typeCode);
+
 
 
 }

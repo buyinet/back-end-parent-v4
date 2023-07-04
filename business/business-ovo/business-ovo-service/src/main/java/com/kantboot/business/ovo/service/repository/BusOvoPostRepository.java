@@ -117,4 +117,5 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
             @Param("userId") Long userId,
             Pageable pageable
     );
+
 }
