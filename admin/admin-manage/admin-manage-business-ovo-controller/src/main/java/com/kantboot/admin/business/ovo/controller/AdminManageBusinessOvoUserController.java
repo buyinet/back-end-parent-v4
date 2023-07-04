@@ -2,7 +2,6 @@ package com.kantboot.admin.business.ovo.controller;
 
 import com.kantboot.base.controller.BaseAdminController;
 import com.kantboot.business.ovo.module.entity.BusOvoUser;
-import com.kantboot.system.module.entity.SysDictI18n;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -32,5 +32,4 @@ public class TpWechatUserController {
         return stateSuccessService.success(service.loginInMp(code), "loginSuccess");
     }
 
-
 }

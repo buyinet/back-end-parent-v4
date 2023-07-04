@@ -67,6 +67,7 @@ public class TpWechatUserServiceImpl implements ITpWechatUserService {
     public SysToken loginInMp(String code) {
         // 获取微信小程序appId
         String appid = settingService.getValue("wechat", "mpAppId");
+
         // 获取微信小程序appSecret
         String appSecret = settingService.getValue("wechat", "mpAppSecret");
 

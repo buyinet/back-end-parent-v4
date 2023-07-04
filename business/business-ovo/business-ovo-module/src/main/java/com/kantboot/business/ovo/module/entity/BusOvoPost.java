@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -56,11 +57,11 @@ public class BusOvoPost {
     /**
      * 可见
      * all 所有人可见
-     * friend 仅好友可见
+     * mutual 仅互相关注可见
      * self 仅自己可见
      * follower 仅关注者可见
      */
-    @Column(name = "visibleCode", length = 64)
+    @Column(name = "visible_code", length = 64)
     private String visibleCode;
 
     /**
@@ -214,5 +215,28 @@ public class BusOvoPost {
     @LastModifiedDate
     @Column(name = "gmt_modified")
     private Date gmtModified;
+
+    /**
+     * 点赞数
+     */
+    @Formula("(SELECT COUNT(*) FROM bus_ovo_post_like b1 WHERE b1.post_id = id)")
+    private Long likeCount;
+
+
+    @Formula("(SELECT COUNT(*) FROM bus_ovo_post_comment b2 WHERE b2.post_id = id)")
+    private Long commentCount;
+
+    /**
+     * 我是否点赞，用于关联查询，不存数据库
+     */
+    @Formula("""
+    (SELECT 
+        CASE
+            COUNT(*) > 0
+            WHEN TRUE THEN TRUE
+            ELSE FALSE
+        FROM bus_ovo_post_like b3 WHERE b3.post_id = id AND b3.user_id = :userId)
+    """)
+    private Boolean like;
 
 }

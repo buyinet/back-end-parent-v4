@@ -6,11 +6,6 @@ import org.springframework.data.domain.Page;
 @Data
 public class PageResult {
 
-//            result.put("totalElements", all.getTotalElements());
-//        result.put("totalPage", all.getTotalPages());
-//        result.put("content", busOvoUserBindList);
-//        result.put("number", all.getNumber() + 1);
-//        result.put("size", all.getSize());
     Long totalElements;
     Integer totalPage;
     Object content;

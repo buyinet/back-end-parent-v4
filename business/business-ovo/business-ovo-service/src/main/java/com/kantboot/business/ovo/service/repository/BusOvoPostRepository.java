@@ -1,14 +1,14 @@
 package com.kantboot.business.ovo.service.repository;
 
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
-import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 帖子的repository
@@ -24,13 +24,6 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
      */
     Page<BusOvoPost> findAllByUserId(Long userId, Pageable pageable);
 
-    /**
-     * 根据审核状态获取帖子
-     * @param auditStatusCode 审核状态编码
-     * @param pageable 分页参数
-     * @return 帖子
-     */
-    Page<BusOvoPost> findAllByAuditStatusCode(String auditStatusCode, Pageable pageable);
 
     /**
      * 根据审核状态和大于gmtCreate获取帖子
@@ -40,6 +33,7 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
      * @return 帖子
      */
     Page<BusOvoPost> findAllByAuditStatusCodeAndGmtCreateGreaterThan(String auditStatusCode, Date gmtCreate, Pageable pageable);
+
 
     /**
      * 查看附近的帖子
@@ -79,4 +73,48 @@ public interface BusOvoPostRepository extends JpaRepository<BusOvoPost,Long> {
      */
     Long countByUserIdAndAuditStatusCode(Long userId,String auditStatusCode);
 
+    /**
+     * 根据gmtAudit获取往上的30个帖子
+     * @return 往上的30个帖子
+     */
+    @Query(value = """
+    SELECT * FROM bus_ovo_post 
+    WHERE
+        gmt_audit > :gmtAudit
+        AND audit_status_code = 'pass'
+        AND visible_code = 'all'
+    ORDER BY gmt_audit ASC LIMIT 30
+    """,nativeQuery = true)
+    List<BusOvoPost> findAfter(@Param("gmtAudit") Date gmtAudit);
+
+    /**
+     * 根据gmtAudit获取往下的30个帖子
+     * @return 往下的30个帖子
+     */
+    List<BusOvoPost> findLast30ByGmtAuditBeforeAndAuditStatusCodeAndVisibleCodeOrderByGmtAuditDesc(Date gmtAudit,String auditStatusCode,String visibleCode);
+
+    /**
+     * 获取最新审核通过的30个帖子
+     * @return 最新审核通过的30个帖子
+     */
+
+    @Query("""
+    SELECT p
+    FROM BusOvoPost p
+    WHERE p.auditStatusCode = :auditStatusCode
+    AND p.visibleCode = :visibleCode
+    AND EXISTS (
+        SELECT 1
+        FROM BusOvoPostLike l
+        WHERE l.postId = p.id
+        AND l.userId = :userId
+    )
+    ORDER BY p.gmtAudit DESC
+    """)
+    Page<BusOvoPost> findLatest(
+            @Param("auditStatusCode") String auditStatusCode,
+            @Param("visibleCode") String visibleCode,
+            @Param("userId") Long userId,
+            Pageable pageable
+    );
 }

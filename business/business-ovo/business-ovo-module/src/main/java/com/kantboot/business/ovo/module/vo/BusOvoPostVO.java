@@ -1,28 +1,28 @@
 package com.kantboot.business.ovo.module.vo;
 
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
-import lombok.Data;
+import com.kantboot.util.core.jpa.KantbootGenerationType;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.math.BigInteger;
 
 /**
  * 帖子VO
- * @author 方某方
  */
-@Data
+@Getter
+@Setter
+@Accessors(chain = true)
 public class BusOvoPostVO extends BusOvoPost {
 
-    /**
-     * 点赞数
-     */
-    private Long likeCount;
 
-    /**
-     * 评论数
-     */
-    private Long commentCount;
 
-    /**
-     * 我是否点赞
-     */
-    private Boolean like;
+
+    // 其他属性和方法
 
 }

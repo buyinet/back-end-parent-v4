@@ -18,6 +18,7 @@ public class ApiPush {
 
     /**
      * 是否通知
+     * 是否会有通知栏（消息提示）
      */
     private Boolean forceNotification;
 

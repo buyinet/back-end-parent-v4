@@ -1,10 +1,13 @@
 package com.kantboot.business.ovo.service.service;
 
+import cats.kernel.Hash;
 import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
 import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
+import com.kantboot.util.common.result.PageResult;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 帖子的service
@@ -13,59 +16,13 @@ import java.util.HashMap;
  */
 public interface IBusOvoPostService {
 
-    /**
-     * 发布帖子
-     * @param dto 发布帖子的参数
-     * @return 发布的帖子
-     */
-    BusOvoPost publish(BusOvoPostDTO dto);
-
-    /**
-     * 获取自己的帖子
-     * @param pageNumber 页码
-     * @param sortField 排序字段
-     * @param sortOrderBy 排序方式
-     * @return 自己的帖子
-     */
-    HashMap<String,Object> getSelf(Integer pageNumber, String sortField, String sortOrderBy);
-
-    /**
-     * 获取推荐的帖子
-     * @param pageNumber 页码
-     * @param sortField 排序字段
-     * @param sortOrderBy 排序方式
-     * @return 推荐的帖子
-     */
-    HashMap<String,Object> getRecommend(Integer pageNumber, String sortField, String sortOrderBy,Long time);
-
-    /**
-     * 获取附近的帖子
-     * @param pageNumber 页码
-     * @param range 范围
-     * @return 附近的帖子
-     */
-    HashMap<String,Object> getNear(Integer pageNumber,Double range);
-
-    /**
-     * 点赞
-     * @param postId 帖子id
-     * @return 点赞数
-     */
-    BusOvoPostVO like(Long postId);
-
-    /**
-     * 根据id获取帖子
-     * @param id 帖子id
-     * @return 帖子
-     */
-    BusOvoPostVO getById(Long id);
 
     /**
      * 审核帖子
      * @param busOvoPost 帖子
      * @return 帖子
      */
-    BusOvoPostVO audit(BusOvoPost busOvoPost);
+    BusOvoPost audit(BusOvoPost busOvoPost);
 
 
 }
