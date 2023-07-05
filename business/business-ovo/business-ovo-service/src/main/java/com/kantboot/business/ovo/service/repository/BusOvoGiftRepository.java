@@ -30,9 +30,6 @@ public interface BusOvoGiftRepository
      */
     List<BusOvoGift> findAllByOrderByPriorityDesc();
 
-    /**
-     *
-     */
 
 }
 

@@ -13,6 +13,7 @@ import com.kantboot.business.ovo.service.repository.BusOvoUserCharmRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoUserGiftDetailRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoGiftService;
 import com.kantboot.business.ovo.service.service.IBusOvoOMoneyService;
+import com.kantboot.system.service.ISysBalanceService;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.core.redis.RedisUtil;
@@ -57,6 +58,9 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
 
     @Resource
     private RedisUtil redisUtil;
+
+    @Resource
+    private ISysBalanceService sysBalanceService;
 
 
     @Override
@@ -148,26 +152,15 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
 
         // 添加到礼物明细表
         busOvoUserGiftDetailRepository.save(busOvoUserGiftDetail);
-
         // end:礼物明细
 
-        // 增加魅力值
-        BusOvoUserCharm busOvoUserCharm = busOvoUserCharmRepository.findById(toUserId).orElseThrow(
-                null
-        );
-        if (busOvoUserCharm == null) {
-            busOvoUserCharm = busOvoUserCharmRepository.save(
-                    new BusOvoUserCharm()
-                            .setUserId(toUserId)
-                            .setValue(byCode.getCharmValue() * giveGiftDto.getNumber())
-            );
-        }
+        // 获取可以增加的魅力值
+        Long charmValue = byCode.getCharmValue() * giveGiftDto.getNumber();
 
-        busOvoUserCharmRepository.save(
-                busOvoUserCharm.setValue(
-                        busOvoUserCharm.getValue() + byCode.getCharmValue() * giveGiftDto.getNumber()
-                )
-        );
+        // 增加魅力值
+        sysBalanceService.addBalance("charmValue",charmValue+0.0,toUserId);
+
+        sysBalanceService.addBalance("charmPoints",(byCode.getCharmValue()+0.00) * giveGiftDto.getNumber(),toUserId);
 
 
     }

@@ -81,7 +81,6 @@ public class SysBalanceServiceImpl implements ISysBalanceService {
     @SneakyThrows
     @Override
     public void addBalance(String typeCode, Double num, Long userId) {
-        redisUtil.setEx("addBalance:lock:userId" + userId, "lock",60,TimeUnit.SECONDS);
         SysBalance sysBalance = repository.findByUserIdAndBalanceTypeCode(userId, typeCode);
         if (sysBalance == null) {
             sysBalance = new SysBalance();
