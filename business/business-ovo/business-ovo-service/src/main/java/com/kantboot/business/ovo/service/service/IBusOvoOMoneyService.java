@@ -1,5 +1,6 @@
 package com.kantboot.business.ovo.service.service;
 
+import com.kantboot.business.ovo.module.dto.BusOvoOMoneyReduceDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoOMoney;
 import com.kantboot.util.common.result.PageResult;
 import org.springframework.data.domain.Page;
@@ -32,7 +33,7 @@ public interface IBusOvoOMoneyService {
      * @param typeCode 类型编码
      * @return 减少结果
      */
-    void reduce(Long oMoney,String typeCode);
+    void reduce(BusOvoOMoneyReduceDTO dto);
 
 
 

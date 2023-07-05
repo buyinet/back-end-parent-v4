@@ -1,8 +1,10 @@
 package com.kantboot.business.ovo.controller;
 
+import com.kantboot.business.ovo.module.dto.GiveGiftDto;
 import com.kantboot.business.ovo.service.service.IBusOvoGiftService;
 import com.kantboot.system.service.IStateSuccessService;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,6 +47,19 @@ public class BusOvoGiftController {
                 "getSuccess"
         );
     }
+
+    /**
+     * 赠送礼物
+     * @param code 礼物编码
+     * @param toUserId 赠送给谁
+     * @return 赠送结果
+     */
+    @RequestMapping("/give")
+    public Object give(@RequestBody GiveGiftDto dto){
+        service.give(dto);
+        return stateSuccessService.success(null,"giveSuccess");
+    }
+
 
 
 }

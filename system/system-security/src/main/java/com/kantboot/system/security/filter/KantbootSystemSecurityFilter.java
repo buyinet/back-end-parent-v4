@@ -74,7 +74,7 @@ public class KantbootSystemSecurityFilter implements Filter {
         filterChain.doFilter(request, response);
         // 记录结束时间
         long end = System.currentTimeMillis();
-        log.info("请求路径：{}，耗时：{}ms", requestUri, end - start);
+//        log.info("请求路径：{}，耗时：{}ms", requestUri, end - start);
     }
 
 

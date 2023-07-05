@@ -3,6 +3,7 @@ package com.kantboot.business.ovo.service.service.impl;
 import com.kantboot.api.module.ApiPush;
 import com.kantboot.api.module.ApiPushPayload;
 import com.kantboot.api.service.IApiPushService;
+import com.kantboot.business.ovo.module.dto.BusOvoOMoneyReduceDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoOMoney;
 import com.kantboot.business.ovo.module.entity.BusOvoOMoneyDetail;
 import com.kantboot.business.ovo.module.entity.BusOvoOMoneyOrder;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -144,10 +146,23 @@ public class BusOvoOMoneyServiceImpl implements IBusOvoOMoneyService {
         busPushBindService.pushByUserId(busOvoOMoneyOrder.getUserId(), apiPush);
     }
 
-
     @Override
-    public void reduce(Long oMoney, String typeCode){
+    public void reduce(BusOvoOMoneyReduceDTO dto) {
 
+        // 查看是否有足够的O币
+        Map<String, Double> byUserId = sysBalanceService.getByUserId(dto.getUserId());
+        Double oMoney = byUserId.get("oMoney");
+        if(oMoney < dto.getOMoneyNum()){
+            // 代表O币不足
+            throw sysExceptionService.getException("oMoneyNotEnough");
+        }
+        sysBalanceService.addBalance("oMoney", -(dto.getOMoneyNum()+0.0), dto.getUserId());
+
+        BusOvoOMoneyDetail busOvoOMoneyDetail = new BusOvoOMoneyDetail();
+        busOvoOMoneyDetail.setTypeCode(dto.getTypeCode());
+        busOvoOMoneyDetail.setNum(-dto.getOMoneyNum());
+        busOvoOMoneyDetail.setUserId(dto.getUserId());
+        busOvoOMoneyDetailRepository.save(busOvoOMoneyDetail);
     }
 }
 

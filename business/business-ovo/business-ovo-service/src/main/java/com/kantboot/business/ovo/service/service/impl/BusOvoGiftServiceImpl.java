@@ -1,25 +1,33 @@
 package com.kantboot.business.ovo.service.service.impl;
 
+import cn.hutool.core.lang.Assert;
+import com.kantboot.business.ovo.module.dto.BusOvoOMoneyReduceDTO;
 import com.kantboot.business.ovo.module.dto.GiveGiftDto;
 import com.kantboot.business.ovo.module.entity.BusOvoGift;
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
+import com.kantboot.business.ovo.module.entity.BusOvoUserCharm;
 import com.kantboot.business.ovo.module.entity.BusOvoUserGiftDetail;
 import com.kantboot.business.ovo.service.repository.BusOvoGiftRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoUserCharmRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoUserGiftDetailRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoGiftService;
+import com.kantboot.business.ovo.service.service.IBusOvoOMoneyService;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.system.service.ISysUserService;
+import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 礼物表的业务实现类
  * @author 方某方
  */
+@Log4j2
 @Service
 public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
 
@@ -39,7 +47,16 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
     private BusOvoUserCharmRepository busOvoUserCharmRepository;
 
     @Resource
+    private IBusOvoOMoneyService busOvoOMoneyService;
+
+    @Resource
+    private IBusOvoGiftService busOvoGiftService;
+
+    @Resource
     private ISysUserService userService;
+
+    @Resource
+    private RedisUtil redisUtil;
 
 
     @Override
@@ -59,6 +76,16 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
 
     @Override
     public void give(GiveGiftDto giveGiftDto) {
+
+        Long idOfSelf = userService.getIdOfSelf();
+        Boolean giveGift = redisUtil.lock("giveGift:fromUserId:"+idOfSelf, 100, TimeUnit.MILLISECONDS);
+
+        if (giveGift) {
+            log.info("操作过于频繁:{}", giveGiftDto);
+            // 操作太频繁，抛出异常
+            throw exceptionService.getException("requestTooMuch");
+        }
+
         if (giveGiftDto.getGiftCode() == null) {
             // 如果礼物编码为空，抛出异常
             throw exceptionService.getException("giftCodeIsNull");
@@ -68,16 +95,17 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
             throw exceptionService.getException("giftNumberIsNull");
         }
         BusOvoGift byCode = getByCode(giveGiftDto.getGiftCode());
+
         if (byCode == null) {
             // 如果礼物不可用，抛出异常
             throw exceptionService.getException("giftIsNotEnable");
         }
 
-        Long idOfSelf = userService.getIdOfSelf();
-
         // 礼物赠送给谁
-        Long toUserId = null;
+        Long toUserId = giveGiftDto.getToUserId();
 
+        // 计算需要的O币数量
+        Long oMoneyNum = byCode.getCostOfOMoney() * giveGiftDto.getNumber();
 
 
         // start:礼物明细
@@ -110,13 +138,36 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
             toUserId=busOvoPost.getUserId();
         }
 
+        // 扣除对应的O币
+        BusOvoOMoneyReduceDTO busOvoOMoneyReduceDTO = new BusOvoOMoneyReduceDTO();
+        busOvoOMoneyReduceDTO.setUserId(idOfSelf);
+        busOvoOMoneyReduceDTO.setOMoneyNum(oMoneyNum);
+        busOvoOMoneyReduceDTO.setTypeCode("giveGift");
+        busOvoOMoneyService.reduce(busOvoOMoneyReduceDTO);
+
+
         // 添加到礼物明细表
         busOvoUserGiftDetailRepository.save(busOvoUserGiftDetail);
+
         // end:礼物明细
 
-        // 未完成，魅力值用定时器计算，从魅力值明细中取上一个小时的魅力值
+        // 增加魅力值
+        BusOvoUserCharm busOvoUserCharm = busOvoUserCharmRepository.findById(toUserId).orElseThrow(
+                null
+        );
+        if (busOvoUserCharm == null) {
+            busOvoUserCharm = busOvoUserCharmRepository.save(
+                    new BusOvoUserCharm()
+                            .setUserId(toUserId)
+                            .setValue(byCode.getCharmValue() * giveGiftDto.getNumber())
+            );
+        }
 
-
+        busOvoUserCharmRepository.save(
+                busOvoUserCharm.setValue(
+                        busOvoUserCharm.getValue() + byCode.getCharmValue() * giveGiftDto.getNumber()
+                )
+        );
 
 
     }

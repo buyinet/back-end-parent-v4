@@ -65,9 +65,9 @@ public class BusOvoGift {
     /**
      * 礼物需要的o币数量
      */
-    @JSONField(name="costOfMoney")
+    @JSONField(name="costOfOMoney")
     @Column(name = "o_money_cost")
-    private Long costOfMoney;
+    private Long costOfOMoney;
 
     /**
      * 魅力值
