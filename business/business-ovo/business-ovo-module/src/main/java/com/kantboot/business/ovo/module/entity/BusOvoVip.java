@@ -1,13 +1,9 @@
 package com.kantboot.business.ovo.module.entity;
 
-import com.kantboot.util.core.jpa.KantbootGenerationType;
-import jakarta.annotation.Resource;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,42 +11,64 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 /**
- * 用户魅力值表
+ * 用户vip表
  * @author 方某方
  */
-@Data
+@Table(name="bus_ovo_vip")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoUserCharm {
+public class BusOvoVip {
 
     /**
      * 主键
      */
     @Id
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /**
-     * 魅力值
+     * 天数
      */
-    @Column(name = "value")
-    private Long value;
+    @Column(name = "days")
+    private Integer days;
 
     /**
-     * 创建时间
+     * 名称
      */
+    @Column(name = "name")
+    private String name;
+
+    /**
+     * 价格
+     */
+    @Column(name = "price")
+    private Double price;
+
+    /**
+     * 赠送O币数量
+     */
+    @Column(name = "num_of_o_money")
+    private Long numOfOMoney;
+
+    /**
+     * 编码，用于区分不同的vip，驼峰式
+     * 7天会员：sevenDays
+     * 月度会员：month
+     * 季度会员：quarter
+     * 年度会员：year
+     */
+    @Column(name = "code")
+    private String code;
+
     @CreatedDate
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
-    /**
-     * 修改时间
-     */
     @LastModifiedDate
     @Column(name = "gmt_modified")
     private Date gmtModified;
-
 }

@@ -11,13 +11,13 @@
     <modules>
         <module>util</module>
         <module>system</module>
-        <module>start-all</module>
         <module>api</module>
         <module>admin</module>
         <module>third-party</module>
         <module>admin/admin-module</module>
         <module>business</module>
         <module>pay</module>
+        <module>start-all</module>
     </modules>
 
     <packaging>pom</packaging>

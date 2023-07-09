@@ -1,6 +1,6 @@
 package com.kantboot.business.ovo.module.entity;
 
-
+import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,17 +12,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 /**
- * 礼物明细的实体类
- * 用于记录用户的礼物明细
+ * 用户魅力值明细表
+ * 用于记录用户的魅力值明细
  * @author 方某方
  */
-@Table(name="bus_ovo_user_gift_detail")
+@Table(name="bus_ovo_user_charm_detail")
 @Entity
 @Getter
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoUserGiftDetail {
+public class BusOvoUserCharmDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +31,8 @@ public class BusOvoUserGiftDetail {
 
     /**
      * 类型编码，驼峰式
-     * toUser
-     * toPost
+     * 礼物: give
+     * 点赞: like
      */
     @Column(name="type_code")
     private String typeCode;
@@ -76,7 +76,6 @@ public class BusOvoUserGiftDetail {
     @Column(name="charm_value")
     private Long charmValue;
 
-
     @OneToOne
     @JoinColumn(name = "from_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private BusOvoUser fromUser;
@@ -98,6 +97,7 @@ public class BusOvoUserGiftDetail {
     @LastModifiedDate
     @Column(name = "gmt_modified")
     private Date gmtModified;
+
 
 
 }

@@ -140,7 +140,7 @@ public class BusOvoOMoneyServiceImpl implements IBusOvoOMoneyService {
         busOvoOMoneyDetailRepository.save(busOvoOMoneyDetail);
 
         ApiPush apiPush = new ApiPush();
-        apiPush.setContent("您已成功充值" + busOvoOMoney.getNum() + "个O币");
+        apiPush.setContent("已到账" + busOvoOMoney.getNum() + "个O币");
         apiPush.setTtl(-1);
         apiPush.setPayload(new ApiPushPayload().setData(sysBalanceService.getByUserId(busOvoOMoneyOrder.getUserId())).setEmit("balanceChange"));
         busPushBindService.pushByUserId(busOvoOMoneyOrder.getUserId(), apiPush);

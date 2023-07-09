@@ -23,6 +23,17 @@ public class BusOvoGiftController {
     IBusOvoGiftService service;
 
     /**
+     * 获取礼物字典
+     */
+    @RequestMapping("/getMap")
+    public Object getMap(){
+        return stateSuccessService.success(
+                service.getMap(),
+                "getSuccess"
+        );
+    }
+
+    /**
      * 根据礼物编码获取礼物
      * @param code 礼物编码
      * @return 礼物
@@ -34,7 +45,6 @@ public class BusOvoGiftController {
                 "getSuccess"
         );
     }
-
 
     /**
      * 获取所有礼物
@@ -50,8 +60,6 @@ public class BusOvoGiftController {
 
     /**
      * 赠送礼物
-     * @param code 礼物编码
-     * @param toUserId 赠送给谁
      * @return 赠送结果
      */
     @RequestMapping("/give")

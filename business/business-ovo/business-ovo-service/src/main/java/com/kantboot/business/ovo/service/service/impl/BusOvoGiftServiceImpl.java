@@ -1,15 +1,16 @@
 package com.kantboot.business.ovo.service.service.impl;
 
-import cn.hutool.core.lang.Assert;
+import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson2.JSON;
 import com.kantboot.business.ovo.module.dto.BusOvoOMoneyReduceDTO;
 import com.kantboot.business.ovo.module.dto.GiveGiftDto;
 import com.kantboot.business.ovo.module.entity.BusOvoGift;
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
-import com.kantboot.business.ovo.module.entity.BusOvoUserCharm;
+import com.kantboot.business.ovo.module.entity.BusOvoUserCharmDetail;
 import com.kantboot.business.ovo.module.entity.BusOvoUserGiftDetail;
 import com.kantboot.business.ovo.service.repository.BusOvoGiftRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
-import com.kantboot.business.ovo.service.repository.BusOvoUserCharmRepository;
+import com.kantboot.business.ovo.service.repository.BusOvoUserCharmDetailRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoUserGiftDetailRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoGiftService;
 import com.kantboot.business.ovo.service.service.IBusOvoOMoneyService;
@@ -19,9 +20,12 @@ import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,8 +48,6 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
     @Resource
     private BusOvoUserGiftDetailRepository busOvoUserGiftDetailRepository;
 
-    @Resource
-    private BusOvoUserCharmRepository busOvoUserCharmRepository;
 
     @Resource
     private IBusOvoOMoneyService busOvoOMoneyService;
@@ -62,6 +64,26 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
     @Resource
     private ISysBalanceService sysBalanceService;
 
+    @Resource
+    private BusOvoUserCharmDetailRepository busOvoUserCharmDetailRepository;
+
+
+    @Override
+    public Map<String, Object> getMap() {
+        // 从redis中获取礼物map
+        String giftMapStr = redisUtil.get("giftMap");
+        if (giftMapStr != null) {
+            return JSON.parseObject(giftMapStr, Map.class);
+        }
+        Map<String, Object> giftMap = new HashMap<>();
+        List<BusOvoGift> all = busOvoGiftRepository.findAll();
+        all.forEach(gift -> {
+            giftMap.put(gift.getCode(), gift);
+        });
+        // 存储到redis中
+        redisUtil.set("giftMap", JSON.toJSONString(giftMap));
+        return giftMap;
+    }
 
     @Override
     public BusOvoGift getByCode(String code) {
@@ -110,6 +132,7 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
 
         // 计算需要的O币数量
         Long oMoneyNum = byCode.getCostOfOMoney() * giveGiftDto.getNumber();
+        Long charmValue = byCode.getCharmValue() * giveGiftDto.getNumber();
 
 
         // start:礼物明细
@@ -117,6 +140,7 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
         busOvoUserGiftDetail.setGiftCode(giveGiftDto.getGiftCode());
         busOvoUserGiftDetail.setFromUserId(idOfSelf);
         busOvoUserGiftDetail.setGiftNum(giveGiftDto.getNumber());
+        busOvoUserGiftDetail.setCharmValue(charmValue);
 
 
         if(giveGiftDto.getToUserId()!=null){
@@ -149,13 +173,22 @@ public class BusOvoGiftServiceImpl implements IBusOvoGiftService {
         busOvoOMoneyReduceDTO.setTypeCode("giveGift");
         busOvoOMoneyService.reduce(busOvoOMoneyReduceDTO);
 
+        // 添加到对应的魅力值明细表
+        BusOvoUserCharmDetail busOvoUserCharmDetail = new BusOvoUserCharmDetail();
+        BeanUtils.copyProperties(busOvoUserGiftDetail,busOvoUserCharmDetail);
+        busOvoUserCharmDetail.setTypeCode("gift");
+        busOvoUserCharmDetailRepository.save(busOvoUserCharmDetail);
+
+
+
 
         // 添加到礼物明细表
         busOvoUserGiftDetailRepository.save(busOvoUserGiftDetail);
         // end:礼物明细
 
-        // 获取可以增加的魅力值
-        Long charmValue = byCode.getCharmValue() * giveGiftDto.getNumber();
+
+        // 增加贡献值
+        sysBalanceService.addBalance("contributionValue",charmValue+0.0,idOfSelf);
 
         // 增加魅力值
         sysBalanceService.addBalance("charmValue",charmValue+0.0,toUserId);

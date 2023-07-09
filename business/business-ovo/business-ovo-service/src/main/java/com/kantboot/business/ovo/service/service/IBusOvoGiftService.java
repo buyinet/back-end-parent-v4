@@ -4,12 +4,19 @@ import com.kantboot.business.ovo.module.dto.GiveGiftDto;
 import com.kantboot.business.ovo.module.entity.BusOvoGift;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 礼物表的业务接口类
  * @author 方某方
  */
 public interface IBusOvoGiftService {
+
+    /**
+     * 获取礼物字典
+     * @return 礼物字典
+     */
+    Map<String,Object> getMap();
 
     /**
      * 根据礼物编码查询礼物

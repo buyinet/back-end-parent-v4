@@ -34,4 +34,17 @@ public class BusOvoEmotionalOrientationController {
                         "getSuccess"
                 );
     }
+
+    /**
+     * 获取情感取向字典
+     * @return 情感取向字典
+     */
+    @RequestMapping("/getMap")
+    public RestResult getMap(){
+        return stateSuccessService.success(
+                service.getMap(),
+                "getSuccess"
+        );
+    }
+
 }

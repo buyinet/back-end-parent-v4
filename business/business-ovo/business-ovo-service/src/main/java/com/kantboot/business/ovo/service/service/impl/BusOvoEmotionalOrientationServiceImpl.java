@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 情感取向的服务
@@ -72,5 +73,11 @@ public class BusOvoEmotionalOrientationServiceImpl implements IBusOvoEmotionalOr
 
         redisUtil.set(redisKey,JSON.toJSONString(result));
         return result;
+    }
+
+    @Override
+    public Map<String, String> getMap() {
+        return repository.findAll().stream().collect(
+                java.util.stream.Collectors.toMap(BusOvoEmotionalOrientation::getCode, BusOvoEmotionalOrientation::getName));
     }
 }
