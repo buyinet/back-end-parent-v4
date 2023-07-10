@@ -1,6 +1,7 @@
-package com.kantboot.business.ovo.module.entity;
+package com.kantboot.admin.business.ovo.controller;
 
-import com.kantboot.system.module.entity.SysRole;
+import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
+import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
 import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.module.entity.SysUserHasHide;
 import jakarta.persistence.*;
@@ -24,7 +25,7 @@ import java.util.List;
 @Setter
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class BusOvoUser {
+public class BusOvoUserInAdmin {
 
     /**
      * 主键
@@ -78,7 +79,7 @@ public class BusOvoUser {
      */
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private SysUserHasHide user;
+    private SysUser user;
 
     /**
      * 关联的用户绑定位置

@@ -207,5 +207,9 @@ public class BusOvoUserBindController {
         return stateSuccessService.success(service.getMutualSelf(pageNumber,sortField,sortOrderBy), "getSuccess");
     }
 
+    @RequestMapping("/findGreater")
+    public RestResult findGreater(Long userId){
+        return stateSuccessService.success(service.findGreater(userId), "getSuccess");
+    }
 
 }

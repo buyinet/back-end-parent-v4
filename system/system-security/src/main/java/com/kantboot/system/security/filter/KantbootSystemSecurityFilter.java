@@ -4,10 +4,14 @@ import com.alibaba.fastjson2.JSON;
 import com.kantboot.system.module.entity.SysPermission;
 import com.kantboot.system.module.entity.SysRole;
 import com.kantboot.system.module.entity.SysUser;
+import com.kantboot.system.module.entity.SysUserOnline;
+import com.kantboot.system.repository.SysUserOnlineRepository;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.system.service.ISysPermissionService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.exception.BaseException;
+import com.kantboot.util.common.http.HttpRequestHeaderUtil;
+import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -20,7 +24,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 系统安全拦截器
@@ -42,6 +48,11 @@ public class KantbootSystemSecurityFilter implements Filter {
     @Resource
     private ISysUserService userService;
 
+    @Resource
+    private SysUserOnlineRepository userOnlineRepository;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     private final BaseException baseException = new BaseException();
 
@@ -52,12 +63,34 @@ public class KantbootSystemSecurityFilter implements Filter {
         long start = System.currentTimeMillis();
 
 
+
         // 向上转型
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String requestUri = request.getRequestURI();
+        //start:存放进在线用户表
+        try{
 
+            HttpRequestHeaderUtil httpRequestHeaderUtil = new HttpRequestHeaderUtil();
+            httpRequestHeaderUtil.setRequest(request);
+
+            Boolean lock = redisUtil.lock("online:token:"+httpRequestHeaderUtil.getToken(), 10, TimeUnit.SECONDS);
+            if(!lock){
+                SysUser byToken = userService.getByToken(httpRequestHeaderUtil.getToken());
+                if (byToken != null) {
+                    userOnlineRepository.save(new SysUserOnline()
+                            .setGmtOnline(new Date())
+                            .setUserId(byToken.getId())
+                            .setLastUrl(request.getRequestURL().toString())
+                    );
+                }
+            }
+        }catch (Exception e){
+           log.info("多半是未登录或者回调接口，先不管");
+        }
+        //end:存放进在线用户表
+
+        String requestUri = request.getRequestURI();
         List<String> pathList = requestUriSplit(requestUri);
         // 遍历匹配
         for (String path : pathList) {

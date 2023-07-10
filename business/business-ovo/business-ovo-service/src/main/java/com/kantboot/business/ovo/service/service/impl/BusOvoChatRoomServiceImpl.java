@@ -88,7 +88,6 @@ public class BusOvoChatRoomServiceImpl
             // 如果是私聊，那么就要获取对方的信息
             List<BusOvoUser> ovoUserList = busOvoChatRoom.getOvoUserList();
             for (BusOvoUser busOvoUserBind : ovoUserList) {
-                busOvoUserBind.setUser(sysUserService.getById(busOvoUserBind.getUserId()));
                 if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
                     busOvoChatRoomVO.setOtherUser(busOvoUserBind);
                     busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());
@@ -123,7 +122,6 @@ public class BusOvoChatRoomServiceImpl
                 // 如果是私聊，那么就要获取对方的信息
                 List<BusOvoUser> ovoUserList = busOvoChatRoom.getOvoUserList();
                 for (BusOvoUser busOvoUserBind : ovoUserList) {
-                    busOvoUserBind.setUser(sysUserService.getById(busOvoUserBind.getUserId()));
                     if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
                         busOvoChatRoomVO.setOtherUser(busOvoUserBind);
                         busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());
@@ -157,7 +155,6 @@ public class BusOvoChatRoomServiceImpl
             // 如果是私聊，那么就要获取对方的信息
             List<BusOvoUser> ovoUserList = busOvoChatRoom.getOvoUserList();
             for (BusOvoUser busOvoUserBind : ovoUserList) {
-                busOvoUserBind.setUser(sysUserService.getById(busOvoUserBind.getUserId()));
                 if (!busOvoUserBind.getUserId().equals(sysUserService.getIdOfSelf())){
                     busOvoChatRoomVO.setOtherUser(busOvoUserBind);
                     busOvoChatRoomVO.setName(busOvoUserBind.getUser().getNickname());

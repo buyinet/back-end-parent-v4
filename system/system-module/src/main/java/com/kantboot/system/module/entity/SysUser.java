@@ -1,5 +1,7 @@
 package com.kantboot.system.module.entity;
 
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kantboot.util.core.jpa.KantbootGenerationType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -177,5 +179,48 @@ public class SysUser implements Serializable {
     )
     private List<SysRole> roles;
 
+    /**
+     * 关联用户在线表
+     */
+    @OneToOne(targetEntity = SysUserOnline.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "id",referencedColumnName = "user_id")
+    private SysUserOnline userOnline;
 
+    @Transient
+    private Boolean online;
+
+    @Transient
+    public SysUser setOnline(Boolean online){
+        return this;
+    }
+
+    @Transient
+    public Boolean getOnline() {
+        if (this.userOnline == null) {
+            return false;
+        }
+        if (this.userOnline.getGmtOnline() == null) {
+            return false;
+        }
+        // 如果在线时间在3分钟内，则认为在线
+        return System.currentTimeMillis() - this.userOnline.getGmtOnline().getTime() < 3 * 60 * 1000;
+    }
+
+    /**
+     * 是否绑定邮箱
+     */
+    @Transient
+    private Boolean emailBind;
+
+    public SysUser setEmailBind(Boolean emailBind){
+        this.emailBind = emailBind;
+        return this;
+    }
+
+    public Boolean getEmailBind() {
+        if (this.emailBind != null) {
+            return emailBind;
+        }
+        return this.email != null && !"".equals(this.email);
+    }
 }

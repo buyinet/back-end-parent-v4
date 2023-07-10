@@ -20,12 +20,14 @@ import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.service.ISysExceptionService;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
+import com.kantboot.util.common.result.PageResult;
 import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -93,8 +95,14 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
     @Override
     public BusOvoUser getByUserId(Long userId) {
         BusOvoUser busOvoUserBind = repository.findById(userId).orElse(null);
-        busOvoUserBind.setUser(sysUserService.getById(userId));
         return busOvoUserBind;
+    }
+
+
+    @Override
+    public PageResult findGreater(Long userId) {
+        Page<BusOvoUser> byIdGreaterThanOrderByIdAsc = repository.findAllByUserIdGreaterThanOrderByGmtCreate(Pageable.ofSize(10).withPage(0), userId);
+        return PageResult.of(byIdGreaterThanOrderByIdAsc);
     }
 
     @Override
@@ -138,7 +146,6 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
         }).collect(Collectors.toList()));
 
         BusOvoUser result = repository.save(busOvoUserBind);
-        result.setUser(save);
 
 
         return result;
@@ -209,13 +216,12 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
         // 获取帖子数
         Long postCount = busOvoPostRepository.countByUserIdAndAuditStatusCode(userId, "pass");
         busOvoUserBindVO.setPostCount(postCount);
-        busOvoUserBindVO.setUser(sysUser);
 
         return busOvoUserBindVO;
     }
 
     @Override
-    public HashMap<String, Object> getRecommendList(Integer pageNumber, String sortField, String sortOrderBy) {
+    public PageResult getRecommendList(Integer pageNumber, String sortField, String sortOrderBy) {
         Sort sort = Sort.by(sortField);
         Sort sort1 =
                 sortOrderBy.toUpperCase().equals("ASC") ?
@@ -223,22 +229,12 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
         PageRequest pageable = PageRequest.of(pageNumber - 1, 15, sort1);
 
         Page<BusOvoUser> all = repository.findAllExcludeUserId(pageable, sysUserService.getIdOfSelf());
-        for (BusOvoUser busOvoUserBind : all.getContent()) {
-            SysUser user = sysUserService.getById(busOvoUserBind.getUserId());
-            busOvoUserBind.setUser(user);
-        }
 
-        HashMap<String, Object> result = new HashMap<>(5);
-        result.put("totalElements", all.getTotalElements());
-        result.put("totalPage", all.getTotalPages());
-        result.put("content", all.getContent());
-        result.put("number", all.getNumber() + 1);
-        result.put("size", all.getSize());
-        return result;
+        return PageResult.of(all);
     }
 
     @Override
-    public HashMap<String, Object> getNear(Integer pageNumber, Double range) {
+    public PageResult getNear(Integer pageNumber, Double range) {
         BusOvoUser self = getSelf();
         // 获取纬度
         Double latitude = self.getLocation().getLatitude();
@@ -249,24 +245,9 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
         longitude = Double.valueOf(String.format("%.5f", longitude));
 
         // 获取附近的人的经纬度地点信息
-        Page<BusOvoUserBindLocation> all = busOvoUserBindLocationRepository
+        Page<BusOvoUser> all = repository
                 .findAllWithDistance(PageRequest.of(pageNumber - 1, 15), latitude, longitude, range);
-        List<BusOvoUserBindLocation> content = all.getContent();
-
-        List<BusOvoUser> busOvoUserBindList = new ArrayList<>();
-        for (BusOvoUserBindLocation busOvoUserBindLocation : content) {
-            if (!busOvoUserBindLocation.getUserId().equals(self.getUserId())) {
-                busOvoUserBindList.add(repository.findByUserId(busOvoUserBindLocation.getUserId()).setUser(sysUserService.getById(busOvoUserBindLocation.getUserId())));
-            }
-        }
-
-        HashMap<String, Object> result = new HashMap<>(5);
-        result.put("totalElements", all.getTotalElements());
-        result.put("totalPage", all.getTotalPages());
-        result.put("content", busOvoUserBindList);
-        result.put("number", all.getNumber() + 1);
-        result.put("size", all.getSize());
-        return result;
+        return PageResult.of(all);
     }
 
 

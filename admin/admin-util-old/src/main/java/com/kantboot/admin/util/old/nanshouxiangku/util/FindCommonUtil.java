@@ -742,6 +742,7 @@ public class FindCommonUtil<T, ID> {
         String andEqJSONString = JSON.toJSONString(andEq);
         List<HashMap> andEqMaps = JSON.parseArray(andEqJSONString, HashMap.class);
 
+
         for (HashMap map : andEqMaps) {
             Set<String> set = map.keySet();
             for (String s : set) {

@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/adminManage/business/ovo/user")
 public class AdminManageBusinessOvoUserController
-        extends BaseAdminController<BusOvoUser,Long>
+        extends BaseAdminController<BusOvoUserInAdmin,Long>
 {
 }

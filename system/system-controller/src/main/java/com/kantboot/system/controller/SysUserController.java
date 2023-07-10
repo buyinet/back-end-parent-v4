@@ -76,5 +76,18 @@ public class SysUserController {
         // 调用service层的修改头像方法，返回结果，并返回成功信息
         return stateSuccessService.success(service.updateAvatar(fileId), "saveSuccess");
     }
+    /**
+     * 绑定邮箱
+     * @param sendTo 邮箱
+     * @param verificationCode 验证码
+     * @return 修改后的用户信息
+     */
+    @RequestMapping("/bindEmail")
+    public RestResult bindEmail(
+            @RequestParam("sendTo") String sendTo,
+            @RequestParam("verificationCode") String verificationCode) {
+        // 调用service层的绑定邮箱方法，返回结果，并返回成功信息
+        return stateSuccessService.success(service.bindEmail(sendTo, verificationCode), "saveSuccess");
+    }
 
 }

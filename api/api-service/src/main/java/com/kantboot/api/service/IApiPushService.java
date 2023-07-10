@@ -1,5 +1,6 @@
 package com.kantboot.api.service;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.module.ApiPush;
 
 /**
@@ -12,5 +13,5 @@ public interface IApiPushService {
      * 推送
      * @param entity 推送实体
      */
-    void push(ApiPush entity);
+    JSONObject push(ApiPush entity);
 }

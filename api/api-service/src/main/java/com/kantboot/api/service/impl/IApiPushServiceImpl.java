@@ -1,5 +1,6 @@
 package com.kantboot.api.service.impl;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.kantboot.api.module.ApiPush;
 import com.kantboot.api.service.IApiPushService;
 import com.kantboot.api.util.uni.push.PushUtil;
@@ -21,7 +22,7 @@ public class IApiPushServiceImpl implements IApiPushService {
     private ISysSettingService settingService;
 
     @Override
-    public void push(ApiPush entity) {
+    public JSONObject push(ApiPush entity) {
         String url = settingService.getValue("uniPush", "url");
 
         Map<String, Object> map = new HashMap<>();
@@ -30,7 +31,8 @@ public class IApiPushServiceImpl implements IApiPushService {
         map.put("title", entity.getTitle());
         map.put("content", entity.getContent());
         map.put("payload", entity.getPayload());
-        PushUtil.sendPush(url, map);
+        return PushUtil.sendPush(url, map);
+
 
     }
 }

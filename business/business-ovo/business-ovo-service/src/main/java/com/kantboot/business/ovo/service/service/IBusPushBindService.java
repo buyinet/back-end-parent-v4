@@ -32,4 +32,10 @@ public interface IBusPushBindService {
      */
     void pushByUserId(Long userId, ApiPush apiPush);
 
+    /**
+     * 根据用户id推送uniPush和邮箱
+     * @param userId 用户id
+     */
+    void pushByUserIdWithEmail(Long userId, ApiPush apiPush);
+
 }

@@ -1,14 +1,16 @@
 package com.kantboot.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.extra.mail.MailAccount;
+import cn.hutool.extra.mail.MailUtil;
 import com.alibaba.fastjson2.JSON;
 import com.kantboot.system.module.dto.SecurityLoginAndRegisterDTO;
-import com.kantboot.system.module.entity.SysException;
-import com.kantboot.system.module.entity.SysRole;
-import com.kantboot.system.module.entity.SysToken;
-import com.kantboot.system.module.entity.SysUser;
+import com.kantboot.system.module.entity.*;
 import com.kantboot.system.repository.SysTokenRepository;
 import com.kantboot.system.repository.SysUserRepository;
+import com.kantboot.system.repository.SysVerificationCodeRepository;
 import com.kantboot.system.service.*;
 import com.kantboot.util.common.exception.BaseException;
 import com.kantboot.util.common.http.HttpRequestHeaderUtil;
@@ -165,8 +167,25 @@ public class SysUserServiceImpl2 implements ISysUserService {
         if (index == -1) {
             return email;
         }
-        // 将邮箱@前面的字符替换为星号
-        return String.format("%s%s", email.substring(0, index).replace(".", "\\*"), email.substring(index));
+
+        // 获取邮箱@前面的字符
+        String prefix = email.substring(0, index-1);
+
+        // 获取邮箱@后面的字符
+        String suffix = email.substring(index+1);
+
+        // 如果邮箱@前面的字符长度小于等于3，则全部替换为星号
+        if (prefix.length() <= 3) {
+            return "***"+"@"+suffix;
+        }
+        // 如果邮箱@前面的字符长度大于3，则将除了第1位和最后一位，其它全部换成*号
+        if(prefix.length() <= 4){
+            return prefix.substring(0,1)+"**"+prefix.substring(prefix.length()-2) +"@"+suffix;
+        }
+
+        return prefix.substring(0,2)+"**"+prefix.substring(prefix.length()-2) +"@"+suffix;
+
+
     }
 
     /**
@@ -319,13 +338,17 @@ public class SysUserServiceImpl2 implements ISysUserService {
         // 将token存入redis
         SysUser save = repository.save(user);
         SysToken sysToken = saveToken(save.getId());
-         return sysToken;
+        SysToken result = BeanUtil.copyProperties(sysToken, SysToken.class);
+        result.setUser(hideSensitiveInfo(sysToken.getUser()));
+         return result;
     }
 
     @Override
     public SysToken thirdLogin(Long userId) {
         SysToken sysToken = saveToken(userId);
-        return sysToken;
+        SysToken result = BeanUtil.copyProperties(sysToken, SysToken.class);
+        result.setUser(hideSensitiveInfo(sysToken.getUser()));
+        return result;
     }
 
     @Override
@@ -368,4 +391,36 @@ public class SysUserServiceImpl2 implements ISysUserService {
         redisUtil.setEx(redisKey, JSON.toJSONString(save), 7, TimeUnit.DAYS);
         return save;
     }
+
+    @Override
+    public SysUser getByToken(String token) {
+        return getUserByToken(token);
+    }
+
+    @Resource
+    private SysVerificationCodeRepository sysVerificationCodeRepository;
+
+    @Override
+    public SysUser bindEmail(String email,String verificationCode) {
+        List<SysVerificationCode> verCodeList = sysVerificationCodeRepository.findBySendToAndTypeCodeAndActionCodeAndGmtExpireAfter(email, "email", "bindEmail", new Date());
+        if (verCodeList.size() == 0) {
+            throw exceptionService.getException("verificationCodeError");
+        }
+
+        for (SysVerificationCode sysVerificationCode : verCodeList) {
+            if ( sysVerificationCode.getVerificationCode().equals(verificationCode)) {
+                Long idOfSelf = getIdOfSelf();
+                SysUser user = repository.findById(idOfSelf).orElseThrow(() -> exceptionService.getException("userNotExist"));
+                user.setEmail(email);
+                SysUser save = repository.save(user);
+                String redisKey = "userId:" + save.getId() + ":SysUser";
+                redisUtil.setEx(redisKey, JSON.toJSONString(save), 7, TimeUnit.DAYS);
+                return hideSensitiveInfo(save);
+            }
+        }
+
+        throw exceptionService.getException("verificationCodeError");
+
+    }
+
 }

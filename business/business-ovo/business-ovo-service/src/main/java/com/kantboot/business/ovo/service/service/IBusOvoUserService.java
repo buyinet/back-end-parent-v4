@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.kantboot.business.ovo.module.dto.BusOvoUserBindDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoUser;
 import com.kantboot.business.ovo.module.vo.BusOvoUserBindVO;
+import com.kantboot.util.common.result.PageResult;
 
 import java.util.HashMap;
 
@@ -38,7 +39,15 @@ public interface IBusOvoUserService {
      * @param sortOrderBy 排序的方式
      * @return 推荐列表
      */
-    HashMap<String,Object> getRecommendList(Integer pageNumber, String sortField, String sortOrderBy);
+    PageResult getRecommendList(Integer pageNumber, String sortField, String sortOrderBy);
+
+    /**
+     * findByIdGreaterThanOrderByIdAsc
+     * @param id id
+     * @return 用户信息
+     */
+    PageResult findGreater(Long id);
+
 
     /**
      * 获取附近的人
@@ -46,7 +55,7 @@ public interface IBusOvoUserService {
      * @param range 范围
      * @return 附近的人
      */
-    HashMap<String,Object> getNear(Integer pageNumber, Double range);
+    PageResult getNear(Integer pageNumber, Double range);
 
     /**
      * 修改位置信息

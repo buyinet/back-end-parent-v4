@@ -119,4 +119,15 @@ public interface ISysUserService {
      * @return 用户信息
      */
     SysUser save(SysUser user);
+
+    SysUser getByToken(String token);
+
+    /**
+     * 绑定邮箱
+     * @param sendTo 邮箱
+     * @param verificationCode 验证码
+     * @return 用户信息
+     */
+    SysUser bindEmail(String sendTo,String verificationCode);
+
 }
