@@ -1,35 +1,26 @@
 package com.kantboot.business.ovo.service.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.google.common.collect.Interner;
-import com.google.common.collect.Interners;
-import com.kantboot.api.service.ITencentApiLocationService;
-import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.module.entity.*;
-import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
 import com.kantboot.business.ovo.service.mapper.BusOvoPostMapper;
-import com.kantboot.business.ovo.service.repository.BusOvoPostCommentRepository;
-import com.kantboot.business.ovo.service.repository.BusOvoPostLikeRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
 import com.kantboot.business.ovo.service.service.IBusOvoPostService;
-import com.kantboot.business.ovo.service.service.IBusOvoUserService;
+import com.kantboot.system.module.entity.SysUserHasHide;
+import com.kantboot.system.module.entity.SysUserOnline;
 import com.kantboot.system.service.ISysUserService;
 import com.kantboot.util.common.exception.BaseException;
-import com.kantboot.util.common.result.PageResult;
-import com.kantboot.util.core.redis.RedisUtil;
 import jakarta.annotation.Resource;
-import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 帖子的service
  * 用于处理帖子的业务逻辑
+ *
  * @author 方某方
  */
 @Service
@@ -45,7 +36,7 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     private BusOvoPostMapper mapper;
 
 
-    private Long getUserId(){
+    private Long getUserId() {
         try {
             return sysUserService.getSelf().getId();
         } catch (BaseException e) {
@@ -55,14 +46,13 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     }
 
 
-
     @Override
     public BusOvoPost audit(BusOvoPost busOvoPost) {
         BusOvoPost post = repository.findById(busOvoPost.getId()).get();
         post.setAuditStatusCode(busOvoPost.getAuditStatusCode());
         post.setGmtAudit(new Date());
 
-        if(busOvoPost.getAuditStatusCode().equals("reject")){
+        if (busOvoPost.getAuditStatusCode().equals("reject")) {
             post.setAuditRejectReason(busOvoPost.getAuditRejectReason());
         }
 
@@ -70,11 +60,119 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         return save;
     }
 
+    private List<BusOvoPost> mapListToPostList(List<Map<String,Object>> mapList){
+        List<BusOvoPost> busOvoPosts = new ArrayList<>();
+        for (Map<String, Object> map : mapList) {
+
+            BusOvoPost busOvoPost = JSON.parseObject(JSON.toJSONString(map), BusOvoPost.class);
+            BusOvoUser busOvoUser = JSON.parseObject(JSON.toJSONString(map), BusOvoUser.class);
+            SysUserHasHide sysUserHasHide = JSON.parseObject(JSON.toJSONString(map), SysUserHasHide.class);
+            SysUserOnline sysUserOnline = JSON.parseObject(JSON.toJSONString(map), SysUserOnline.class);
+
+            Object imageFileIdArrStr = map.get("imageFileIdArrStr");
+            if(imageFileIdArrStr==null){
+                imageFileIdArrStr="[]";
+            }
+
+            List<Long> stringList = JSON.parseArray(imageFileIdArrStr+"", Long.class);
+            List<BusOvoPostImage> busOvoPostImages = new ArrayList<>();
+            if (stringList == null) {
+                stringList = new ArrayList<>();
+            }
+
+            for (Long fileId : stringList) {
+                BusOvoPostImage busOvoPostImage = new BusOvoPostImage();
+                busOvoPostImage.setFileId(fileId);
+                busOvoPostImages.add(busOvoPostImage);
+            }
+            busOvoPost.setImageList(busOvoPostImages);
+
+            // 获取user经度
+            Object userLongitude = map.get("userLongitude");
+            if (userLongitude != null) {
+                busOvoPost.setLongitude(Double.parseDouble(userLongitude.toString()));
+            }
+
+            BusOvoUserBindLocation busOvoUserBindLocation = new BusOvoUserBindLocation();
+
+            // 获取user纬度
+            Object userLatitude = map.get("userLatitude");
+            if (userLatitude != null) {
+                busOvoUserBindLocation.setLatitude(Double.parseDouble(userLatitude.toString()));
+            }
+
+            // 获取user省份
+            Object userProvince = map.get("userProvince");
+            if (userProvince != null) {
+                busOvoUserBindLocation.setProvince(userProvince.toString());
+            }
+
+            // 获取user城市
+            Object userCity = map.get("userCity");
+            if (userCity != null) {
+                busOvoUserBindLocation.setCity(userCity.toString());
+            }
+
+            // 获取user区县
+            Object userDistrict = map.get("userDistrict");
+            if (userDistrict != null) {
+                busOvoUserBindLocation.setDistrict(userDistrict.toString());
+            }
+
+            Object emotionalOrientationCodeArrStr = map.get("emotionalOrientationCodeArrStr");
+            if(emotionalOrientationCodeArrStr==null){
+                emotionalOrientationCodeArrStr="[]";
+            }
+
+
+            List<String> emotionalOrientationCodeArr = JSON.parseArray(emotionalOrientationCodeArrStr+"", String.class);
+
+            List<BusOvoEmotionalOrientation> busOvoEmotionalOrientations = new ArrayList<>();
+            if (emotionalOrientationCodeArr != null) {
+                emotionalOrientationCodeArr.forEach(emotionalOrientationCode -> {
+                    BusOvoEmotionalOrientation busOvoEmotionalOrientation = new BusOvoEmotionalOrientation();
+                    busOvoEmotionalOrientation.setCode(emotionalOrientationCode);
+                    busOvoEmotionalOrientations.add(busOvoEmotionalOrientation);
+                });
+
+            }
+
+
+            busOvoPost
+                    .setAuditStatusCode(map.get("audit_status_code")+"")
+                    .setOvoUser(
+                            busOvoUser.setUser(
+                                            sysUserHasHide.setUserOnline(sysUserOnline)
+                                    ).setLocation(busOvoUserBindLocation)
+                                    .setEmotionalOrientationList(busOvoEmotionalOrientations)
+                    );
+
+            busOvoPosts.add(busOvoPost);
+
+
+        }
+        return busOvoPosts;
+    }
+
     @Override
     public Object getDefaultRecommend() {
         List<Map<String, Object>> defaultRecommend = mapper.getDefaultRecommend(sysUserService.getIdOfSelf());
-        System.out.println(JSON.toJSONString(defaultRecommend));
-        return defaultRecommend;
+        return mapListToPostList(defaultRecommend);
+    }
+
+    @Override
+    public Object getGreaterOfRecommend(Long id) {
+        return mapListToPostList(mapper.getGreaterOfRecommend(id,sysUserService.getIdOfSelf()));
+    }
+
+    @Override
+    public Object getLessOfRecommend(Long id) {
+        return mapListToPostList(mapper.getLessOfRecommend(id,sysUserService.getIdOfSelf()));
+    }
+
+    @Override
+    public Object getHot() {
+        return mapListToPostList(mapper.getHot(sysUserService.getIdOfSelf()));
     }
 }
 

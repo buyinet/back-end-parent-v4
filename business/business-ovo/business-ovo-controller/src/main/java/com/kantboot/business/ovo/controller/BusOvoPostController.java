@@ -1,11 +1,9 @@
 package com.kantboot.business.ovo.controller;
 
-import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.service.service.IBusOvoPostService;
 import com.kantboot.system.service.IStateSuccessService;
 import com.kantboot.util.common.result.RestResult;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +29,33 @@ public class BusOvoPostController {
     @RequestMapping("/getDefaultRecommend")
     public RestResult getDefaultRecommend(){
         return stateSuccessService.success(service.getDefaultRecommend(),"getSuccess");
+    }
+
+    /**
+     * getGreaterOfRecommend
+     * @return RestResult
+     */
+    @RequestMapping("/getGreaterOfRecommend")
+    public RestResult getGreaterOfRecommend(Long id){
+        return stateSuccessService.success(service.getGreaterOfRecommend(id),"getSuccess");
+    }
+
+    /**
+     * getLessOfRecommend
+     * @return RestResult
+     */
+    @RequestMapping("/getLessOfRecommend")
+    public RestResult getLessOfRecommend(Long id){
+        return stateSuccessService.success(service.getLessOfRecommend(id),"getSuccess");
+    }
+
+    /**
+     * getHost
+     * @return RestResult
+     */
+    @RequestMapping("/getHot")
+    public RestResult getHot(){
+        return stateSuccessService.success(service.getHot(),"getSuccess");
     }
 
 }

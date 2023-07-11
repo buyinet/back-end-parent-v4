@@ -1,13 +1,6 @@
 package com.kantboot.business.ovo.service.service;
 
-import cats.kernel.Hash;
-import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.module.entity.BusOvoPost;
-import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
-import com.kantboot.util.common.result.PageResult;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 帖子的service
@@ -26,9 +19,24 @@ public interface IBusOvoPostService {
 
     /**
      * 查询默认推荐的帖子
+     * @return 帖子列表
      */
     Object getDefaultRecommend();
 
+    /**
+     * 获取大于某个id的帖子
+     * @param id id
+     * @return 帖子列表
+     */
+    Object getGreaterOfRecommend(Long id);
 
+    /**
+     * 获取小于某个id的帖子
+     * @param id id
+     * @return 帖子列表
+     */
+    Object getLessOfRecommend(Long id);
+
+    Object getHot();
 
 }
