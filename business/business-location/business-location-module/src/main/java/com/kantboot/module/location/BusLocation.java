@@ -24,8 +24,10 @@ public class BusLocation {
 
     /**
      * adCode 位置编码
-     *
      */
+    @Column(name = "ad_code",length = 32)
+    private String adCode;
+
 
 
 

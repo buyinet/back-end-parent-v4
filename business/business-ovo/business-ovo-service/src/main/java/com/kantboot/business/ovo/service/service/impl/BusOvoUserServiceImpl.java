@@ -105,6 +105,13 @@ public class BusOvoUserServiceImpl implements IBusOvoUserService {
         return PageResult.of(byIdGreaterThanOrderByIdAsc);
     }
 
+
+    @Override
+    public PageResult findLess(Long userId) {
+        Page<BusOvoUser> byIdLessThanOrderByIdAsc = repository.findAllByUserIdLessThanOrderByGmtCreate(Pageable.ofSize(10).withPage(0), userId);
+        return PageResult.of(byIdLessThanOrderByIdAsc);
+    }
+
     @Override
     public BusOvoUser bind(BusOvoUserBindDTO dto) {
 

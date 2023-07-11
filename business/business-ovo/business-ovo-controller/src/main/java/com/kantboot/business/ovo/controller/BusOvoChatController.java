@@ -50,6 +50,10 @@ public class BusOvoChatController {
         return stateSuccessService.success(service.getByRoomId(roomId,pageNumber),"getSuccess");
     }
 
+    @RequestMapping("/findLess")
+    public RestResult findLess(Long roomId, Long id){
+        return stateSuccessService.success(service.findLess(roomId,id),"getSuccess");
+    }
 
 
 }

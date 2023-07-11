@@ -1,6 +1,7 @@
 package com.kantboot.business.ovo.service.service;
 
 import com.kantboot.business.ovo.module.entity.BusOvoChat;
+import com.kantboot.util.common.result.PageResult;
 
 import java.util.HashMap;
 
@@ -28,5 +29,13 @@ public interface IBusOvoChatService {
      * @return 聊天记录
      */
     HashMap<String,Object> getByRoomId(Long roomId, Integer pageNumber);
+
+    /**
+     * findByRoomIdAndIdLessThanOrderByGmtCreateDesc
+     * @param roomId 聊天室id
+     * @param id 聊天id
+     * @return 聊天记录
+     */
+    PageResult findLess(Long roomId, Long id);
 
 }

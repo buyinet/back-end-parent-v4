@@ -24,5 +24,11 @@ public interface IBusOvoPostService {
      */
     BusOvoPost audit(BusOvoPost busOvoPost);
 
+    /**
+     * 查询默认推荐的帖子
+     */
+    Object getDefaultRecommend();
+
+
 
 }

@@ -18,5 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/business/ovo/post")
 public class BusOvoPostController {
 
+    @Resource
+    private IBusOvoPostService service;
+
+    @Resource
+    private IStateSuccessService stateSuccessService;
+
+    /**
+     * getDefaultRecommend
+     * @return RestResult
+     */
+    @RequestMapping("/getDefaultRecommend")
+    public RestResult getDefaultRecommend(){
+        return stateSuccessService.success(service.getDefaultRecommend(),"getSuccess");
+    }
 
 }

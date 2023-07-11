@@ -30,9 +30,17 @@ public interface BusOvoUserRepository extends JpaRepository<BusOvoUser, Long> {
      * 查询userId大于某个userId的用户，根据创建时间排序
      * @param pageable 分页
      * @param id 用户id
+     * @return Page<BusOvoUserBind> Ovo绑定的用户
      */
     Page<BusOvoUser> findAllByUserIdGreaterThanOrderByGmtCreate(Pageable pageable, Long id);
 
+    /**
+     * 查询userId小于某个userId的用户，根据创建时间排序
+     * @param pageable 分页
+     * @param id 用户id
+     * @return Page<BusOvoUserBind> Ovo绑定的用户
+     */
+    Page<BusOvoUser> findAllByUserIdLessThanOrderByGmtCreate(Pageable pageable, Long id);
 
     /**
      * 根据分页查询，且排除某个用户
@@ -47,6 +55,7 @@ public interface BusOvoUserRepository extends JpaRepository<BusOvoUser, Long> {
             countQuery = "SELECT COUNT(*) FROM bus_ovo_user",
             nativeQuery = true)
     Page<BusOvoUser> findAllWithDistance(Pageable pageable, Double latitude, Double longitude, Double range);
+
 
 
 }

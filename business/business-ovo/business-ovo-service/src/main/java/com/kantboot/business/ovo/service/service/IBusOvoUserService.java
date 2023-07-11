@@ -43,10 +43,17 @@ public interface IBusOvoUserService {
 
     /**
      * findByIdGreaterThanOrderByIdAsc
-     * @param id id
+     * @param userId 用户id
      * @return 用户信息
      */
-    PageResult findGreater(Long id);
+    PageResult findGreater(Long userId);
+
+    /**
+     * findLessThanOrderByIdAsc
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    PageResult findLess(Long userId);
 
 
     /**

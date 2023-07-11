@@ -212,4 +212,9 @@ public class BusOvoUserBindController {
         return stateSuccessService.success(service.findGreater(userId), "getSuccess");
     }
 
+    @RequestMapping("/findLess")
+    public RestResult findLess(Long userId){
+        return stateSuccessService.success(service.findLess(userId), "getSuccess");
+    }
+
 }

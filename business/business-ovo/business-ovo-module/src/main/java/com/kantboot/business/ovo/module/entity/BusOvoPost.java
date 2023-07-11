@@ -216,27 +216,27 @@ public class BusOvoPost {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    /**
-     * 点赞数
-     */
-    @Formula("(SELECT COUNT(*) FROM bus_ovo_post_like b1 WHERE b1.post_id = id)")
-    private Long likeCount;
-
-
-    @Formula("(SELECT COUNT(*) FROM bus_ovo_post_comment b2 WHERE b2.post_id = id)")
-    private Long commentCount;
-
-    /**
-     * 我是否点赞，用于关联查询，不存数据库
-     */
-    @Formula("""
-    (SELECT 
-        CASE
-            COUNT(*) > 0
-            WHEN TRUE THEN TRUE
-            ELSE FALSE
-        FROM bus_ovo_post_like b3 WHERE b3.post_id = id AND b3.user_id = :userId)
-    """)
-    private Boolean like;
+//    /**
+//     * 点赞数
+//     */
+//    @Formula("(SELECT COUNT(*) FROM bus_ovo_post_like b1 WHERE b1.post_id = id)")
+//    private Long likeCount;
+//
+//
+//    @Formula("(SELECT COUNT(*) FROM bus_ovo_post_comment b2 WHERE b2.post_id = id)")
+//    private Long commentCount;
+//
+//    /**
+//     * 我是否点赞，用于关联查询，不存数据库
+//     */
+//    @Formula("""
+//    (SELECT
+//        CASE
+//            COUNT(*) > 0
+//            WHEN TRUE THEN TRUE
+//            ELSE FALSE
+//        FROM bus_ovo_post_like b3 WHERE b3.post_id = id AND b3.user_id = :userId)
+//    """)
+//    private Boolean like;
 
 }

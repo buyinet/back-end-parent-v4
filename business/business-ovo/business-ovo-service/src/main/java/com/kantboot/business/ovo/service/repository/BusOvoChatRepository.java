@@ -28,6 +28,11 @@ extends JpaRepository<BusOvoChat, Long>
     Page<BusOvoChat> findByRoomIdOrderByGmtCreateDesc(Pageable pageable,Long roomId);
 
     /**
+     * 根据房间号和小于某个id的消息，分页
+     */
+    Page<BusOvoChat> findByRoomIdAndIdLessThanOrderByGmtCreateDesc(Pageable pageable,Long roomId,Long id);
+
+    /**
      * 根据房间号获取消息数量
      * @param roomId 房间号
      * @return 消息数量

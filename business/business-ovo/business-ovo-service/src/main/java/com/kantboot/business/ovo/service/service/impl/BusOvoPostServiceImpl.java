@@ -1,5 +1,6 @@
 package com.kantboot.business.ovo.service.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
@@ -7,6 +8,7 @@ import com.kantboot.api.service.ITencentApiLocationService;
 import com.kantboot.business.ovo.module.dto.BusOvoPostDTO;
 import com.kantboot.business.ovo.module.entity.*;
 import com.kantboot.business.ovo.module.vo.BusOvoPostVO;
+import com.kantboot.business.ovo.service.mapper.BusOvoPostMapper;
 import com.kantboot.business.ovo.service.repository.BusOvoPostCommentRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostLikeRepository;
 import com.kantboot.business.ovo.service.repository.BusOvoPostRepository;
@@ -23,10 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 帖子的service
@@ -43,22 +42,10 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
     private ISysUserService sysUserService;
 
     @Resource
-    private IBusOvoUserService userBindService;
+    private BusOvoPostMapper mapper;
 
-    @Resource
-    private ITencentApiLocationService locationService;
-
-    @Resource
-    private BusOvoPostLikeRepository postLikeRepository;
-
-    @Resource
-    private BusOvoPostCommentRepository postCommentRepository;
-
-    @Resource
-    private RedisUtil redisUtil;
 
     private Long getUserId(){
-
         try {
             return sysUserService.getSelf().getId();
         } catch (BaseException e) {
@@ -66,6 +53,8 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         }
 
     }
+
+
 
     @Override
     public BusOvoPost audit(BusOvoPost busOvoPost) {
@@ -81,6 +70,11 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
         return save;
     }
 
-
+    @Override
+    public Object getDefaultRecommend() {
+        List<Map<String, Object>> defaultRecommend = mapper.getDefaultRecommend(sysUserService.getIdOfSelf());
+        System.out.println(JSON.toJSONString(defaultRecommend));
+        return defaultRecommend;
+    }
 }
 

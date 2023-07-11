@@ -13,6 +13,7 @@ import com.kantboot.business.ovo.service.service.IBusOvoChatService;
 import com.kantboot.business.ovo.service.service.IBusOvoUserService;
 import com.kantboot.business.ovo.service.service.IBusPushBindService;
 import com.kantboot.system.service.ISysUserService;
+import com.kantboot.util.common.result.PageResult;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -136,5 +137,12 @@ public class BusOvoChatServiceImpl
         map.put("number", byRoomIdOrderByGmtCreateDesc.getNumber());
         map.put("totalElements", byRoomIdOrderByGmtCreateDesc.getTotalElements());
         return map;
+    }
+
+    @Override
+    public PageResult findLess(Long roomId, Long id) {
+        Pageable pageable = Pageable.ofSize(10).withPage( 0);
+        Page<BusOvoChat> byRoomIdAndIdLessThanOrderByGmtCreateDesc = repository.findByRoomIdAndIdLessThanOrderByGmtCreateDesc(pageable, roomId, id);
+        return PageResult.of(byRoomIdAndIdLessThanOrderByGmtCreateDesc);
     }
 }
