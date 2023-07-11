@@ -87,19 +87,20 @@ public class BusOvoPostServiceImpl implements IBusOvoPostService {
             }
             busOvoPost.setImageList(busOvoPostImages);
 
+            BusOvoUserBindLocation busOvoUserBindLocation = new BusOvoUserBindLocation();
             // 获取user经度
             Object userLongitude = map.get("userLongitude");
             if (userLongitude != null) {
-                busOvoPost.setLongitude(Double.parseDouble(userLongitude.toString()));
+                busOvoUserBindLocation.setLongitude(Double.parseDouble(userLongitude.toString()));
             }
 
-            BusOvoUserBindLocation busOvoUserBindLocation = new BusOvoUserBindLocation();
 
             // 获取user纬度
             Object userLatitude = map.get("userLatitude");
             if (userLatitude != null) {
                 busOvoUserBindLocation.setLatitude(Double.parseDouble(userLatitude.toString()));
             }
+
 
             // 获取user省份
             Object userProvince = map.get("userProvince");
