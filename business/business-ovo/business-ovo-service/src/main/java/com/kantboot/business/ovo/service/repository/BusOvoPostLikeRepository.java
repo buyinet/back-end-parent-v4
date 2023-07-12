@@ -32,7 +32,7 @@ public interface BusOvoPostLikeRepository extends JpaRepository<BusOvoPostLike,L
      * @param postId 帖子id
      * @return 是否存在
      */
-    Boolean existsBusOvoPostLikeByUserIdAndPostId(Long userId,Long postId);
+    Boolean existsByUserIdAndPostId(Long userId,Long postId);
 
     /**
      * 根据用户id和帖子id删除点赞

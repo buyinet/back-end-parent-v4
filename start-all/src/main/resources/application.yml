@@ -50,6 +50,12 @@ spring:
 ribbon:
   restclient:
     enabled: true
+
+
+mybatis-plus:
+  # 下划线转驼峰
+  configuration:
+    map-underscore-to-camel-case: true
 #
 #spring:
 #  jpa:

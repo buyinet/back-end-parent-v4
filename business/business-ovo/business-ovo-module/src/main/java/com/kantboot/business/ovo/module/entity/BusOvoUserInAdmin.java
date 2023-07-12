@@ -1,9 +1,7 @@
-package com.kantboot.admin.business.ovo.controller;
+package com.kantboot.business.ovo.module.entity;
 
-import com.kantboot.business.ovo.module.entity.BusOvoEmotionalOrientation;
-import com.kantboot.business.ovo.module.entity.BusOvoUserBindLocation;
-import com.kantboot.system.module.entity.SysUser;
 import com.kantboot.system.module.entity.SysUserHasHide;
+import com.kantboot.system.module.entity.SysUserInAdmin;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,7 +77,7 @@ public class BusOvoUserInAdmin {
      */
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private SysUser user;
+    private SysUserInAdmin user;
 
     /**
      * 关联的用户绑定位置

@@ -34,7 +34,6 @@ public interface BusOvoUserCharmMapper {
              	) AS totalCharmValue,
              	
             	b.nickname AS nickname,
-            	b.nickname AS nickname,
              	b.gender AS gender,
              	b.birthday AS birthday,
             	b.file_id_of_avatar AS fileIdOfAvatar,

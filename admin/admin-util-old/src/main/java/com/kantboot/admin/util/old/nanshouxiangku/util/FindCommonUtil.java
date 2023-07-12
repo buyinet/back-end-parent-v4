@@ -774,10 +774,10 @@ public class FindCommonUtil<T, ID> {
                         JSONObject jsonObject = (JSONObject) map.get(s);
                         Set<String> set1 = jsonObject.keySet();
                         for (String s2 : set1) {
+                                predicatesByAnd.add(
+                                        criteriaBuilder
+                                                .equal(root.get(s).get(s2), jsonObject.get(s2)));
 
-                            predicatesByAnd.add(
-                                    criteriaBuilder
-                                            .equal(root.get(s).get(s2), jsonObject.get(s2)));
 
                         }
                     }
