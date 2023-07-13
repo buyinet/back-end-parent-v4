@@ -1,7 +1,5 @@
 package com.kantboot.util.core.jpa;
 
-import cn.hutool.core.lang.Snowflake;
-import cn.hutool.extra.spring.SpringUtil;
 import com.github.yitter.contract.IdGeneratorOptions;
 import com.github.yitter.idgen.YitIdHelper;
 import org.hibernate.HibernateException;

@@ -54,6 +54,12 @@
 
         <dependency>
             <groupId>com.kantboot</groupId>
+            <artifactId>admin-manage-bussiness-ovo-shop-controller</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kantboot</groupId>
             <artifactId>third-party-wechat-controller</artifactId>
             <version>1.0.0</version>
         </dependency>

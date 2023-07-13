@@ -64,10 +64,8 @@ public class BusOvoShopGoods {
      * 商品展示的文件
      * 一对多，并且按照优先级倒序
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "goods_id", referencedColumnName = "id")
-    @OrderBy("priority DESC")
-    private List<BusOvoShopGoodsBodyFile> bodyFileList;
+    @Column(name = "body_file_list_str", length = 500)
+    private String bodyFileListStr;
 
     /**
      * 货源地址

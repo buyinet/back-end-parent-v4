@@ -26,4 +26,9 @@ public class BusOvoShopGoodsTypeController {
         return stateSuccessService.success(service.getList(),"getSuccess");
     }
 
+    @RequestMapping("/getMap")
+    public RestResult getMap() {
+        return stateSuccessService.success(service.getMap(),"getSuccess");
+    }
+
 }
