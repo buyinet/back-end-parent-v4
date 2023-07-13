@@ -21,4 +21,9 @@ public class BusOvoShopGoodsController {
         return stateSuccessService.success(service.getByTypeCode(typeCode, pageNumber),"getSuccess");
     }
 
+    @RequestMapping("/getById")
+    public Object getById(Long id) {
+        return stateSuccessService.success(service.getById(id),"getSuccess");
+    }
+
 }

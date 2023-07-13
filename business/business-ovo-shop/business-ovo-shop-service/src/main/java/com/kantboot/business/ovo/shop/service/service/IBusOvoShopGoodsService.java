@@ -13,4 +13,11 @@ public interface IBusOvoShopGoodsService {
 
     PageResult getByTypeCode(String typeCode, Integer pageNumber);
 
+    /**
+     * 根据商品id获取商品详情
+     * @param id 商品id
+     * @return 商品详情
+     */
+    BusOvoShopGoods getById(Long id);
+
 }

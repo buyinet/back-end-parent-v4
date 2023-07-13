@@ -36,10 +36,10 @@ public class BusOvoShopGoods {
     private Long id;
 
     /**
-     * 商品名称
+     * 商品标题
      */
-    @Column(name = "name", length = 64)
-    private String name;
+    @Column(name = "title", length = 64)
+    private String title;
 
     /**
      * 商品描述

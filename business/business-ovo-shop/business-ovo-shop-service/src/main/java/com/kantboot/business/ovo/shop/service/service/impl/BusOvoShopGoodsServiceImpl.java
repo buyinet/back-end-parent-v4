@@ -28,4 +28,9 @@ public class BusOvoShopGoodsServiceImpl implements IBusOvoShopGoodsService {
                         .withPage(pageNumber - 1)
                 ));
     }
+
+    @Override
+    public BusOvoShopGoods getById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 }
